@@ -118,6 +118,129 @@
 	);
 		 
 		 
+## ########################################################### ##
+		2.	*** add actions, reducers ***
+## ########################################################### ##		 
 		 
-		 
-		 
+	
+2.1. 	Edit `src/actions/types.js`:
+		## здесь будут храниться все константы, которые мы используем 
+		## в наших `action creators` & `reducers`:
+		export const IS_RENT = "IS_RENT";
+		export const PROPERTY_VALUE = "PROPERTY_VALUE";
+		export const DOWN_PAYMENT = "DOWN_PAYMENT";
+
+
+2.2.	Edit `src/actions/index.js`:
+		## добавляем `actions`
+		import { DOWN_PAYMENT, IS_RENT, PROPERTY_VALUE } from "./types";
+		export const getRentValue = value => {
+			return {
+				type: IS_RENT,
+				payload: value
+			};
+		};
+
+		export const getPropertyValue = value => {
+			return {
+				type: PROPERTY_VALUE,
+				payload: value
+			};
+		};
+
+		export const getDownPayment = value => {
+			return {
+				type: DOWN_PAYMENT,
+				payload: value
+			};
+		};
+
+2.3.	Edit `src/components/LeftPart.js`:
+		import { connect } from "react-redux";
+		import { getDownPayment, getPropertyValue,getRentValue } from "../actions";  // look at `src/actions/index.js`
+		...
+		## поскольку у нас еще нет функции `mapStateToProps`, первым параметром передаем `null`
+		export default connect(null,{ getDownPayment, getPropertyValue,getRentValue })(LeftPart);
+		
+2.4.	Create `src/reducers/rentReducer.js`:
+		export default (state = 500, action) => {
+		  switch (action.type) {
+			// see to `src/actions/index.js`
+			case "IS_RENT":
+			  return action.payload;
+			default:
+			  return state;
+		  }
+		};
+		
+2.5.	Create `src/reducers/propertyValueReducer.js`:
+		export default (state = 50000, action) => {
+		  switch (action.type) {
+			// see to `src/actions/index.js`
+			case "PROPERTY_VALUE":
+			  return action.payload;
+			default:
+			  return state;
+		  }
+		};
+		
+2.6.	Create `src/reducers/downPaymentReducer.js`:
+		export default (state = 2500, action) => {
+		  switch (action.type) {
+			// see to `src/actions/index.js`
+			case "DOWN_PAYMENT":
+			  return action.payload;
+			default:
+			  return state;
+		  }
+		};
+
+2.7. Edit `src/reducers/index.js`:
+		##Это метод, который позволяет вместо создания одного огромного reducer для всего состояния приложения сразу,
+		## разбивать его на отдельные модули.
+		import { combineReducers } from "redux";			
+
+		import downPaymentReducer from "./downPaymentReducer";
+		import propertyValueReducer from "./propertyValueReducer";
+		import rentReducer from "./rentReducer";
+
+		export default combineReducers({
+		  rentValue: rentReducer,
+		  propertyValue: propertyValueReducer,
+		  downPayment: downPaymentReducer
+		});
+		
+2.8.	Edit `src/components/LeftPart.js`:
+		## add function `mapStateToProps`:
+		## //  `state.***` - значение состояния по ключу из `combineReducers` (`src/reducers/index.js`)
+		const mapStateToProps = state => {
+		  return {
+			rentValue: state.rentValue,
+			propertyValue: state.propertyValue,
+			downPayment: state.downPayment
+		  };
+		};
+		## data from `src/actions/index.js`
+		export default connect(mapStateToProps, {
+			getRentValue,
+			getPropertyValue,
+			getDownPayment
+		})(LeftPart);
+
+2.9.	Edit `src/components/LeftPart.js`:
+		render() {
+			return (
+			  <div className="LeftPart">
+				<div>isRent: {this.props.rentValue}</div>
+				<div>isPropertyValue:{this.props.propertyValue} </div>
+				<div>isDownPayment: {this.props.downPayment}</div>
+			  </div>
+			);
+		}
+
+
+
+
+
+
+
