@@ -1,45 +1,35 @@
 import "./LeftPart.scss";
 
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
-import { getDownPayment, getPropertyValue, getRentValue } from "../actions";
+import InputField from "./InputField";
 
 class LeftPart extends Component {
-  getCurrentValue = curVal => {
-    switch (curVal) {
-      case "isRent":
-        return "isRent";
-      case "isPropertyValue":
-        return "isPropertyValue";
-      case "isDownPayment":
-        return "isDownPayment";
-      default:
-        return null;
-    }
-  };
-
   render() {
     return (
       <div className="LeftPart">
-        <div>isRent: {this.props.rentValue}</div>
-        <div>isPropertyValue:{this.props.propertyValue} </div>
-        <div>isDownPayment: {this.props.downPayment}</div>
+        <div>
+          <h3>Rent</h3>
+          <p>Indicate the amount of your current or projected monthly rent.</p>
+          <InputField name="rent" />
+        </div>
+        <div>
+          <h3>Property Value</h3>
+          <p>Indicate the value of the property you are looking to buy.</p>
+          <InputField name="propertyValue" />
+        </div>
+        <div>
+          <h3>Down Payment</h3>
+          <p>
+            Indicate how much you could pay for your down payment. Loans with a
+            down payment of less than 20% of property value will require
+            loan-insurance with CMHC or Genworth.
+          </p>
+          <InputField name="downPayment" />
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    rentValue: state.rentValue,
-    propertyValue: state.propertyValue,
-    downPayment: state.downPayment
-  };
-};
-
-export default connect(mapStateToProps, {
-  getRentValue,
-  getPropertyValue,
-  getDownPayment
-})(LeftPart);
+export default LeftPart;
