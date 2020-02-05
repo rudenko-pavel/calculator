@@ -1,7 +1,7 @@
-export default (state = 2500, action) => {
+export default (state = 50000, action) => {
   switch (action.type) {
     // see to `src/actions/index.js`
-    case "DOWN_PAYMENT":
+    case "SET_PROPERTY_VALUE":
       return action.payload;
     default:
       return state;
