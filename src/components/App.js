@@ -2,8 +2,8 @@ import "./App.scss";
 
 import React from "react";
 
-import LeftPart from "./LeftPart";
-import RightPart from "./RightPart";
+import LeftPart from "./LeftPart/LeftPart";
+import RightPart from "./RightPart/RightPart";
 
 const App = () => {
   return (
