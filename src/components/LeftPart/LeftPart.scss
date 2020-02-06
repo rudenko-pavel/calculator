@@ -1,0 +1,13 @@
+.LeftPart{
+    h3{
+        padding-top: 5px;
+        border-top: 1px solid red;
+        margin-top: 10px;
+    }
+
+    .inputField{
+        input[type="text"]{
+            width: 150px !important;
+        }
+    }
+}

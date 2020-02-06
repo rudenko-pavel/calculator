@@ -1,4 +1,4 @@
-export default (state = 500, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     // look at `src/actions/index.js`
     case "SET_RENT":
