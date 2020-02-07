@@ -1,32 +1,41 @@
 import "./RightPart.scss";
 
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
 
-class RightPart extends Component {
+import { setDownPayment, setPropertyValue, setRent } from "../../actions";
+
+class RightPart extends React.Component {
   sumFunc = () => {
-    const a = this.props.values.rentValue;
-    const b = this.props.values.propertyValue;
-    const с = this.props.values.downPayment;
-
-    const result = a + b + с;
+    const result = "a + b + с";
     return result;
   };
 
   render() {
-    // console.log("RightPart: ", this.props.values);
-    const rentValue = this.props.values.rentValue;
-    const propertyValue = this.props.values.propertyValue;
-    const downPayment = this.props.values.downPayment;
+    const rentValue = this.props.rentValue.rentValue;
+    const propertyValue = this.props.propertyValue.propertyValue;
+    const downPayment = this.props.downPayment.downPayment;
     return (
       <div className="RightPart">
         <div>Rent: {rentValue}</div>
         <div>Property Value: {propertyValue}</div>
-        <div>Down Payment: {downPayment}</div>
-        <div>
-          RESULT: <span id="result">{this.sumFunc()}</span>
-        </div>
+        <div> Down Payment: {downPayment} </div>
+        <hr />
       </div>
     );
   }
 }
-export default RightPart;
+
+const mapStateToProps = state => {
+  return {
+    rentValue: state.rentValue,
+    propertyValue: state.propertyValue,
+    downPayment: state.downPayment
+  };
+};
+
+export default connect(mapStateToProps, {
+  setRent,
+  setPropertyValue,
+  setDownPayment
+})(RightPart);
