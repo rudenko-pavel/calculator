@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import "./LeftPart.scss";
 
 import React from "react";
@@ -6,25 +9,9 @@ import { connect } from "react-redux";
 import { setDownPayment, setPropertyValue, setRent } from "../../actions";
 
 class LeftPart extends React.Component {
-  handleChangeRent(event) {
-    this.props.setRent(event.target.value);
-    console.log("handleChangeRent(): ", event.target.value);
-  }
-
-  handleChangePropertyValue(event) {
-    this.props.setPropertyValue(event.target.value);
-    console.log("handleChangePropertyValue(): ", event.target.value);
-  }
-
-  handleChangeSetDownPayment(event) {
-    this.props.setDownPayment(event.target.value);
-    console.log("handleChangeAge(): ", event.target.value);
-  }
-
   render() {
-    const rentValue = this.rentValue;
-    const propertyValue = this.propertyValue;
-    const downPayment  = this.downPayment;
+    const { rentValue, propertyValue, downPayment } = this;
+    const { setDownPayment, setPropertyValue, setRent } = this.props;
 
     return (
       <div className="LeftPart">
@@ -41,7 +28,7 @@ class LeftPart extends React.Component {
                 name="rentValue"
                 id="rentValue"
                 value={rentValue}
-                onChange={this.handleChangeRent.bind(this)}
+                onChange={e => setRent(e.target.value)}
               />
             </div>
           </div>
@@ -57,7 +44,7 @@ class LeftPart extends React.Component {
                 name="propertyValue"
                 id="propertyValue"
                 value={propertyValue}
-                onChange={this.handleChangePropertyValue.bind(this)}
+                onChange={e => setPropertyValue(e.target.value)}
               />
             </div>
           </div>
@@ -73,7 +60,7 @@ class LeftPart extends React.Component {
                 name="downPayment"
                 id="downPayment"
                 value={downPayment}
-                onChange={this.handleChangeSetDownPayment.bind(this)}
+                onChange={e => setDownPayment(e.target.value)}
               />
             </div>
           </div>
@@ -85,9 +72,7 @@ class LeftPart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    rentValue: state.rentValue,
-    propertyValue: state.propertyValue,
-    downPayment: state.downPayment
+    base: state.base
   };
 };
 

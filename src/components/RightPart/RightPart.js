@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./RightPart.scss";
 
 import React from "react";
@@ -12,9 +13,10 @@ class RightPart extends React.Component {
   };
 
   render() {
-    const rentValue = this.props.rentValue.rentValue;
-    const propertyValue = this.props.propertyValue.propertyValue;
-    const downPayment = this.props.downPayment.downPayment;
+    const { base } = this.props;
+    const { rentValue } = base;
+    const { propertyValue } = base;
+    const { downPayment } = base;
     return (
       <div className="RightPart">
         <div>Rent: {rentValue}</div>
@@ -28,9 +30,7 @@ class RightPart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    rentValue: state.rentValue,
-    propertyValue: state.propertyValue,
-    downPayment: state.downPayment
+    base: state.base
   };
 };
 
