@@ -1,0 +1,14 @@
+@import "./scss/palette";
+
+.ant-tooltip{
+    .ant-tooltip-inner{
+        background-color: $tooltip-bg;
+        color: $tooltip-text-color;
+    }
+
+    .ant-tooltip-arrow{
+        &:before{
+            background-color: $tooltip-bg;
+        }
+    }
+}

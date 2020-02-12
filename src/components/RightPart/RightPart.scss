@@ -1,0 +1,20 @@
+@import "../../scss/palette";
+.RightPart{
+    padding: 20px;
+    .ant-card-head{
+        background-color: $dark-grey-color;
+    }
+    .ant-card-body{
+        padding: 0px;
+        .ant-row{
+            border: 1px solid $grey-color;
+            & > div{
+                padding: 10px;
+            }
+        }
+    }
+
+    .caption{
+        color: $red-color
+    }
+}

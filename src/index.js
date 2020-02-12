@@ -1,4 +1,5 @@
-import "semantic-ui-css/semantic.min.css";
+//import "semantic-ui-css/semantic.min.css";
+import "antd/dist/antd.css";
 import "./index.scss";
 
 import React from "react";

@@ -3,6 +3,7 @@
 /* eslint-disable react/destructuring-assignment */
 import "./LeftPart.scss";
 
+import { Card, InputNumber, Slider } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -10,60 +11,93 @@ import { setDownPayment, setPropertyValue, setRent } from "../../actions";
 
 class LeftPart extends React.Component {
   render() {
-    const { rentValue, propertyValue, downPayment } = this;
-    const { setDownPayment, setPropertyValue, setRent } = this.props;
+    const { setDownPayment, setPropertyValue, setRent, base } = this.props;
+    const { rentValue, propertyValue, downPayment } = base;
 
     return (
       <div className="LeftPart">
-        <form className="ui form">
-          <div>
-            <h3>Rent</h3>
-            <div className="inputField ui labeled input">
-              <label htmlFor="rentValue" className="ui label">
-                $
-              </label>
-              <input
-                type="text"
-                autoComplete="off"
+        <form>
+          <Card title="Rent">
+            <Card.Grid hoverable={false}>
+              <InputNumber
                 name="rentValue"
                 id="rentValue"
+                min={500}
+                max={4000}
+                defaultValue={rentValue}
                 value={rentValue}
-                onChange={e => setRent(e.target.value)}
+                formatter={rentValue =>
+                  `$ ${rentValue}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={rentValue => rentValue.replace(/\$\s?|(,*)/g, "")}
+                onChange={setRent}
               />
-            </div>
-          </div>
-          <div>
-            <h3>Property Value</h3>
-            <div className="inputField ui labeled input">
-              <label htmlFor="propertyValue" className="ui label">
-                $
-              </label>
-              <input
-                type="text"
-                autoComplete="off"
+            </Card.Grid>
+            <Card.Grid hoverable={false}>
+              <Slider
+                min={500}
+                max={4000}
+                defaultValue={rentValue}
+                tooltipVisible
+                onChange={setRent}
+                value={typeof rentValue === "number" ? rentValue : 0}
+              />
+            </Card.Grid>
+          </Card>
+          <Card title="Property Value">
+            <Card.Grid hoverable={false}>
+              <InputNumber
                 name="propertyValue"
                 id="propertyValue"
+                min={50000}
+                max={4000000}
+                defaultValue={propertyValue}
                 value={propertyValue}
-                onChange={e => setPropertyValue(e.target.value)}
+                formatter={value =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={value => value.replace(/\$\s?|(,*)/g, "")}
+                onChange={setPropertyValue}
               />
-            </div>
-          </div>
-          <div>
-            <h3>Down Payment</h3>
-            <div className="inputField  ui labeled input">
-              <label htmlFor="downPayment" className="ui label">
-                $
-              </label>
-              <input
-                type="text"
-                autoComplete="off"
+            </Card.Grid>
+            <Card.Grid hoverable={false}>
+              <Slider
+                min={50000}
+                max={4000000}
+                defaultValue={propertyValue}
+                tooltipVisible
+                onChange={setPropertyValue}
+                value={typeof propertyValue === "number" ? propertyValue : 0}
+              />
+            </Card.Grid>
+          </Card>
+          <Card title="Down Payment">
+            <Card.Grid hoverable={false}>
+              <InputNumber
                 name="downPayment"
                 id="downPayment"
+                min={250}
+                max={600}
+                defaultValue={downPayment}
                 value={downPayment}
-                onChange={e => setDownPayment(e.target.value)}
+                formatter={value =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={value => value.replace(/\$\s?|(,*)/g, "")}
+                onChange={setDownPayment}
               />
-            </div>
-          </div>
+            </Card.Grid>
+            <Card.Grid hoverable={false}>
+              <Slider
+                min={250}
+                max={600}
+                defaultValue={downPayment}
+                tooltipVisible
+                onChange={setDownPayment}
+                value={typeof downPayment === "number" ? downPayment : 0}
+              />
+            </Card.Grid>
+          </Card>
         </form>
       </div>
     );
