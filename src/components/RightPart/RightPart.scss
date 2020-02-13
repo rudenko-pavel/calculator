@@ -1,6 +1,6 @@
 @import "../../scss/palette";
 .RightPart{
-    padding: 20px;
+    padding: 10px;
     .ant-card-head{
         background-color: $dark-grey-color;
     }
@@ -10,11 +10,13 @@
             border: 1px solid $grey-color;
             & > div{
                 padding: 10px;
+                &:nth-child(1){
+                    font-weight: 600;
+                }
+                &.caption{
+                    color: $red-color
+                }
             }
         }
-    }
-
-    .caption{
-        color: $red-color
     }
 }

@@ -12,3 +12,26 @@
         }
     }
 }
+
+.ant-card-head-title,
+.ant-collapse-header{
+    text-transform: uppercase;
+}
+
+.ant-card-body{
+    .ant-typography{
+        width: 100%;
+        display: block;
+        code{
+            width: 100%;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            padding: 5px;
+        }
+    }
+
+    .ant-card-type-inner{
+        margin: 7px;
+    }
+}

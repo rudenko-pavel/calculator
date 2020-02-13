@@ -1,6 +1,6 @@
 @import "../../scss/palette";
 .LeftPart{
-    padding:20px;
+    padding:10px;
     .ant-card{
         margin: 0 auto 15px auto;
 
@@ -10,8 +10,9 @@
             & > div{
                 -webkit-box-shadow: none;
                 box-shadow: none;
-                &:nth-child(1){ width: 30% !important; }
-                &:nth-child(2){ width: 70% !important; }
+                &:nth-child(1){ width: 100% !important; }
+                &:nth-child(2){ width: 30% !important; }
+                &:nth-child(3){ width: 70% !important; }
             }
             .ant-card-grid{ padding: 10px; }
             .ant-input-number{ width: 150px !important; }
