@@ -1,0 +1,19 @@
+{
+    "initialStore" : {
+        "amortizationValue"     : 3,
+        "downPayment"           : 300,
+        "mortgageRateValue"     : 2,
+        "propertyValue"         : 1000000,
+        "rentValue"             : 1000,
+        "annualTaxesValue"      : 555,
+        "heatingCostsValue"     : 777,
+        "buyingHomeValue"       : 650,
+        "sellingHomeValue"      : 5432,
+        "maintenanceValue"      : 1,
+        "ownerInsuranceValue"   : 0.41,
+        "rentersInsuranceValue" : 300,
+        "rentMonthlyCostsValue" : 250,
+        "rateOfGrowthValue"     : 1.9,
+        "returnInvestmentValue" : 3.45
+    }
+}

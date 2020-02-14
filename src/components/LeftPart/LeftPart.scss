@@ -28,9 +28,15 @@
         .ant-slider-track{
             position: absolute;
             top: 0;
-            background-color: $slider-track-bg;
+            background-color: $slider-default;
             height: 100%;
             border-radius: 10px;
+        }
+        
+        .default-data{
+            &.ant-slider-track{
+                background-color: $slider-track-bg;
+            }
         }
 
         .ant-slider-handle{

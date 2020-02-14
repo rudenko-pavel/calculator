@@ -30,7 +30,7 @@ class RightPart extends React.Component {
   };
 
   render() {
-    const { base } = this.props;
+    const { state } = this.props;
     const {
       amortizationValue,
       mortgageRateValue,
@@ -47,7 +47,7 @@ class RightPart extends React.Component {
       rentMonthlyCostsValue,
       rateOfGrowthValue,
       returnInvestmentValue
-    } = base;
+    } = state;
 
     return (
       <div className="RightPart">
@@ -121,7 +121,7 @@ class RightPart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    base: state.base
+    state: state.state
   };
 };
 

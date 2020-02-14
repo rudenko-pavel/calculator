@@ -1,9 +1,18 @@
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import "./LeftPart.scss";
 
-import { Card, Collapse, Input, Slider, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Collapse,
+  Input,
+  Popover,
+  Slider,
+  Typography
+} from "antd";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -13,6 +22,7 @@ import {
   setBuyingHome,
   setDownPayment,
   setHeatingCosts,
+  setInitialState,
   setMaintenance,
   setMortgageRate,
   setOwnerInsurance,
@@ -29,6 +39,7 @@ class LeftPart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      someInitialValue: this.props.initialStateValue,
       sliderData: {
         rentData: {
           min: 400,
@@ -105,12 +116,50 @@ class LeftPart extends React.Component {
           max: 10,
           step: 0.1
         }
+      },
+      popover: {
+        downPayment: {
+          text: (
+            <div>
+              The minimum downpayment is based on property value:
+              <li>5% of the first $500k</li>
+              <li>10% of the remainder if less than $1M</li>
+              <li>A property over 1 million requires a 20% downpayment</li>
+            </div>
+          )
+        },
+        annualTaxes: {
+          text: (
+            <div>
+              <p>
+                These amounts are determined by your municipality, according to
+                the value of the property.
+              </p>
+              <p>School taxes are only applicable in Quebec.</p>
+            </div>
+          )
+        }
       }
     };
   }
 
-  formatNumber = (value, action) => {
-    let newValue = parseFloat(value);
+  componentDidMount() {
+    this.props.setInitialState();
+  }
+
+  getDefaultValues = key => {
+    switch (key) {
+      case 5:
+        // this.props.setRent(newValue);
+        break;
+      default:
+        break;
+    }
+  };
+
+  formatNumber = (e, action) => {
+    console.log("SSSSSS: ", e.target);
+    let newValue = parseFloat(e.target.value);
     const dataSlider = this.state.sliderData;
     const reg = /^-?[0-9]*(\.[0-9]*)?$/;
     // eslint-disable-next-line no-restricted-globals
@@ -229,7 +278,8 @@ class LeftPart extends React.Component {
 
   render() {
     const { Text } = Typography;
-    console.log("LeftPart: ", this.props.base);
+    console.log("this.props.state: ", this.props.state);
+    console.log("this.state: ", this.state);
     function callback(key) {
       console.log(key);
     }
@@ -249,7 +299,7 @@ class LeftPart extends React.Component {
       setRentMonthlyCosts,
       setRateOfGrowth,
       setReturnInvestment,
-      base
+      state
     } = this.props;
     const {
       amortizationValue,
@@ -267,16 +317,16 @@ class LeftPart extends React.Component {
       rentMonthlyCostsValue,
       rateOfGrowthValue,
       returnInvestmentValue
-    } = base;
+    } = state;
     const { Panel } = Collapse;
-    const { sliderData } = this.state;
+    const { sliderData, popover } = this.state;
 
     return (
       <div className="LeftPart">
         <form>
-          <Collapse defaultActiveKey={["4"]} onChange={callback}>
+          <Collapse defaultActiveKey={["1"]} onChange={callback}>
             <Panel header="general data" key="1">
-              <Card title="Rent">
+              <Card title="Rent" className="default-data">
                 <Card.Grid hoverable={false}>
                   <Text type="secondary">
                     Indicate the amount of your current or projected monthly
@@ -289,7 +339,7 @@ class LeftPart extends React.Component {
                     id="rentValue"
                     value={rentValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 1)}
+                    onChange={e => this.formatNumber(e, 1)}
                   />
                   <Text code>
                     Between {sliderData.rentData.min} -{" "}
@@ -318,7 +368,7 @@ class LeftPart extends React.Component {
                     id="propertyValue"
                     value={propertyValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 2)}
+                    onChange={e => this.formatNumber(e, 2)}
                   />
                   <Text code>
                     Between {sliderData.propertyValueData.min} -{" "}
@@ -349,7 +399,7 @@ class LeftPart extends React.Component {
                     id="downPayment"
                     value={downPayment}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 3)}
+                    onChange={e => this.formatNumber(e, 3)}
                   />
                   <Text code>
                     Between {sliderData.downPaymentData.min} -{" "}
@@ -365,6 +415,15 @@ class LeftPart extends React.Component {
                     value={downPayment}
                   />
                 </Card.Grid>
+                <Popover
+                  placement="top"
+                  content={popover.downPayment.text}
+                  trigger="click"
+                >
+                  <Button type="primary" shape="circle">
+                    i
+                  </Button>
+                </Popover>
               </Card>
             </Panel>
             <Panel header="mortgage details" key="2">
@@ -382,7 +441,7 @@ class LeftPart extends React.Component {
                     id="amortizationValue"
                     value={amortizationValue}
                     suffix="years"
-                    onChange={e => this.formatNumber(e.target.value, 4)}
+                    onChange={e => this.formatNumber(e, 4)}
                   />
                   <Text code>
                     Between {sliderData.amortizationData.min} -{" "}
@@ -409,7 +468,7 @@ class LeftPart extends React.Component {
                     id="mortgageRateValue"
                     value={mortgageRateValue}
                     suffix="%"
-                    onChange={e => this.formatNumber(e.target.value, 5)}
+                    onChange={e => this.formatNumber(e, 5)}
                   />
                   <Text code>
                     Between {sliderData.mortgageRateData.min} -{" "}
@@ -441,7 +500,7 @@ class LeftPart extends React.Component {
                     id="annualTaxesValue"
                     value={annualTaxesValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 6)}
+                    onChange={e => this.formatNumber(e, 6)}
                   />
                   <Text code>
                     Between {sliderData.annualTaxesData.min} -{" "}
@@ -457,6 +516,15 @@ class LeftPart extends React.Component {
                     value={annualTaxesValue}
                   />
                 </Card.Grid>
+                <Popover
+                  placement="top"
+                  content={popover.annualTaxes.text}
+                  trigger="click"
+                >
+                  <Button type="primary" shape="circle">
+                    i
+                  </Button>
+                </Popover>
               </Card>
               <Card title="Annual heating costs">
                 <Card.Grid hoverable={false}>
@@ -468,7 +536,7 @@ class LeftPart extends React.Component {
                     id="heatingCostsValue"
                     value={heatingCostsValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 7)}
+                    onChange={e => this.formatNumber(e, 7)}
                   />
                   <Text code>
                     Between {sliderData.heatingCostsData.min} -{" "}
@@ -488,7 +556,8 @@ class LeftPart extends React.Component {
             </Panel>
             <Panel header="closing costs" key="4">
               <Text>
-                Closing costs are the initial charge you have to pay when you buy or sell a home.
+                Closing costs are the initial charge you have to pay when you
+                buy or sell a home.
               </Text>
               <Card title="Costs of buying a home">
                 <Card.Grid hoverable={false}>
@@ -500,7 +569,7 @@ class LeftPart extends React.Component {
                     id="buyingHomeValue"
                     value={buyingHomeValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 8)}
+                    onChange={e => this.formatNumber(e, 8)}
                   />
                   <Text code>
                     Between {sliderData.buyingHomeData.min} -{" "}
@@ -527,7 +596,7 @@ class LeftPart extends React.Component {
                     id="sellingHomeValue"
                     value={sellingHomeValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 9)}
+                    onChange={e => this.formatNumber(e, 9)}
                   />
                   <Text code>
                     Between {sliderData.sellingHomeData.min} -{" "}
@@ -550,6 +619,9 @@ class LeftPart extends React.Component {
                 When buying a house, you have to think about its maintenance.
                 It’s best to set an amount aside for maintenance related costs.
               </Text>
+              <Button type="primary" onClick={this.getDefaultValues(5)}>
+                Reset
+              </Button>
               <Card title="Maintenance and renovation">
                 <Card.Grid hoverable={false}>
                   <Text type="secondary"> </Text>
@@ -560,7 +632,7 @@ class LeftPart extends React.Component {
                     id="maintenanceValue"
                     value={maintenanceValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 10)}
+                    onChange={e => this.formatNumber(e, 10)}
                   />
                   <Text code>
                     Between {sliderData.maintenanceData.min} -{" "}
@@ -587,7 +659,7 @@ class LeftPart extends React.Component {
                     id="ownerInsuranceValue"
                     value={ownerInsuranceValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 11)}
+                    onChange={e => this.formatNumber(e, 11)}
                   />
                   <Text code>
                     Between {sliderData.ownerInsuranceData.min} -{" "}
@@ -614,7 +686,7 @@ class LeftPart extends React.Component {
                     id="rentersInsuranceValue"
                     value={rentersInsuranceValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 12)}
+                    onChange={e => this.formatNumber(e, 12)}
                   />
                   <Text code>
                     Between {sliderData.rentersInsuranceData.min} -{" "}
@@ -641,7 +713,7 @@ class LeftPart extends React.Component {
                     id="rentMonthlyCostsValue"
                     value={rentMonthlyCostsValue}
                     prefix="$"
-                    onChange={e => this.formatNumber(e.target.value, 13)}
+                    onChange={e => this.formatNumber(e, 13)}
                   />
                   <Text code>
                     Between {sliderData.rentMonthlyCostsData.min} -{" "}
@@ -661,7 +733,8 @@ class LeftPart extends React.Component {
             </Panel>
             <Panel header="market trends" key="6">
               <Text>
-                The value of a property changes over time, following market trends.
+                The value of a property changes over time, following market
+                trends.
               </Text>
               <Card title="Property rate of growth">
                 <Card.Grid hoverable={false}>
@@ -673,7 +746,7 @@ class LeftPart extends React.Component {
                     id="rateOfGrowthValue"
                     value={rateOfGrowthValue}
                     suffix="years"
-                    onChange={e => this.formatNumber(e.target.value, 14)}
+                    onChange={e => this.formatNumber(e, 14)}
                   />
                   <Text code>
                     Between {sliderData.rateOfGrowthData.min} -{" "}
@@ -700,7 +773,7 @@ class LeftPart extends React.Component {
                     id="returnInvestmentValue"
                     value={returnInvestmentValue}
                     suffix="%"
-                    onChange={e => this.formatNumber(e.target.value, 15)}
+                    onChange={e => this.formatNumber(e, 15)}
                   />
                   <Text code>
                     Between {sliderData.returnInvestmentData.min} -{" "}
@@ -727,11 +800,12 @@ class LeftPart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    base: state.base
+    state: state.state
   };
 };
 
 export default connect(mapStateToProps, {
+  setInitialState,
   setAmortization,
   setMortgageRate,
   setRent,

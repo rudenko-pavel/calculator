@@ -13,6 +13,21 @@
     }
 }
 
+.ant-popover{
+    list-style: disc;
+    .ant-popover-inner-content {
+        padding: 12px 16px 12px 28px;
+        max-width: 350px;
+        background-color: $popover-bg;
+        border: 1px solid $popover-border;
+    }
+
+    .ant-popover-arrow{
+        border-right-color:$popover-border !important;
+        border-bottom-color:$popover-border !important;
+    }
+}
+
 .ant-card-head-title,
 .ant-collapse-header{
     text-transform: uppercase;
@@ -31,7 +46,16 @@
         }
     }
 
+    .ant-btn-circle{
+        margin: 0 10px 10px 20px;
+    }
+
     .ant-card-type-inner{
         margin: 7px;
     }
+}
+
+.ant-btn{
+    display: block;
+    margin: 10px;
 }
