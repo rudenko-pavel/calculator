@@ -1,11 +1,9 @@
-import myJson from "../apis/json";
 import {
   SET_AMORTIZATION,
   SET_ANNUAL_TAXES,
   SET_BUYING_HOME,
   SET_DOWN_PAYMENT,
   SET_HEATING_COSTS,
-  SET_INITIAL_STATE,
   SET_MAINTENANCE,
   SET_MORTGAGE_RATE,
   SET_OWNER_INSURANCE,
@@ -18,11 +16,6 @@ import {
   SET_SELLING_HOME,
   SET_VALUE
 } from "./types";
-
-export const setInitialState = () => async dispatch => {
-  const responce = await myJson.get("/initialStore.json");
-  dispatch({ type: SET_INITIAL_STATE, payload: responce.data.initialStore });
-};
 
 export const setAmortization = value => {
   return {

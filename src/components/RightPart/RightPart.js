@@ -36,7 +36,7 @@ class RightPart extends React.Component {
       mortgageRateValue,
       rentValue,
       propertyValue,
-      downPayment,
+      downPaymentValue,
       annualTaxesValue,
       heatingCostsValue,
       buyingHomeValue,
@@ -85,7 +85,7 @@ class RightPart extends React.Component {
           <Card type="inner" title="general data">
             <div>Rent: {rentValue}</div>
             <div>Property Value: {propertyValue}</div>
-            <div>Down Payment: {downPayment} </div>
+            <div>Down Payment: {downPaymentValue} </div>
           </Card>
           <Card type="inner" title="mortgage details">
             <div>Amortization: {amortizationValue} </div>
