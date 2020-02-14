@@ -32,7 +32,8 @@ import {
   setRentersInsurance,
   setRentMonthlyCosts,
   setReturnInvestment,
-  setSellingHome
+  setSellingHome,
+  setValue
 } from "../../actions";
 
 class LeftPart extends React.Component {
@@ -144,7 +145,7 @@ class LeftPart extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setInitialState();
+    // this.props.setInitialState();
   }
 
   getDefaultValues = key => {
@@ -184,7 +185,8 @@ class LeftPart extends React.Component {
             newValue = dataSlider.downPaymentData.min;
           if (newValue > dataSlider.downPaymentData.max)
             newValue = dataSlider.downPaymentData.max;
-          this.props.setDownPayment(newValue);
+          // this.props.setDownPayment(newValue);
+          this.props.setValue("downPayment", newValue);
           break;
         case 4:
           if (newValue < dataSlider.amortizationData.min)
@@ -411,7 +413,7 @@ class LeftPart extends React.Component {
                     min={sliderData.downPaymentData.min}
                     max={sliderData.downPaymentData.max}
                     step={sliderData.downPaymentData.step}
-                    onChange={setDownPayment}
+                    onChange={v => this.formatNumber(v, 3)}
                     value={downPayment}
                   />
                 </Card.Grid>
@@ -820,5 +822,5 @@ export default connect(mapStateToProps, {
   setRentersInsurance,
   setRentMonthlyCosts,
   setRateOfGrowth,
-  setReturnInvestment
+  setValue
 })(LeftPart);

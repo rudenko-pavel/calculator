@@ -24,13 +24,6 @@ export const setInitialState = () => async dispatch => {
   dispatch({ type: SET_INITIAL_STATE, payload: responce.data.initialStore });
 };
 
-export const setValue = (action, value) => {
-  return {
-    type: SET_VALUE,
-    payload: value
-  };
-};
-
 export const setAmortization = value => {
   return {
     type: SET_AMORTIZATION,
@@ -133,5 +126,16 @@ export const setReturnInvestment = value => {
   return {
     type: SET_RETURN_INVESTMENT,
     payload: value
+  };
+};
+
+export const setValue = (value_name, value) => {
+  // logic here
+  return {
+    type: SET_VALUE,
+    payload: {
+      value_name,
+      value
+    }
   };
 };
