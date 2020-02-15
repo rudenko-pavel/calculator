@@ -16,45 +16,19 @@ class CardComponent extends React.Component {
       // eslint-disable-next-line react/no-unused-state
       popover: {
         downPaymentValue: {
-          text: (
-            <div>
-              The minimum downpayment is based on property value:
-              <li>5% of the first $500k</li>
-              <li>10% of the remainder if less than $1M</li>
-              <li>A property over 1 million requires a 20% downpayment</li>
-            </div>
-          )
+          text:
+            "<div>The minimum downpayment is based on property value: <li>5% of the first $500k</li><li>10% of the remainder if less than $1M</li><li>A property over 1 million requires a 20% downpayment</li></div>"
         },
-        annualTaxes: {
-          text: (
-            <div>
-              <p>
-                These amounts are determined by your municipality, according to
-                the value of the property.
-              </p>
-              <p>School taxes are only applicable in Quebec.</p>
-            </div>
-          )
+        annualTaxesValue: {
+          text:
+            "<div><p>These amounts are determined by your municipality, according to the value of the property.</p><p>School taxes are only applicable in Quebec.</p></div>"
         }
       }
     };
   }
 
   setDataInStore = (e, name) => {
-    let newValue = parseFloat(e);
-    const dataSlider = this.props.state.sliderData;
-    const reg = /^-?[0-9]*(\.[0-9]*)?$/;
-    // eslint-disable-next-line no-restricted-globals
-    if ((!isNaN(newValue) && reg.test(newValue)) || newValue === "") {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const [key, value] of Object.entries(dataSlider)) {
-        if (`${key}` === name) {
-          if (newValue < `${value.min}`) newValue = `${value.min}`;
-          else if (newValue > `${value.max}`) newValue = `${value.max}`;
-          this.props.setValue(name, parseFloat(newValue));
-        }
-      }
-    }
+    this.props.setValue(name, e, this.props.state.sliderData);
   };
 
   lookForFieldName = name => {
@@ -80,25 +54,25 @@ class CardComponent extends React.Component {
     return result;
   };
 
-  showPopover = name => {
-    if (this.props.popover) {
-      console.log(name);
-      /* for (const [key, value] of Object.entries(this.state.popover)) {
+  // eslint-disable-next-line consistent-return
+  showPopover(name) {
+    if (this.props.popover === 1) {
+      for (const [key, value] of Object.entries(this.state.popover)) {
         if (`${key}` === name) {
           // eslint-disable-next-line no-restricted-syntax
           if (`${key}` === name) {
             return (
-              <Popover placement="top" content={value} trigger="click">
+              <Popover placement="top" content={value.text} trigger="click">
                 <Button type="primary" shape="circle">
                   i
                 </Button>
               </Popover>
             );
           }
-        } 
-      } */
+        }
+      }
     }
-  };
+  }
 
   render() {
     const { Text } = Typography;

@@ -45,7 +45,7 @@ class LeftPart extends React.Component {
                 nameValue="downPaymentValue"
                 prefix="$"
                 suffix=""
-                popover
+                popover={1}
               />
             </Panel>
             <Panel header="mortgage details" key="2">
@@ -78,7 +78,7 @@ class LeftPart extends React.Component {
                 nameValue="annualTaxesValue"
                 prefix="$"
                 suffix=""
-                popover
+                popover={1}
               />
               <CardComponent
                 title="Annual heating costs"

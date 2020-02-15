@@ -1,4 +1,4 @@
-import { SET_VALUE } from "../actions/types";
+import { RESET_VALUES, SET_VALUE } from "../actions/types";
 
 const initialState = {
   amortizationValue: 3,
@@ -71,7 +71,11 @@ export default (state = initialState, action) => {
       return { ...state, returnInvestmentValue: action.payload };
     case SET_VALUE:
       return { ...state, [action.payload.value_name]: action.payload.value };
+    case RESET_VALUES:
 
+    const ttt = { rentValue: 3333, propertyValue: 977777 };
+
+      return { ...state, ...ttt };
     default:
       return state;
   }

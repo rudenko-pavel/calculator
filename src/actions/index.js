@@ -1,4 +1,5 @@
 import {
+  RESET_VALUES,
   SET_AMORTIZATION,
   SET_ANNUAL_TAXES,
   SET_BUYING_HOME,
@@ -122,13 +123,35 @@ export const setReturnInvestment = value => {
   };
 };
 
-export const setValue = (value_name, value) => {
+export const setValue = (value_name, value, dataSlider) => {
   // logic here
+  let newValue = parseFloat(value);
+  const reg = /^-?[0-9]*(\.[0-9]*)?$/;
+  // eslint-disable-next-line no-restricted-globals
+  if ((!isNaN(newValue) && reg.test(newValue)) || newValue === "") {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, val] of Object.entries(dataSlider)) {
+      if (`${key}` === value_name) {
+        if (value < `${val.min}`) newValue = `${val.min}`;
+        else if (value > `${val.max}`) newValue = `${val.max}`;
+      }
+    }
+  }
+  // eslint-disable-next-line no-param-reassign
+  value = parseFloat(newValue);
+
   return {
     type: SET_VALUE,
     payload: {
       value_name,
       value
     }
+  };
+};
+
+export const resetValues = arrayOfValues => {
+  return {
+    type: RESET_VALUES,
+    payload: arrayOfValues
   };
 };

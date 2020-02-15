@@ -4,19 +4,26 @@
     .ant-card-head{
         background-color: $dark-grey-color;
     }
-    .ant-card-body{
-        padding: 0px;
-        .ant-row{
-            border: 1px solid $grey-color;
-            & > div{
-                padding: 10px;
-                &:nth-child(1){
-                    font-weight: 600;
-                }
-                &.caption{
-                    color: $red-color
+    .table-money{
+        .ant-card-body{
+            padding: 0px;
+            .ant-row{
+                border: 1px solid $grey-color;
+                & > div{
+                    padding: 10px;
+                    &:nth-child(1){
+                        font-weight: 600;
+                    }
+                    &.caption{
+                        color: $red-color
+                    }
                 }
             }
+        }
+    }
+    .selectedData{
+        .ant-card-body{
+            padding: 5px 0;
         }
     }
 }
