@@ -72,10 +72,22 @@ export default (state = initialState, action) => {
     case SET_VALUE:
       return { ...state, [action.payload.value_name]: action.payload.value };
     case RESET_VALUES:
-
-    const ttt = { rentValue: 3333, propertyValue: 977777 };
-
-      return { ...state, ...ttt };
+      let newUpdateProps = {};
+      if (action.payload.length > 0) {
+        for (let i = 0; i < action.payload.length; i++) {
+          if (initialState.hasOwnProperty(action.payload[i])){
+            const nameProp = action.payload[i];
+            newUpdateProps = {
+              ...newUpdateProps,
+              [nameProp]: initialState[nameProp]
+            };
+          }
+        }
+      } else {
+        newUpdateProps = { ...initialState};
+      }
+      console.log("updateProps: ", newUpdateProps);
+      return { ...state, ...newUpdateProps };
     default:
       return state;
   }

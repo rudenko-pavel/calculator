@@ -8,11 +8,6 @@ import { connect } from "react-redux";
 import { resetValues } from "../../actions";
 
 class RightPart extends React.Component {
-  sumFunc = () => {
-    const result = "a + b + с";
-    return result;
-  };
-
   render() {
     const { state } = this.props;
     const {
@@ -65,10 +60,7 @@ class RightPart extends React.Component {
           </Row>
         </Card>
         <Divider dashed />
-        <Button
-          type="primary"
-          onClick={e => this.props.resetValues(["rentValue", "propertyValue"],state)}
-        >
+        <Button type="primary" onClick={() => this.props.resetValues([])}>
           Reset all
         </Button>
         <Card title="selected data" className="selectedData">

@@ -8,7 +8,7 @@ import { Button, Collapse, Typography } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 
-import { setValue } from "../../actions";
+import { resetValues, setValue } from "../../actions";
 import CardComponent from "../CardComponent/CardComponent";
 
 class LeftPart extends React.Component {
@@ -113,7 +113,19 @@ class LeftPart extends React.Component {
                 When buying a house, you have to think about its maintenance.
                 It’s best to set an amount aside for maintenance related costs.
               </Text>
-              <Button type="primary">Reset</Button>
+              <Button
+                type="primary"
+                onClick={() =>
+                  this.props.resetValues([
+                    "maintenanceValue",
+                    "ownerInsuranceValue",
+                    "rentersInsuranceValue",
+                    "rentMonthlyCostsValue"
+                  ])
+                }
+              >
+                Reset maintenance costs
+              </Button>
               <CardComponent
                 title="Maintenance and renovation"
                 text=" "
@@ -148,6 +160,17 @@ class LeftPart extends React.Component {
                 The value of a property changes over time, following market
                 trends.
               </Text>
+              <Button
+                type="primary"
+                onClick={() =>
+                  this.props.resetValues([
+                    "rateOfGrowthValue",
+                    "returnInvestmentValue"
+                  ])
+                }
+              >
+                Reset market trends
+              </Button>
               <CardComponent
                 title="Property rate of growth"
                 text=" "
@@ -176,4 +199,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { setValue })(LeftPart);
+export default connect(mapStateToProps, { setValue, resetValues })(LeftPart);
