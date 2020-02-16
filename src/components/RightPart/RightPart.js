@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import "./RightPart.scss";
 
@@ -8,6 +9,12 @@ import { connect } from "react-redux";
 import { resetValues } from "../../actions";
 
 class RightPart extends React.Component {
+  comparisonValues = currentValue => {
+    console.log ("comparisonValues", currentValue);
+    const result = "green";
+    return result;
+  };
+
   render() {
     const { state } = this.props;
     const {
@@ -67,7 +74,12 @@ class RightPart extends React.Component {
           <Row>
             <Col span={12}>
               <Card type="inner" title="general data">
-                <div>Rent: {rentValue}</div>
+                <div
+                  id="rentValueDiv"
+                  className={this.comparisonValues({ rentValue })}
+                >
+                  Rent: {rentValue}
+                </div>
                 <div>Property Value: {propertyValue}</div>
                 <div>Down Payment: {downPaymentValue} </div>
               </Card>

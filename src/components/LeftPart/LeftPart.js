@@ -12,6 +12,43 @@ import { resetValues, setValue } from "../../actions";
 import CardComponent from "../CardComponent/CardComponent";
 
 class LeftPart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // eslint-disable-next-line react/no-unused-state
+      popover: {
+        downPaymentValue: {
+          text: (
+            <div>
+              The minimum downpayment is based on property value:{" "}
+              <li>5% of the first $500k</li>
+              <li>10% of the remainder if less than $1M</li>
+              <li>A property over 1 million requires a 20% downpayment</li>
+            </div>
+          )
+        },
+        annualTaxesValue: {
+          text: (
+            <div>
+              <p>
+                These amounts are determined by your municipality, according to
+                the value of the property.
+              </p>
+              <p>School taxes are only applicable in Quebec.</p>
+            </div>
+          )
+        }
+      }
+    };
+  }
+
+  returnPopover = name => {
+    if (this.state.popover.hasOwnProperty(name)) {
+      const txt = this.state.popover[name];
+      return txt.text;
+    }
+  };
+
   render() {
     const { Text } = Typography;
     function callback(key) {
@@ -45,7 +82,7 @@ class LeftPart extends React.Component {
                 nameValue="downPaymentValue"
                 prefix="$"
                 suffix=""
-                popover={1}
+                popover={this.returnPopover("downPaymentValue")}
               />
             </Panel>
             <Panel header="mortgage details" key="2">
@@ -78,7 +115,7 @@ class LeftPart extends React.Component {
                 nameValue="annualTaxesValue"
                 prefix="$"
                 suffix=""
-                popover={1}
+                popover={this.returnPopover("annualTaxesValue")}
               />
               <CardComponent
                 title="Annual heating costs"

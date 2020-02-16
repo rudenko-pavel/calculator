@@ -55,22 +55,15 @@ class CardComponent extends React.Component {
   };
 
   // eslint-disable-next-line consistent-return
-  showPopover(name) {
-    if (this.props.popover === 1) {
-      for (const [key, value] of Object.entries(this.state.popover)) {
-        if (`${key}` === name) {
-          // eslint-disable-next-line no-restricted-syntax
-          if (`${key}` === name) {
-            return (
-              <Popover placement="top" content={value.text} trigger="click">
-                <Button type="primary" shape="circle">
-                  i
-                </Button>
-              </Popover>
-            );
-          }
-        }
-      }
+  showPopover() {
+    if (typeof this.props.popover === "object") {
+      return (
+        <Popover placement="top" content={this.props.popover} trigger="click">
+          <Button type="primary" shape="circle">
+            i
+          </Button>
+        </Popover>
+      );
     }
   }
 
@@ -104,7 +97,7 @@ class CardComponent extends React.Component {
               onChange={v => this.setDataInStore(v, name)}
               value={this.lookForFieldName(name)}
             />
-            {this.showPopover(name)}
+            {this.showPopover()}
           </Card.Grid>
         </Card>
       </div>

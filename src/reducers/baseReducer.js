@@ -1,3 +1,5 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-case-declarations */
 import { RESET_VALUES, SET_VALUE } from "../actions/types";
 
 const initialState = {
@@ -74,8 +76,8 @@ export default (state = initialState, action) => {
     case RESET_VALUES:
       let newUpdateProps = {};
       if (action.payload.length > 0) {
-        for (let i = 0; i < action.payload.length; i++) {
-          if (initialState.hasOwnProperty(action.payload[i])){
+        for (let i = 0; i < action.payload.length; i += 1) {
+          if (initialState.hasOwnProperty(action.payload[i])) {
             const nameProp = action.payload[i];
             newUpdateProps = {
               ...newUpdateProps,
@@ -84,9 +86,8 @@ export default (state = initialState, action) => {
           }
         }
       } else {
-        newUpdateProps = { ...initialState};
+        newUpdateProps = { ...initialState };
       }
-      console.log("updateProps: ", newUpdateProps);
       return { ...state, ...newUpdateProps };
     default:
       return state;
