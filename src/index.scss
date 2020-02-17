@@ -5,11 +5,8 @@
         background-color: $tooltip-bg;
         color: $tooltip-text-color;
     }
-
     .ant-tooltip-arrow{
-        &:before{
-            background-color: $tooltip-bg;
-        }
+        &:before{ background-color: $tooltip-bg; }
     }
 }
 
@@ -29,21 +26,18 @@
 }
 
 .ant-card-head-title,
-.ant-collapse-header{
-    text-transform: uppercase;
-}
+.ant-collapse-header{ text-transform: uppercase; }
 
 .ant-card-body{
     .new-value{
-        color: $blue-color;
-        .ant-typography{
-            display: none;
+        span{
+            color: $blue-color;
+            &.ant-typography{ display: none !important; }
         }
     }
 
     .ant-typography{
         width: 100%;
-
         code{
             width: 100%;
             display: block;
@@ -52,17 +46,61 @@
             padding: 5px;
         }
     }
-
-    .ant-btn-circle{
-        margin: 0 10px 10px 20px;
-    }
-
-    .ant-card-type-inner{
-        margin: 7px;
-    }
+    .ant-btn-circle{ margin: 0 10px 10px 20px; }
+    .ant-card-type-inner{ margin: 7px; }
 }
-
 .ant-btn{
     display: block;
     margin: 10px;
 }
+
+ .ant-back-top {
+    bottom: 80px;
+  }
+   .ant-back-top-inner {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border-radius: 4px;
+    background-color: #1088e9;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+  }
+  .show-selected-data{
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    }
+.ant-drawer-content-wrapper{ width:50% !important}
+
+@media only screen and (max-device-width:991px)   {
+    .LeftPart, .RightPart { 
+        padding: 5px !important; 
+        .ant-collapse-content-box,
+        .CardComponent{
+            padding: 5px !important; 
+            .ant-card{
+                margin: 0 auto 5px auto;
+                .ant-card-body{
+                    & > div{
+                        &:nth-child(1){ width: 100% !important; }
+                        &:nth-child(2){ width: 100% !important; }
+                        &:nth-child(3){ width: 100% !important; }
+                    }
+
+                }
+            }
+        }
+        .ant-card-head{
+            min-height: 24px;
+            .ant-card-head-title{
+                padding: 6px 0;
+            }
+        }
+    }
+  }
+
+  @media only screen and (max-device-width:767px)   {
+    .ant-drawer-content-wrapper{ width:70% !important}
+  }
