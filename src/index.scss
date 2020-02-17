@@ -34,9 +34,16 @@
 }
 
 .ant-card-body{
+    .new-value{
+        color: $blue-color;
+        .ant-typography{
+            display: none;
+        }
+    }
+
     .ant-typography{
         width: 100%;
-        display: block;
+
         code{
             width: 100%;
             display: block;

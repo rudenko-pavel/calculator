@@ -1,5 +1,6 @@
 import {
   RESET_VALUES,
+  SAVE_DEFAULT,
   SET_AMORTIZATION,
   SET_ANNUAL_TAXES,
   SET_BUYING_HOME,
@@ -153,5 +154,12 @@ export const resetValues = arrayOfValues => {
   return {
     type: RESET_VALUES,
     payload: arrayOfValues
+  };
+};
+
+export const saveDefault = () => {
+  return {
+    type: SAVE_DEFAULT,
+    payload: null
   };
 };

@@ -2,17 +2,25 @@
 /* eslint-disable react/prop-types */
 import "./RightPart.scss";
 
-import { Button, Card, Col, Divider, Row } from "antd";
+import { Button, Card, Col, Divider, Row, Typography } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 
-import { resetValues } from "../../actions";
+import { resetValues, saveDefault } from "../../actions";
 
 class RightPart extends React.Component {
+  componentDidMount() {
+    this.props.saveDefault();
+  }
+
   comparisonValues = currentValue => {
-    console.log ("comparisonValues", currentValue);
-    const result = "green";
-    return result;
+    let currentClass = "";
+    const nameV = Object.entries(currentValue)[0][0];
+    const valueV = Object.entries(currentValue)[0][1];
+    if (valueV === this.props.state.defaultValues[nameV])
+      currentClass = "default-value";
+    else currentClass = "new-value";
+    return currentClass;
   };
 
   render() {
@@ -34,6 +42,7 @@ class RightPart extends React.Component {
       rateOfGrowthValue,
       returnInvestmentValue
     } = state;
+    const { Text } = Typography;
 
     return (
       <div className="RightPart">
@@ -74,56 +83,94 @@ class RightPart extends React.Component {
           <Row>
             <Col span={12}>
               <Card type="inner" title="general data">
-                <div
-                  id="rentValueDiv"
-                  className={this.comparisonValues({ rentValue })}
-                >
-                  Rent: {rentValue}
+                <div className={this.comparisonValues({ rentValue })}>
+                  Rent: {rentValue} <Text type="secondary">[default]</Text>
                 </div>
-                <div>Property Value: {propertyValue}</div>
-                <div>Down Payment: {downPaymentValue} </div>
+                <div className={this.comparisonValues({ propertyValue })}>
+                  Property Value: {propertyValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
+                <div className={this.comparisonValues({ downPaymentValue })}>
+                  Down Payment: {downPaymentValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
               </Card>
             </Col>
             <Col span={12}>
               <Card type="inner" title="mortgage details">
-                <div>Amortization: {amortizationValue} </div>
-                <div>Mortgage rate: {mortgageRateValue} </div>
+                <div className={this.comparisonValues({ amortizationValue })}>
+                  Amortization: {amortizationValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
+                <div className={this.comparisonValues({ mortgageRateValue })}>
+                  Mortgage rate: {mortgageRateValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
               </Card>
             </Col>
           </Row>
           <Row>
             <Col span={12}>
               <Card type="inner" title="taxes and basic costs">
-                <div>
+                <div className={this.comparisonValues({ annualTaxesValue })}>
                   Amount of annual municipal and school taxes:{" "}
-                  {annualTaxesValue}{" "}
+                  {annualTaxesValue} <Text type="secondary">[default]</Text>
                 </div>
-                <div>Annual heating costs: {heatingCostsValue} </div>
+                <div className={this.comparisonValues({ heatingCostsValue })}>
+                  Annual heating costs: {heatingCostsValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
               </Card>
             </Col>
             <Col span={12}>
               <Card type="inner" title="closing costs">
-                <div>Costs of buying a home: {buyingHomeValue}</div>
-                <div>Costs of selling a home: {sellingHomeValue} </div>
+                <div className={this.comparisonValues({ buyingHomeValue })}>
+                  Costs of buying a home: {buyingHomeValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
+                <div className={this.comparisonValues({ sellingHomeValue })}>
+                  Costs of selling a home: {sellingHomeValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
               </Card>
             </Col>
           </Row>
           <Row>
             <Col span={12}>
               <Card type="inner" title="maintenance costs">
-                <div>Maintenance and renovation: {maintenanceValue}</div>
-                <div>
-                  Annual homeowner&lsquo;s insurance: {ownerInsuranceValue}{" "}
+                <div className={this.comparisonValues({ maintenanceValue })}>
+                  Maintenance and renovation: {maintenanceValue}{" "}
+                  <Text type="secondary">[default]</Text>
                 </div>
-                <div>Renter&lsquo;s insurance: {rentersInsuranceValue}</div>
-                <div>Rent monthly heating costs: {rentMonthlyCostsValue} </div>
+                <div className={this.comparisonValues({ ownerInsuranceValue })}>
+                  Annual homeowner&lsquo;s insurance: {ownerInsuranceValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
+                <div
+                  className={this.comparisonValues({ rentersInsuranceValue })}
+                >
+                  Renter&lsquo;s insurance: {rentersInsuranceValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
+                <div
+                  className={this.comparisonValues({ rentMonthlyCostsValue })}
+                >
+                  Rent monthly heating costs: {rentMonthlyCostsValue}{" "}
+                  <Text type="secondary">[default]</Text>
+                </div>
               </Card>
             </Col>
             <Col span={12}>
               <Card type="inner" title="market trends">
-                <div>Property rate of growth: {rateOfGrowthValue}</div>
-                <div>
+                <div className={this.comparisonValues({ rateOfGrowthValue })}>
+                  Property rate of growth: {rateOfGrowthValue}
+                  <Text type="secondary">[default]</Text>
+                </div>
+                <div
+                  className={this.comparisonValues({ returnInvestmentValue })}
+                >
                   Rate of return on investment: {returnInvestmentValue}{" "}
+                  <Text type="secondary">[default]</Text>
                 </div>
               </Card>
             </Col>
@@ -140,4 +187,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { resetValues })(RightPart);
+export default connect(mapStateToProps, { resetValues, saveDefault })(
+  RightPart
+);

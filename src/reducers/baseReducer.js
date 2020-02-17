@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-case-declarations */
-import { RESET_VALUES, SET_VALUE } from "../actions/types";
+import { RESET_VALUES, SAVE_DEFAULT, SET_VALUE } from "../actions/types";
 
 const initialState = {
   amortizationValue: 3,
@@ -34,7 +34,8 @@ const initialState = {
     rentMonthlyCostsValue: { min: 0, max: 1000, step: 50 },
     rateOfGrowthValue: { min: 0, max: 5, step: 0.1 },
     returnInvestmentValue: { min: 0, max: 10, step: 0.1 }
-  }
+  },
+  defaultValues: {}
 };
 
 //  You also can do initial state like that
@@ -86,9 +87,14 @@ export default (state = initialState, action) => {
           }
         }
       } else {
-        newUpdateProps = { ...initialState };
+        newUpdateProps = {
+          ...initialState,
+          defaultValues: state.defaultValues
+        };
       }
       return { ...state, ...newUpdateProps };
+    case SAVE_DEFAULT:
+      return { ...state, defaultValues: state };
     default:
       return state;
   }
