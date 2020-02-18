@@ -7,7 +7,7 @@ import {
   SET_VALUE
 } from "../actions/types";
 
-const initialState = {
+export const initialState = {
   amortizationValue: 3,
   downPaymentValue: 300,
   mortgageRateValue: 2,

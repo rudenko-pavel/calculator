@@ -7,6 +7,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { resetValues, saveDefault } from "../../actions";
+import initialState from "../../reducers/baseReducer";
 
 class RightPart extends React.Component {
   constructor(props) {
@@ -50,13 +51,14 @@ class RightPart extends React.Component {
         {name}:{" "}
         <span>
           {preffix} {new Intl.NumberFormat().format(valueV)} {suffix}
-        </span>{" "}
+        </span>
         <Text type="secondary">[default]</Text>
       </div>
     );
   };
 
   render() {
+    console.log("DDDD",initialState)
     const { state } = this.props;
     const {
       amortizationValue,
@@ -75,7 +77,6 @@ class RightPart extends React.Component {
       rateOfGrowthValue,
       returnInvestmentValue
     } = state;
-    const { Text } = Typography;
 
     return (
       <div className="RightPart">
@@ -87,7 +88,7 @@ class RightPart extends React.Component {
           </Row>
           <Row>
             <Col span={10}>Rent or Mortgage</Col>
-            <Col span={7}>{rentValue}</Col>
+            <Col span={7}>{new Intl.NumberFormat().format(rentValue)}</Col>
             <Col span={7}>col-8</Col>
           </Row>
           <Row>
@@ -195,13 +196,13 @@ class RightPart extends React.Component {
                     "%"
                   )}
                   {this.showCard(
-                    "Annual homeowner&lsquo;s insurance",
+                    "Annual homeowner's insurance",
                     { ownerInsuranceValue },
                     "",
                     "%"
                   )}
                   {this.showCard(
-                    "Renter&lsquo;s insurance",
+                    "Renter's insurance",
                     { rentersInsuranceValue },
                     "$",
                     ""
@@ -244,6 +245,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { resetValues, saveDefault })(
-  RightPart
-);
+export default connect(mapStateToProps, {
+  resetValues,
+  saveDefault
+})(RightPart);

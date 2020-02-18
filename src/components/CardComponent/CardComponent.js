@@ -85,24 +85,28 @@ class CardComponent extends React.Component {
     const name = this.props.nameValue;
     return (
       <div className="CardComponent">
-        <Card title={this.props.title} className="default-data">
+        <Card title={this.props.title}>
           <Card.Grid hoverable={false}>
             <Text type="secondary">{this.props.text}</Text>
           </Card.Grid>
           <Card.Grid hoverable={false}>
             <Input
               name={name}
-              value={new Intl.NumberFormat().format(
-                this.lookForFieldName(name)
-              )}
+              value={this.lookForFieldName(name)}
               prefix={this.props.prefix}
               suffix={this.props.suffix}
               onChange={e => this.setDataInStore(e.target.value, e.target.name)}
               onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
             />
             <Text code>
-              Between {this.lookForInSliderData(name).min} -{" "}
-              {this.lookForInSliderData(name).max}{" "}
+              Between{" "}
+              {new Intl.NumberFormat().format(
+                this.lookForInSliderData(name).min
+              )}{" "}
+              -{" "}
+              {new Intl.NumberFormat().format(
+                this.lookForInSliderData(name).max
+              )}{" "}
             </Text>
           </Card.Grid>
           <Card.Grid hoverable={false}>
