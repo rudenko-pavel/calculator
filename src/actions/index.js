@@ -1,4 +1,5 @@
 import {
+  CHECK_VALUE,
   RESET_VALUES,
   SAVE_DEFAULT,
   SET_AMORTIZATION,
@@ -124,8 +125,7 @@ export const setReturnInvestment = value => {
   };
 };
 
-export const setValue = (value_name, value, dataSlider) => {
-  // logic here
+export const checkValue = (value_name, value, dataSlider) => {
   let newValue = parseFloat(value);
   const reg = /^-?[0-9]*(\.[0-9]*)?$/;
   // eslint-disable-next-line no-restricted-globals
@@ -133,14 +133,25 @@ export const setValue = (value_name, value, dataSlider) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const [key, val] of Object.entries(dataSlider)) {
       if (`${key}` === value_name) {
-        if (value < `${val.min}`) newValue = `${val.min}`;
-        else if (value > `${val.max}`) newValue = `${val.max}`;
+        if (newValue < `${val.min}`) newValue = `${val.min}`;
+        else if (newValue > `${val.max}`) newValue = `${val.max}`;
       }
     }
   }
   // eslint-disable-next-line no-param-reassign
   value = parseFloat(newValue);
 
+  return {
+    type: CHECK_VALUE,
+    payload: {
+      value_name,
+      value
+    }
+  };
+};
+
+export const setValue = (value_name, value) => {
+  // logic here
   return {
     type: SET_VALUE,
     payload: {

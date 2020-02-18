@@ -42,6 +42,20 @@ class RightPart extends React.Component {
     return currentClass;
   };
 
+  showCard = (name, value, preffix, suffix) => {
+    const { Text } = Typography;
+    const valueV = Object.entries(value)[0][1];
+    return (
+      <div className={this.comparisonValues(value)}>
+        {name}:{" "}
+        <span>
+          {preffix} {new Intl.NumberFormat().format(valueV)} {suffix}
+        </span>{" "}
+        <Text type="secondary">[default]</Text>
+      </div>
+    );
+  };
+
   render() {
     const { state } = this.props;
     const {
@@ -115,103 +129,105 @@ class RightPart extends React.Component {
             <Row>
               <Col lg={12} md={24}>
                 <Card type="inner" title="general data">
-                  <div className={this.comparisonValues({ rentValue })}>
-                    Rent: <span>{rentValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div className={this.comparisonValues({ propertyValue })}>
-                    Property Value: <span>{propertyValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div className={this.comparisonValues({ downPaymentValue })}>
-                    Down Payment: <span>{downPaymentValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
+                  {this.showCard("Rent", { rentValue }, "$", "")}
+                  {this.showCard("Property Value", { propertyValue }, "$", "")}
+                  {this.showCard("Down Payment", { downPaymentValue }, "$", "")}
                 </Card>
               </Col>
               <Col lg={12} md={24}>
                 <Card type="inner" title="mortgage details">
-                  <div className={this.comparisonValues({ amortizationValue })}>
-                    Amortization: <span>{amortizationValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div className={this.comparisonValues({ mortgageRateValue })}>
-                    Mortgage rate: <span>{mortgageRateValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
+                  {this.showCard(
+                    "Amortization",
+                    { amortizationValue },
+                    "",
+                    "years"
+                  )}
+                  {this.showCard(
+                    "Mortgage rate",
+                    { mortgageRateValue },
+                    "",
+                    "%"
+                  )}
                 </Card>
               </Col>
             </Row>
             <Row>
               <Col lg={12} md={24}>
                 <Card type="inner" title="taxes and basic costs">
-                  <div className={this.comparisonValues({ annualTaxesValue })}>
-                    Amount of annual municipal and school taxes:{" "}
-                    <span>{annualTaxesValue}</span>
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div className={this.comparisonValues({ heatingCostsValue })}>
-                    Annual heating costs: <span>{heatingCostsValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
+                  {this.showCard(
+                    "Amount of annual municipal and school taxes",
+                    { annualTaxesValue },
+                    "$",
+                    ""
+                  )}
+                  {this.showCard(
+                    "Annual heating costs",
+                    { heatingCostsValue },
+                    "$",
+                    ""
+                  )}
                 </Card>
               </Col>
               <Col lg={12} md={24}>
                 <Card type="inner" title="closing costs">
-                  <div className={this.comparisonValues({ buyingHomeValue })}>
-                    Costs of buying a home: <span>{buyingHomeValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div className={this.comparisonValues({ sellingHomeValue })}>
-                    Costs of selling a home: <span>{sellingHomeValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
+                  {this.showCard(
+                    "Costs of buying a home",
+                    { buyingHomeValue },
+                    "$",
+                    ""
+                  )}
+                  {this.showCard(
+                    "Costs of selling a home",
+                    { sellingHomeValue },
+                    "$",
+                    ""
+                  )}
                 </Card>
               </Col>
             </Row>
             <Row>
               <Col lg={12} md={24}>
                 <Card type="inner" title="maintenance costs">
-                  <div className={this.comparisonValues({ maintenanceValue })}>
-                    Maintenance and renovation: <span>{maintenanceValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div
-                    className={this.comparisonValues({ ownerInsuranceValue })}
-                  >
-                    Annual homeowner&lsquo;s insurance:
-                    <span>{ownerInsuranceValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div
-                    className={this.comparisonValues({ rentersInsuranceValue })}
-                  >
-                    Renter&lsquo;s insurance:{" "}
-                    <span>{rentersInsuranceValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div
-                    className={this.comparisonValues({ rentMonthlyCostsValue })}
-                  >
-                    Rent monthly heating costs:
-                    <span>{rentMonthlyCostsValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
+                  {this.showCard(
+                    "Maintenance and renovation",
+                    { maintenanceValue },
+                    "",
+                    "%"
+                  )}
+                  {this.showCard(
+                    "Annual homeowner&lsquo;s insurance",
+                    { ownerInsuranceValue },
+                    "",
+                    "%"
+                  )}
+                  {this.showCard(
+                    "Renter&lsquo;s insurance",
+                    { rentersInsuranceValue },
+                    "$",
+                    ""
+                  )}
+                  {this.showCard(
+                    "Rent monthly heating costs",
+                    { rentMonthlyCostsValue },
+                    "$",
+                    ""
+                  )}
                 </Card>
               </Col>
               <Col lg={12} md={24}>
                 <Card type="inner" title="market trends">
-                  <div className={this.comparisonValues({ rateOfGrowthValue })}>
-                    Property rate of growth: <span>{rateOfGrowthValue}</span>
-                    <Text type="secondary">[default]</Text>
-                  </div>
-                  <div
-                    className={this.comparisonValues({ returnInvestmentValue })}
-                  >
-                    Rate of return on investment:
-                    <span>{returnInvestmentValue}</span>{" "}
-                    <Text type="secondary">[default]</Text>
-                  </div>
+                  {this.showCard(
+                    "Property rate of growth",
+                    { rateOfGrowthValue },
+                    "",
+                    "years"
+                  )}
+                  {this.showCard(
+                    "Rate of return on investment",
+                    { returnInvestmentValue },
+                    "",
+                    "%"
+                  )}
                 </Card>
               </Col>
             </Row>

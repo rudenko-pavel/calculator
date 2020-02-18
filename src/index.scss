@@ -55,7 +55,8 @@
 }
 
  .ant-back-top {
-    bottom: 80px;
+    bottom: 30px;
+    right: 30px;
   }
    .ant-back-top-inner {
     height: 40px;
@@ -72,7 +73,15 @@
     right: 10px;
     top: 10px;
     }
-.ant-drawer-content-wrapper{ width:50% !important}
+.ant-drawer-content-wrapper{ 
+    width:50% !important;
+    .ant-card-body{
+        padding: 4px;
+        .ant-card-type-inner{
+            margin: 4px;
+        }
+    }
+}
 
 @media only screen and (max-device-width:991px)   {
     .LeftPart, .RightPart { 

@@ -167,15 +167,15 @@ class LeftPart extends React.Component {
                 title="Maintenance and renovation"
                 text=" "
                 nameValue="maintenanceValue"
-                prefix="$"
-                suffix=""
+                prefix=""
+                suffix="%"
               />
               <CardComponent
                 title="Annual homeowner's insurance"
                 text=" "
                 nameValue="ownerInsuranceValue"
-                prefix="$"
-                suffix=""
+                prefix=""
+                suffix="%"
               />
               <CardComponent
                 title="Renter's insurance"

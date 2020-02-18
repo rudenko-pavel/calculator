@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
@@ -7,7 +8,7 @@ import { Button, Card, Input, Popover, Slider, Typography } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 
-import { setValue } from "../../actions";
+import { checkValue, setValue } from "../../actions";
 
 class CardComponent extends React.Component {
   constructor(props) {
@@ -28,7 +29,19 @@ class CardComponent extends React.Component {
   }
 
   setDataInStore = (e, name) => {
-    this.props.setValue(name, e, this.props.state.sliderData);
+    let receiveValue;
+    const newValue = parseFloat(e);
+    const reg = /^-?[0-9]*(\.[0-9]*)?$/;
+    if ((!isNaN(newValue) && reg.test(newValue)) || newValue === "") {
+      receiveValue = parseFloat(e);
+    } else {
+      receiveValue = 0;
+    }
+    this.props.setValue(name, receiveValue);
+  };
+
+  checkDataInStore = (e, name) => {
+    this.props.checkValue(name, e, this.props.state.sliderData);
   };
 
   lookForFieldName = name => {
@@ -79,10 +92,13 @@ class CardComponent extends React.Component {
           <Card.Grid hoverable={false}>
             <Input
               name={name}
-              value={this.lookForFieldName(name)}
+              value={new Intl.NumberFormat().format(
+                this.lookForFieldName(name)
+              )}
               prefix={this.props.prefix}
               suffix={this.props.suffix}
               onChange={e => this.setDataInStore(e.target.value, e.target.name)}
+              onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
             />
             <Text code>
               Between {this.lookForInSliderData(name).min} -{" "}
@@ -111,4 +127,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { setValue })(CardComponent);
+export default connect(mapStateToProps, { checkValue, setValue })(CardComponent);
