@@ -1,12 +1,24 @@
 @import "../scss/palette";
-html, body{background-color: $background-color;}
-.App{
-    background-color: $background-color;
-    margin: 1px !important;
-    height: 100%;
-    position: relative;
-    .column{
-        border: 1px solid $collapse-border;
-        padding: 10px;
+html{
+    min-height: 100%;
+    height: auto;
+    body{
+        position: relative;
+        background-image: url("/images/flag.png");
+        background-repeat: no-repeat;
+        background-position: right bottom;
+        background-color: $background-color;
+        min-height: 100%;
+        height:auto;
+        .App{
+            margin: 1px !important;
+            min-height: 100%;
+            position: relative;
+            .column{
+                border: 1px solid $collapse-border;
+                padding: 10px;
+            }
+        }
     }
+
 }

@@ -102,6 +102,11 @@
                 background-image: none;
                 background-color: $slider-track-bg;
             }
+                &:active{
+                    &:after{
+                    background-color: $red-color !important;
+                }
+            }
         }
     }
     

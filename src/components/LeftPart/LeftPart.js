@@ -61,7 +61,7 @@ class LeftPart extends React.Component {
       <div className="LeftPart">
         <form>
           <Collapse
-            defaultActiveKey={["1"]}
+            defaultActiveKey={[]}
             onChange={callback}
             className="div-wrapper"
           >

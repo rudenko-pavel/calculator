@@ -1,6 +1,6 @@
 @import "./scss/palette";
 #root { 
-    max-widthwidth: 970px;
+    max-width: 970px;
     margin-right: auto;
     margin-left: auto;
     padding-left: 15px;
@@ -133,6 +133,11 @@
     margin: 0px;
     }
 .ant-drawer-content-wrapper{ 
+    .ant-drawer-content{
+        background-image: url("/images/flag.png");
+        background-repeat: no-repeat;
+        background-position: right bottom;
+    }
     width:50% !important;
     .ant-card-body{
         padding: 4px;
