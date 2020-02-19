@@ -1,9 +1,11 @@
 @import "./scss/palette";
-#root { width: 970px;
+#root { 
+    max-widthwidth: 970px;
     margin-right: auto;
     margin-left: auto;
     padding-left: 15px;
-    padding-right: 15px; }
+    padding-right: 15px; 
+}
 .div-wrapper{
     box-shadow: 3px 3px 10px;
     border: 1px solid $collapse-border;
@@ -168,6 +170,6 @@
   }
 
   @media only screen and (max-device-width:767px)   {
-    #root { width: 970px; }
+    #root { max-width: 750px; }
     .ant-drawer-content-wrapper{ width:70% !important}
   }
