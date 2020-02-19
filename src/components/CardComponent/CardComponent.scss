@@ -14,7 +14,29 @@
                 &:nth-child(2){ width: 40% !important; }
                 &:nth-child(3){ width: 60% !important; }
             }
-            .ant-card-grid{ padding: 10px; }
+            .ant-card-grid{ 
+                padding: 10px; 
+                .ant-input{
+                    border: none;
+                    border-bottom: 1px solid $collapse-border;
+                    width: 100%;
+                    font-size: 1.1em;
+                    border-radius: 0px;
+                    outline:none !important;
+                    &:focus {
+                        outline: 0;
+                        box-shadow: none;
+                        border-bottom: 2px solid $red-color;
+                        color: $red-color;
+                        }
+                }
+                .input-helper{
+                    font-size: 0.9375em;
+                    color: $collapse-border;
+                    letter-spacing: 0.0275rem;
+                    margin: 0.125rem 0.875rem;
+                }
+            }
             .ant-input-number{ width: 150px !important; }
         }
     }
@@ -22,7 +44,7 @@
     .ant-slider{
         background: $slider-bg;
         position: relative;
-        height: 20px;
+        height: 10px;
         border-radius: 10px;
         .ant-slider-rail{ display: none;}
         .ant-slider-track{
@@ -41,8 +63,8 @@
 
         .ant-slider-handle{
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             background: $white-color;
             border: 1px solid $grey-color;
             cursor: pointer;
@@ -62,8 +84,8 @@
             &:after{
                 content: "";
                 display: block;
-                width: 18px;
-                height: 18px;
+                width: 12px;
+                height: 12px;
                 margin: auto;
                 position: absolute;
                 top: 0;

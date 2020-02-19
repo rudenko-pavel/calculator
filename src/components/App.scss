@@ -1,7 +1,12 @@
+@import "../scss/palette";
+html, body{background-color: $background-color;}
 .App{
+    background-color: $background-color;
     margin: 1px !important;
+    height: 100%;
+    position: relative;
     .column{
-        border: 1px solid lightgray;
+        border: 1px solid $collapse-border;
         padding: 10px;
     }
 }

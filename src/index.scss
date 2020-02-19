@@ -1,4 +1,62 @@
 @import "./scss/palette";
+#root { width: 970px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px; }
+.div-wrapper{
+    box-shadow: 3px 3px 10px;
+    border: 1px solid $collapse-border;
+    border-radius: 0px;
+    
+    .ant-collapse-header,
+    .ant-card-head{ 
+        text-transform: uppercase;
+        background-color: $header-collapse-bg !important;
+    }
+    .ant-divider{
+        margin: 5px;
+    }
+
+    .ant-collapse-content-box{
+        padding: 0px 2px;
+        .ant-divider{
+            margin: 1px 0 3px 0 !important;
+            &:after, &:before{
+                border-top: 1px solid $slider-default;
+            }
+        }
+        .hint{
+            padding: 5px 15px;
+            display: block;
+            text-align: right;
+            color: $red-color;
+        }
+        .ant-card{
+            border: 0px solid $collapse-border;
+        }
+    }
+}
+
+.selectedData{
+    .ant-card-body{
+        padding: 5px 0;
+        .ant-card-bordered{
+            border: 0px solid $red-color !important;
+        }
+    }
+}
+
+.ant-btn-primary{
+    background-color: $red-color;
+    border-color: $dark-red-color;
+    &:hover,
+    &:focus,
+    &:active{
+        background-color: $dark-red-color;
+        border-color: $dark-red-color;
+    }
+}
 
 .ant-tooltip{
     .ant-tooltip-inner{
@@ -26,26 +84,18 @@
 }
 
 .ant-card-head-title,
-.ant-collapse-header{ text-transform: uppercase; }
+.ant-divider-inner-text{
+    text-transform: capitalize;
+}
 
 .ant-card-body{
     .new-value{
         span{
-            color: $blue-color;
+            color: $red-color;
             &.ant-typography{ display: none !important; }
         }
     }
 
-    .ant-typography{
-        width: 100%;
-        code{
-            width: 100%;
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            padding: 5px;
-        }
-    }
     .ant-btn-circle{ margin: 0 10px 10px 20px; }
     .ant-card-type-inner{ margin: 7px; }
 }
@@ -63,15 +113,22 @@
     width: 40px;
     line-height: 40px;
     border-radius: 4px;
-    background-color: #1088e9;
-    color: #fff;
+    background-color: $red-color;
+    color: $white-color;
     text-align: center;
     font-size: 20px;
+    &:hover,
+    &:focus,
+    &:active{
+        background-color: $dark-red-color;
+        border-color: $dark-red-color;
+    }
   }
   .show-selected-data{
     position: fixed;
-    right: 10px;
+    right: 0px;
     top: 10px;
+    margin: 0px;
     }
 .ant-drawer-content-wrapper{ 
     width:50% !important;
@@ -111,5 +168,6 @@
   }
 
   @media only screen and (max-device-width:767px)   {
+    #root { width: 970px; }
     .ant-drawer-content-wrapper{ width:70% !important}
   }

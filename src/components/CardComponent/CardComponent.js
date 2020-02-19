@@ -4,7 +4,15 @@
 /* eslint-disable react/destructuring-assignment */
 import "./CardComponent.scss";
 
-import { Button, Card, Input, Popover, Slider, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Divider,
+  Input,
+  Popover,
+  Slider,
+  Typography
+} from "antd";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -85,7 +93,8 @@ class CardComponent extends React.Component {
     const name = this.props.nameValue;
     return (
       <div className="CardComponent">
-        <Card title={this.props.title}>
+        <Divider orientation="left">{this.props.title}</Divider>
+        <Card>
           <Card.Grid hoverable={false}>
             <Text type="secondary">{this.props.text}</Text>
           </Card.Grid>
@@ -98,16 +107,18 @@ class CardComponent extends React.Component {
               onChange={e => this.setDataInStore(e.target.value, e.target.name)}
               onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
             />
-            <Text code>
-              Between{" "}
-              {new Intl.NumberFormat().format(
-                this.lookForInSliderData(name).min
-              )}{" "}
-              -{" "}
-              {new Intl.NumberFormat().format(
-                this.lookForInSliderData(name).max
-              )}{" "}
-            </Text>
+            <span className="input-helper">
+              <Text type="secondary">
+                Between{" "}
+                {new Intl.NumberFormat().format(
+                  this.lookForInSliderData(name).min
+                )}{" "}
+                -{" "}
+                {new Intl.NumberFormat().format(
+                  this.lookForInSliderData(name).max
+                )}{" "}
+              </Text>
+            </span>
           </Card.Grid>
           <Card.Grid hoverable={false}>
             <Slider
@@ -131,4 +142,6 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { checkValue, setValue })(CardComponent);
+export default connect(mapStateToProps, { checkValue, setValue })(
+  CardComponent
+);

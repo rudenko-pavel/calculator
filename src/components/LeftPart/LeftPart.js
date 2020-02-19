@@ -60,7 +60,11 @@ class LeftPart extends React.Component {
     return (
       <div className="LeftPart">
         <form>
-          <Collapse defaultActiveKey={["1"]} onChange={callback}>
+          <Collapse
+            defaultActiveKey={["1"]}
+            onChange={callback}
+            className="div-wrapper"
+          >
             <Panel header="general data" key="1">
               <CardComponent
                 title="Rent"
@@ -86,7 +90,7 @@ class LeftPart extends React.Component {
               />
             </Panel>
             <Panel header="mortgage details" key="2">
-              <Text>
+              <Text className="hint">
                 Imagine a scenario where you are buying a house and indicate the
                 characteristics of your mortgage.
               </Text>
@@ -106,7 +110,7 @@ class LeftPart extends React.Component {
               />
             </Panel>
             <Panel header="taxes and basic costs" key="3">
-              <Text>
+              <Text className="hint">
                 Buying a home comes with some expenses that should be expected.
               </Text>
               <CardComponent
@@ -126,7 +130,7 @@ class LeftPart extends React.Component {
               />
             </Panel>
             <Panel header="closing costs" key="4">
-              <Text>
+              <Text className="hint">
                 Closing costs are the initial charge you have to pay when you
                 buy or sell a home.
               </Text>
@@ -146,7 +150,7 @@ class LeftPart extends React.Component {
               />
             </Panel>
             <Panel header="maintenance costs" key="5">
-              <Text>
+              <Text className="hint">
                 When buying a house, you have to think about its maintenance.
                 It’s best to set an amount aside for maintenance related costs.
               </Text>
@@ -193,7 +197,7 @@ class LeftPart extends React.Component {
               />
             </Panel>
             <Panel header="market trends" key="6">
-              <Text>
+              <Text className="hint">
                 The value of a property changes over time, following market
                 trends.
               </Text>

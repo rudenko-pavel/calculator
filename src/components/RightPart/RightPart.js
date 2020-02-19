@@ -80,7 +80,7 @@ class RightPart extends React.Component {
 
     return (
       <div className="RightPart">
-        <Card title="monthly payments" className="table-money">
+        <Card title="monthly payments" className="table-money div-wrapper">
           <Row>
             <Col span={10}>&nbsp;</Col>
             <Col span={7}>RENT</Col>
@@ -126,17 +126,19 @@ class RightPart extends React.Component {
           onClose={this.onClose}
           visible={this.state.visible}
         >
-          <Card title="selected data" className="selectedData">
+          <Card title="selected data" className="selectedData div-wrapper">
             <Row>
               <Col lg={12} md={24}>
-                <Card type="inner" title="general data">
+                <Divider orientation="left">general data</Divider>
+                <Card type="inner">
                   {this.showCard("Rent", { rentValue }, "$", "")}
                   {this.showCard("Property Value", { propertyValue }, "$", "")}
                   {this.showCard("Down Payment", { downPaymentValue }, "$", "")}
                 </Card>
               </Col>
               <Col lg={12} md={24}>
-                <Card type="inner" title="mortgage details">
+                <Divider orientation="left">mortgage details</Divider>
+                <Card type="inner">
                   {this.showCard(
                     "Amortization",
                     { amortizationValue },
@@ -154,7 +156,8 @@ class RightPart extends React.Component {
             </Row>
             <Row>
               <Col lg={12} md={24}>
-                <Card type="inner" title="taxes and basic costs">
+                <Divider orientation="left">taxes and basic costs</Divider>
+                <Card type="inner">
                   {this.showCard(
                     "Amount of annual municipal and school taxes",
                     { annualTaxesValue },
@@ -170,7 +173,8 @@ class RightPart extends React.Component {
                 </Card>
               </Col>
               <Col lg={12} md={24}>
-                <Card type="inner" title="closing costs">
+                <Divider orientation="left">closing costs</Divider>
+                <Card type="inner">
                   {this.showCard(
                     "Costs of buying a home",
                     { buyingHomeValue },
@@ -188,7 +192,8 @@ class RightPart extends React.Component {
             </Row>
             <Row>
               <Col lg={12} md={24}>
-                <Card type="inner" title="maintenance costs">
+                <Divider orientation="left">maintenance costs</Divider>
+                <Card type="inner">
                   {this.showCard(
                     "Maintenance and renovation",
                     { maintenanceValue },
@@ -216,7 +221,8 @@ class RightPart extends React.Component {
                 </Card>
               </Col>
               <Col lg={12} md={24}>
-                <Card type="inner" title="market trends">
+                <Divider orientation="left">market trends</Divider>
+                <Card type="inner">
                   {this.showCard(
                     "Property rate of growth",
                     { rateOfGrowthValue },
