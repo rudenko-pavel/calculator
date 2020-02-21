@@ -19,23 +19,6 @@ import { connect } from "react-redux";
 import { checkValue, setValue } from "../../actions";
 
 class CardComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      popover: {
-        downPaymentValue: {
-          text:
-            "<div>The minimum downpayment is based on property value: <li>5% of the first $500k</li><li>10% of the remainder if less than $1M</li><li>A property over 1 million requires a 20% downpayment</li></div>"
-        },
-        annualTaxesValue: {
-          text:
-            "<div><p>These amounts are determined by your municipality, according to the value of the property.</p><p>School taxes are only applicable in Quebec.</p></div>"
-        }
-      }
-    };
-  }
-
   setDataInStore = (e, name) => {
     let receiveValue;
     const newValue = parseFloat(e);
@@ -54,9 +37,14 @@ class CardComponent extends React.Component {
 
   lookForFieldName = name => {
     let fieldValue = "";
-    for (const [key, value] of Object.entries(this.props.state)) {
-      if (`${key}` === name) {
-        fieldValue = value;
+    if (typeof this.props.betweenValues === "number") {
+      fieldValue = this.props.betweenValues * 0.05;
+      this.props.setValue(name, fieldValue);
+    } else {
+      for (const [key, value] of Object.entries(this.props.state)) {
+        if (`${key}` === name) {
+          fieldValue = value;
+        }
       }
     }
     return fieldValue;
@@ -64,13 +52,23 @@ class CardComponent extends React.Component {
 
   lookForInSliderData = name => {
     const result = [];
-    for (const [key, value] of Object.entries(this.props.state.sliderData)) {
-      if (`${key}` === name) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key2, value2] of Object.entries(value)) {
-          result[`${key2}`] = value2;
+    if (typeof this.props.betweenValues === "number") {
+      result.min = this.props.betweenValues * 0.05;
+      result.max = this.props.betweenValues;
+      result.step = this.props.state.sliderData[name].step;
+      result.proc = new Intl.NumberFormat("en-EN", { style: "percent" }).format(
+        this.props.state[name] / this.props.betweenValues
+      );
+    } else {
+      for (const [key, value] of Object.entries(this.props.state.sliderData)) {
+        if (`${key}` === name) {
+          // eslint-disable-next-line no-restricted-syntax
+          for (const [key2, value2] of Object.entries(value)) {
+            result[`${key2}`] = value2;
+          }
         }
       }
+      result.proc = "";
     }
     return result;
   };
@@ -101,7 +99,7 @@ class CardComponent extends React.Component {
           <Card.Grid hoverable={false}>
             <Input
               name={name}
-              value={this.lookForFieldName(name)}
+              value={[this.lookForFieldName(name)]}
               prefix={this.props.prefix}
               suffix={this.props.suffix}
               onChange={e => this.setDataInStore(e.target.value, e.target.name)}
@@ -109,18 +107,14 @@ class CardComponent extends React.Component {
             />
             <span className="input-helper">
               <Text type="secondary">
-                Between{" "}
-                {new Intl.NumberFormat().format(
-                  this.lookForInSliderData(name).min
-                )}{" "}
-                -{" "}
-                {new Intl.NumberFormat().format(
-                  this.lookForInSliderData(name).max
-                )}{" "}
+                {this.lookForInSliderData(name).proc}
               </Text>
             </span>
           </Card.Grid>
           <Card.Grid hoverable={false}>
+            <span className="minSlider slider-values">
+              {this.lookForInSliderData(name).min}
+            </span>
             <Slider
               min={this.lookForInSliderData(name).min}
               max={this.lookForInSliderData(name).max}
@@ -128,6 +122,9 @@ class CardComponent extends React.Component {
               onChange={v => this.setDataInStore(v, name)}
               value={this.lookForFieldName(name)}
             />
+            <span className="maxSlider slider-values">
+              {this.lookForInSliderData(name).max}
+            </span>
             {this.showPopover()}
           </Card.Grid>
         </Card>

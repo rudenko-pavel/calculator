@@ -18,34 +18,102 @@ class LeftPart extends React.Component {
       // eslint-disable-next-line react/no-unused-state
       popover: {
         downPaymentValue: {
-          text: (
-            <div>
-              The minimum downpayment is based on property value:{" "}
-              <li>5% of the first $500k</li>
-              <li>10% of the remainder if less than $1M</li>
-              <li>A property over 1 million requires a 20% downpayment</li>
-            </div>
-          )
+          conditions: true,
+          response: [
+            {
+              condition: 0,
+              text: (
+                <div>
+                  The minimum downpayment is based on property value:{" "}
+                  <li>5% of the first $500k</li>
+                  <li>10% of the remainder if less than $1M</li>
+                  <li>A property over 1 million requires a 20% downpayment</li>
+                </div>
+              )
+            },
+            {
+              condition: 1,
+              text: (
+                <div>
+                  Your down payment should represent at least 5% of the value of
+                  the property when it does not exceed $250,000.
+                </div>
+              )
+            },
+            {
+              condition: 2,
+              text: (
+                <div>
+                  Your down payment should represent 5% of the first $500k + 10%
+                  of the remainder when it surpasses $500,000 but does not
+                  exceed $1,000,000.
+                </div>
+              )
+            },
+            {
+              condition: 3,
+              text: (
+                <div>
+                  Your down payment should represent 20% of the value of the
+                  property when it exceeds $1,000,000.
+                </div>
+              )
+            }
+          ]
         },
         annualTaxesValue: {
-          text: (
-            <div>
-              <p>
-                These amounts are determined by your municipality, according to
-                the value of the property.
-              </p>
-              <p>School taxes are only applicable in Quebec.</p>
-            </div>
-          )
+          conditions: false,
+          response: {
+            text: (
+              <div>
+                <p>
+                  These amounts are determined by your municipality, according
+                  to the value of the property.
+                </p>
+                <p>School taxes are only applicable in Quebec.</p>
+              </div>
+            )
+          }
         }
       }
     };
   }
 
-  returnPopover = name => {
+  downPaymentValueCondition = value => {
+    let result = 0;
+    switch (true) {
+      case value < 250001:
+        result = 0;
+        break;
+      case value > 250000 && value < 500001:
+        result = 1;
+        break;
+      case value > 500000 && value < 1000001:
+        result = 2;
+        break;
+      case value > 1000000:
+        result = 3;
+        break;
+      default:
+        result = 0;
+    }
+    return result;
+  };
+
+  returnPopover = (name, condition) => {
+    let txt = "";
     if (this.state.popover.hasOwnProperty(name)) {
-      const txt = this.state.popover[name];
-      return txt.text;
+      if (this.state.popover[name].conditions === false)
+        txt = this.state.popover[name].response.text;
+      else {
+        for (const [key, value] of Object.entries(this.state.popover[name].response)) {
+          const parseFloatKey = parseFloat(key);
+          if (parseFloatKey === condition) {
+            txt = value.text;
+          }
+        }
+      }
+      return txt;
     }
   };
 
@@ -86,7 +154,11 @@ class LeftPart extends React.Component {
                 nameValue="downPaymentValue"
                 prefix="$"
                 suffix=""
-                popover={this.returnPopover("downPaymentValue")}
+                popover={this.returnPopover(
+                  "downPaymentValue",
+                  this.downPaymentValueCondition(this.props.state.propertyValue)
+                )}
+                betweenValues={this.props.state.propertyValue}
               />
             </Panel>
             <Panel header="mortgage details" key="2">
