@@ -26,7 +26,7 @@ export const initialState = {
   sliderData: {
     rentValue: { min: 400, max: 3900, step: 50 },
     propertyValue: { min: 40000, max: 3900000, step: 10000 },
-    downPaymentValue: { min: 240, max: 600, step: 100 },
+    downPaymentValue: { min: 200, max: 600, step: 100 },
     amortizationValue: { min: 2, max: 9, step: 1 },
     mortgageRateValue: { min: 1, max: 9, step: 0.1 },
     annualTaxesValue: { min: 0, max: 1000, step: 100 },

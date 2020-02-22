@@ -58,7 +58,7 @@ class RightPart extends React.Component {
   };
 
   render() {
-    console.log("DDDD",initialState)
+    //console.log("DDDD",initialState)
     const { state } = this.props;
     const {
       amortizationValue,

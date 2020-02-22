@@ -106,12 +106,7 @@ class LeftPart extends React.Component {
       if (this.state.popover[name].conditions === false)
         txt = this.state.popover[name].response.text;
       else {
-        for (const [key, value] of Object.entries(this.state.popover[name].response)) {
-          const parseFloatKey = parseFloat(key);
-          if (parseFloatKey === condition) {
-            txt = value.text;
-          }
-        }
+        txt = this.state.popover[name].response[condition].text;
       }
       return txt;
     }
@@ -147,6 +142,7 @@ class LeftPart extends React.Component {
                 nameValue="propertyValue"
                 prefix="$"
                 suffix=""
+                dependencies="downPaymentValue"
               />
               <CardComponent
                 title="Down Payment"
@@ -158,7 +154,6 @@ class LeftPart extends React.Component {
                   "downPaymentValue",
                   this.downPaymentValueCondition(this.props.state.propertyValue)
                 )}
-                betweenValues={this.props.state.propertyValue}
               />
             </Panel>
             <Panel header="mortgage details" key="2">

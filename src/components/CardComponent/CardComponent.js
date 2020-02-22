@@ -36,40 +36,34 @@ class CardComponent extends React.Component {
   };
 
   lookForFieldName = name => {
+    //console.log("lookForFieldName() ", name, this.props.dependencies, this.props.state[this.props.dependencies]);
     let fieldValue = "";
-    if (typeof this.props.betweenValues === "number") {
-      fieldValue = this.props.betweenValues * 0.05;
-      this.props.setValue(name, fieldValue);
-    } else {
-      for (const [key, value] of Object.entries(this.props.state)) {
-        if (`${key}` === name) {
-          fieldValue = value;
-        }
+    for (const [key, value] of Object.entries(this.props.state)) {
+      if (`${key}` === name) {
+        fieldValue = value;
       }
+    }
+    const dependValue = this.props.state[name] * 0.05;
+    if (typeof(this.props.dependencies) === "string" && this.props.state.sliderData[this.props.dependencies].min !== dependValue) {
+ //     console.log (this.props.state.sliderData[this.props.dependencies].min,dependValue)
+   //   console.log (this.props.state.sliderData[this.props.dependencies].min,this.props.state.sliderData[this.props.dependencies].max)
+      console.log ("---")
+  //    this.props.setValue(this.props.state.sliderData[this.props.dependencies].min, dependValue);
     }
     return fieldValue;
   };
 
   lookForInSliderData = name => {
     const result = [];
-    if (typeof this.props.betweenValues === "number") {
-      result.min = this.props.betweenValues * 0.05;
-      result.max = this.props.betweenValues;
-      result.step = this.props.state.sliderData[name].step;
-      result.proc = new Intl.NumberFormat("en-EN", { style: "percent" }).format(
-        this.props.state[name] / this.props.betweenValues
-      );
-    } else {
-      for (const [key, value] of Object.entries(this.props.state.sliderData)) {
-        if (`${key}` === name) {
-          // eslint-disable-next-line no-restricted-syntax
-          for (const [key2, value2] of Object.entries(value)) {
-            result[`${key2}`] = value2;
-          }
+    for (const [key, value] of Object.entries(this.props.state.sliderData)) {
+      if (`${key}` === name) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [key2, value2] of Object.entries(value)) {
+          result[`${key2}`] = value2;
         }
       }
-      result.proc = "";
     }
+    result.proc = "";
     return result;
   };
 
