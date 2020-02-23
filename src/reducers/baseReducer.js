@@ -8,38 +8,21 @@ import {
 } from "../actions/types";
 
 export const initialState = {
-  amortizationValue: 3,
-  downPaymentValue: 300,
-  mortgageRateValue: 2,
-  propertyValue: 200000,
-  rentValue: 1000,
-  annualTaxesValue: 555,
-  heatingCostsValue: 777,
-  buyingHomeValue: 650,
-  sellingHomeValue: 5555,
-  maintenanceValue: 1,
-  ownerInsuranceValue: 0.41,
-  rentersInsuranceValue: 300,
-  rentMonthlyCostsValue: 250,
-  rateOfGrowthValue: 1.9,
-  returnInvestmentValue: 3.45,
-  sliderData: {
-    rentValue: { min: 400, max: 3900, step: 50 },
-    propertyValue: { min: 40000, max: 3900000, step: 10000 },
-    downPaymentValue: { min: 200, max: 600, step: 100 },
-    amortizationValue: { min: 2, max: 9, step: 1 },
-    mortgageRateValue: { min: 1, max: 9, step: 0.1 },
-    annualTaxesValue: { min: 0, max: 1000, step: 100 },
-    heatingCostsValue: { min: 0, max: 10000, step: 100 },
-    buyingHomeValue: { min: 0, max: 10000, step: 100 },
-    sellingHomeValue: { min: 0, max: 24000, step: 100 },
-    maintenanceValue: { min: 0, max: 5, step: 0.1 },
-    ownerInsuranceValue: { min: 0, max: 2, step: 0.1 },
-    rentersInsuranceValue: { min: 0, max: 1000, step: 50 },
-    rentMonthlyCostsValue: { min: 0, max: 1000, step: 50 },
-    rateOfGrowthValue: { min: 0, max: 5, step: 0.1 },
-    returnInvestmentValue: { min: 0, max: 10, step: 0.1 }
-  },
+  rentValue: { val: 1000, min: 500, max: 4000, step: 50 },
+  propertyValue: { val: 50000, min: 50000, max: 2000000, step: 10000 },
+  downPaymentValue: { val: 2500, min: 2500, max: 50000, step: 10 },
+  amortizationValue: { val: 25, min: 1, max: 25, step: 1 },
+  mortgageRateValue: { val: 2, min: 1, max: 8, step: 0.1 },
+  amountAnnualTaxesValue: { val: 500, min: 0, max: 2000, step: 10 },
+  annualHeatingCostsValue: { val: 500, min: 0, max: 2000, step: 10 },
+  buyingHomeValue: { val: 1000, min: 0, max: 2000, step: 10 },
+  sellingHomeValue: { val: 2000, min: 0, max: 5000, step: 10 },
+  maintenanceValue: { val: 1, min: 0, max: 5, step: 0.1 },
+  ownerInsuranceValue: { val: 0.1, min: 0, max: 2, step: 0.1 },
+  rentersInsuranceValue: { val: 250, min: 0, max: 1000, step: 50 },
+  rentMonthlyCostsValue: { val: 300, min: 0, max: 1000, step: 10 },
+  rateOfGrowthValue: { val: 2, min: 0, max: 5, step: 0.1 },
+  returnInvestmentValue: { val: 4, min: 0, max: 10, step: 0.1 },
   defaultValues: {}
 };
 
@@ -48,9 +31,25 @@ export default (state = initialState, action) => {
   switch (action.type) {
     // see to `src/actions/index.js`
     case SET_VALUE:
-      return { ...state, [action.payload.value_name]: action.payload.value };
+      let result = "";
+      if (typeof action.payload.additional_option_name !== "string") {
+        const changingVal = action.payload.value_name;
+        const newState = { ...state[changingVal], val: action.payload.value };
+        result = { ...state, [changingVal]: newState };
+      } else {
+        const changingVal = action.payload.value_name;
+        const addOption = action.payload.additional_option_name;
+        const newState = {
+          ...state[changingVal],
+          [addOption]: action.payload.value
+        };
+        result = { ...state, [changingVal]: newState };
+      }
+      return result;
     case CHECK_VALUE:
-      return { ...state, [action.payload.value_name]: action.payload.value };
+      const changingVal = action.payload.value_name;
+      const newState = { ...state[changingVal], val: action.payload.value };
+      return { ...state, [changingVal]: newState };
     case RESET_VALUES:
       let newUpdateProps = {};
       if (action.payload.length > 0) {

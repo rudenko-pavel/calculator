@@ -61,7 +61,7 @@ class LeftPart extends React.Component {
             }
           ]
         },
-        annualTaxesValue: {
+        amountAnnualTaxesValue: {
           conditions: false,
           response: {
             text: (
@@ -82,16 +82,16 @@ class LeftPart extends React.Component {
   downPaymentValueCondition = value => {
     let result = 0;
     switch (true) {
-      case value < 250001:
+      case value.val < 250001:
         result = 0;
         break;
-      case value > 250000 && value < 500001:
+      case value.val > 250000 && value.val < 500001:
         result = 1;
         break;
-      case value > 500000 && value < 1000001:
+      case value.val > 500000 && value.val < 1000001:
         result = 2;
         break;
-      case value > 1000000:
+      case value.val > 1000000:
         result = 3;
         break;
       default:
@@ -142,7 +142,14 @@ class LeftPart extends React.Component {
                 nameValue="propertyValue"
                 prefix="$"
                 suffix=""
-                dependencies="downPaymentValue"
+                dependencies={[
+                  "downPaymentValue",
+                  "amountAnnualTaxesValue",
+                  "annualHeatingCostsValue",
+                  "buyingHomeValue",
+                  "sellingHomeValue"
+                ]}
+                downPaymentValueCondition={this.downPaymentValueCondition}
               />
               <CardComponent
                 title="Down Payment"
@@ -183,15 +190,15 @@ class LeftPart extends React.Component {
               <CardComponent
                 title="Amount of annual municipal and school taxes."
                 text=" "
-                nameValue="annualTaxesValue"
+                nameValue="amountAnnualTaxesValue"
                 prefix="$"
                 suffix=""
-                popover={this.returnPopover("annualTaxesValue")}
+                popover={this.returnPopover("amountAnnualTaxesValue")}
               />
               <CardComponent
                 title="Annual heating costs"
                 text=" "
-                nameValue="heatingCostsValue"
+                nameValue="annualHeatingCostsValue"
                 prefix="$"
                 suffix=""
               />

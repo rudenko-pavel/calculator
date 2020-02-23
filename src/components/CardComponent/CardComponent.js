@@ -28,34 +28,90 @@ class CardComponent extends React.Component {
     } else {
       receiveValue = 0;
     }
+    if (typeof this.props.dependencies === "object") {
+      const { props } = this;
+      props.dependencies.forEach(function(entry) {
+        let newValueMin;
+        const eObject = { val: e };
+        const ratio = props.downPaymentValueCondition(eObject);
+        switch (entry) {
+          case "downPaymentValue":
+            switch (ratio) {
+              case 0:
+              case 1:
+                newValueMin = e * 0.05;
+                break;
+              case 2:
+                newValueMin = 500000 * 0.05 + (e - 500000) * 0.1;
+                break;
+              case 3:
+                newValueMin = e * 0.2;
+                break;
+              default:
+                newValueMin = 0;
+            }
+            for (const [key] of Object.entries(props.state)) {
+              if (`${key}` === entry) {
+                if (isNaN(newValue) === true) {
+                  props.setValue(key, 0, "min");
+                  props.setValue(key, 0, "max");
+                } else {
+                  props.setValue(key, newValueMin, "min");
+                  props.setValue(key, newValue, "max");
+                }
+                break;
+              }
+            }
+            console.log("Excellent", entry);
+            break;
+          case "amountAnnualTaxesValue":
+          case "buyingHomeValue":
+          case "annualHeatingCostsValue":
+            for (const [key] of Object.entries(props.state)) {
+              if (`${key}` === entry) {
+                if (isNaN(newValue) === true) props.setValue(key, 0, "max");
+                else props.setValue(key, newValue * 0.04, "max");
+                break;
+              }
+            }
+            console.log("Excellent", entry);
+            break;
+          case "sellingHomeValue":
+            for (const [key] of Object.entries(props.state)) {
+              if (`${key}` === entry) {
+                if (isNaN(newValue) === true) props.setValue(key, 0, "max");
+                props.setValue(key, newValue * 0.1, "max");
+                break;
+              }
+            }
+            console.log("Excellent", entry);
+            break;
+          default:
+            console.log("Invalid choice");
+            break;
+        }
+      });
+    }
     this.props.setValue(name, receiveValue);
   };
 
   checkDataInStore = (e, name) => {
-    this.props.checkValue(name, e, this.props.state.sliderData);
+    this.props.checkValue(name, e, this.props.state);
   };
 
   lookForFieldName = name => {
-    //console.log("lookForFieldName() ", name, this.props.dependencies, this.props.state[this.props.dependencies]);
     let fieldValue = "";
     for (const [key, value] of Object.entries(this.props.state)) {
       if (`${key}` === name) {
-        fieldValue = value;
+        fieldValue = value.val;
       }
-    }
-    const dependValue = this.props.state[name] * 0.05;
-    if (typeof(this.props.dependencies) === "string" && this.props.state.sliderData[this.props.dependencies].min !== dependValue) {
- //     console.log (this.props.state.sliderData[this.props.dependencies].min,dependValue)
-   //   console.log (this.props.state.sliderData[this.props.dependencies].min,this.props.state.sliderData[this.props.dependencies].max)
-      console.log ("---")
-  //    this.props.setValue(this.props.state.sliderData[this.props.dependencies].min, dependValue);
     }
     return fieldValue;
   };
 
-  lookForInSliderData = name => {
+  lookForOptions = name => {
     const result = [];
-    for (const [key, value] of Object.entries(this.props.state.sliderData)) {
+    for (const [key, value] of Object.entries(this.props.state)) {
       if (`${key}` === name) {
         // eslint-disable-next-line no-restricted-syntax
         for (const [key2, value2] of Object.entries(value)) {
@@ -100,26 +156,24 @@ class CardComponent extends React.Component {
               onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
             />
             <span className="input-helper">
-              <Text type="secondary">
-                {this.lookForInSliderData(name).proc}
-              </Text>
+              <Text type="secondary">??{this.lookForOptions(name).proc}</Text>
             </span>
+            {this.showPopover()}
           </Card.Grid>
           <Card.Grid hoverable={false}>
             <span className="minSlider slider-values">
-              {this.lookForInSliderData(name).min}
+              {this.lookForOptions(name).min}
             </span>
             <Slider
-              min={this.lookForInSliderData(name).min}
-              max={this.lookForInSliderData(name).max}
-              step={this.lookForInSliderData(name).step}
+              min={this.lookForOptions(name).min}
+              max={this.lookForOptions(name).max}
+              step={this.lookForOptions(name).step}
               onChange={v => this.setDataInStore(v, name)}
               value={this.lookForFieldName(name)}
             />
             <span className="maxSlider slider-values">
-              {this.lookForInSliderData(name).max}
+              {this.lookForOptions(name).max}
             </span>
-            {this.showPopover()}
           </Card.Grid>
         </Card>
       </div>

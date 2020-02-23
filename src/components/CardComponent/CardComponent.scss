@@ -44,6 +44,11 @@
                     &.minSlider {left: 15px;}
                     &.maxSlider {right: 15px;}
                 }
+                button{
+                    position: absolute;
+                    right: 0;
+                    bottom: -10px;
+                }
             }
             .ant-input-number{ width: 150px !important; }
         }

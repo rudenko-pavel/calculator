@@ -45,7 +45,7 @@ class RightPart extends React.Component {
 
   showCard = (name, value, preffix, suffix) => {
     const { Text } = Typography;
-    const valueV = Object.entries(value)[0][1];
+    const valueV = Object.entries(value)[0][1].val;
     return (
       <div className={this.comparisonValues(value)}>
         {name}:{" "}
@@ -58,7 +58,7 @@ class RightPart extends React.Component {
   };
 
   render() {
-    //console.log("DDDD",initialState)
+    // console.log("initialState: ",initialState)
     const { state } = this.props;
     const {
       amortizationValue,
@@ -66,8 +66,8 @@ class RightPart extends React.Component {
       rentValue,
       propertyValue,
       downPaymentValue,
-      annualTaxesValue,
-      heatingCostsValue,
+      amountAnnualTaxesValue,
+      annualHeatingCostsValue,
       buyingHomeValue,
       sellingHomeValue,
       maintenanceValue,
@@ -88,7 +88,7 @@ class RightPart extends React.Component {
           </Row>
           <Row>
             <Col span={10}>Rent or Mortgage</Col>
-            <Col span={7}>{new Intl.NumberFormat().format(rentValue)}</Col>
+            <Col span={7}>{new Intl.NumberFormat().format(rentValue.val)}</Col>
             <Col span={7}>col-8</Col>
           </Row>
           <Row>
@@ -160,13 +160,13 @@ class RightPart extends React.Component {
                 <Card type="inner">
                   {this.showCard(
                     "Amount of annual municipal and school taxes",
-                    { annualTaxesValue },
+                    { amountAnnualTaxesValue },
                     "$",
                     ""
                   )}
                   {this.showCard(
                     "Annual heating costs",
-                    { heatingCostsValue },
+                    { annualHeatingCostsValue },
                     "$",
                     ""
                   )}

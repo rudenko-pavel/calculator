@@ -125,13 +125,13 @@ export const setReturnInvestment = value => {
   };
 };
 
-export const checkValue = (value_name, value, dataSlider) => {
+export const checkValue = (value_name, value, state) => {
   let newValue = parseFloat(value);
   const reg = /^-?[0-9]*(\.[0-9]*)?$/;
   // eslint-disable-next-line no-restricted-globals
   if ((!isNaN(newValue) && reg.test(newValue)) || newValue === "") {
     // eslint-disable-next-line no-restricted-syntax
-    for (const [key, val] of Object.entries(dataSlider)) {
+    for (const [key, val] of Object.entries(state)) {
       if (`${key}` === value_name) {
         if (newValue < `${val.min}`) newValue = `${val.min}`;
         else if (newValue > `${val.max}`) newValue = `${val.max}`;
@@ -150,13 +150,15 @@ export const checkValue = (value_name, value, dataSlider) => {
   };
 };
 
-export const setValue = (value_name, value) => {
+export const setValue = (value_name, value, additional_option_name) => {
+  // console.log("setValue(): ",value_name, additional_option_name )
   // logic here
   return {
     type: SET_VALUE,
     payload: {
       value_name,
-      value
+      value,
+      additional_option_name
     }
   };
 };
