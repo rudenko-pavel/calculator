@@ -52,9 +52,20 @@ class CardComponent extends React.Component {
             }
             for (const [key] of Object.entries(props.state)) {
               if (`${key}` === entry) {
-                if (isNaN(newValue) === true) {
-                  props.setValue(key, 0, "min");
-                  props.setValue(key, 0, "max");
+                if (
+                  receiveValue < props.state[name].min ||
+                  receiveValue > props.state[name].max
+                ) {
+                  if (receiveValue < props.state[name].min) {
+                    props.setValue(key, props.state[name].min * 0.05, "min");
+                    props.setValue(key, props.state[name].min, "max");
+                    props.setValue(key, props.state[name].min * 0.05);
+                  }
+                  if (receiveValue > props.state[name].max) {
+                    props.setValue(key, props.state[name].max * 0.2, "min");
+                    props.setValue(key, props.state[name].max, "max");
+                    props.setValue(key, props.state[name].max);
+                  }
                 } else {
                   props.setValue(key, newValueMin, "min");
                   props.setValue(key, newValue, "max");
@@ -69,8 +80,21 @@ class CardComponent extends React.Component {
           case "annualHeatingCostsValue":
             for (const [key] of Object.entries(props.state)) {
               if (`${key}` === entry) {
-                if (isNaN(newValue) === true) props.setValue(key, 0, "max");
-                else props.setValue(key, newValue * 0.04, "max");
+                if (
+                  receiveValue < props.state[name].min ||
+                  receiveValue > props.state[name].max
+                ) {
+                  if (receiveValue < props.state[name].min) {
+                    props.setValue(key, props.state[name].min * 0.04, "max");
+                    props.setValue(key, 0);
+                  }
+                  if (receiveValue > props.state[name].max) {
+                    props.setValue(key, props.state[name].max * 0.04, "max");
+                    props.setValue(key, props.state[name].max * 0.04);
+                  }
+                } else {
+                  props.setValue(key, receiveValue * 0.04, "max");
+                }
                 break;
               }
             }
@@ -79,8 +103,21 @@ class CardComponent extends React.Component {
           case "sellingHomeValue":
             for (const [key] of Object.entries(props.state)) {
               if (`${key}` === entry) {
-                if (isNaN(newValue) === true) props.setValue(key, 0, "max");
-                props.setValue(key, newValue * 0.1, "max");
+                if (
+                  receiveValue < props.state[name].min ||
+                  receiveValue > props.state[name].max
+                ) {
+                  if (receiveValue < props.state[name].min) {
+                    props.setValue(key, props.state[name].min * 0.1, "max");
+                    props.setValue(key, 0);
+                  }
+                  if (receiveValue > props.state[name].max) {
+                    props.setValue(key, props.state[name].max * 0.1, "max");
+                    props.setValue(key, props.state[name].max * 0.1);
+                  }
+                } else {
+                  props.setValue(key, receiveValue * 0.1, "max");
+                }
                 break;
               }
             }
@@ -109,17 +146,71 @@ class CardComponent extends React.Component {
     return fieldValue;
   };
 
-  lookForOptions = name => {
+  lookForOptions = (name, fullValue) => {
+    console.log(name, this.props.state.propertyValue.min)
     const result = [];
     for (const [key, value] of Object.entries(this.props.state)) {
       if (`${key}` === name) {
         // eslint-disable-next-line no-restricted-syntax
         for (const [key2, value2] of Object.entries(value)) {
           result[`${key2}`] = value2;
+          if (fullValue > 0 && key2 === "val") {
+            switch (name) {
+              case "maintenanceValue":
+              case "ownerInsuranceValue":
+
+
+
+
+                if (
+                  fullValue < this.props.state.propertyValue.min ||
+                  fullValue > this.props.state.propertyValue.max
+                ) {
+                  if (fullValue < this.props.state.propertyValue.min) {
+                    result.proc = `$${new Intl.NumberFormat("en-EN", {
+                      maximumFractionDigits: 2
+                    }).format((value2 / 100) * this.props.state.propertyValue.min)} first year`;
+                  }
+                  if (fullValue > this.props.state.propertyValue.max){
+                    result.proc = `$${new Intl.NumberFormat("en-EN", {
+                      maximumFractionDigits: 2
+                    }).format((value2 / 100) * this.props.state.propertyValue.max)} first year`;
+                  }
+                } else {
+                  result.proc = `$${new Intl.NumberFormat("en-EN", {
+                    maximumFractionDigits: 2
+                  }).format((value2 / 100) * fullValue)} first year`;
+                }
+
+                break;
+              default:
+                if (
+                  fullValue < this.props.state.propertyValue.min ||
+                  fullValue > this.props.state.propertyValue.max
+                ) {
+                  if (fullValue < this.props.state.propertyValue.min) {
+                    result.proc = new Intl.NumberFormat("en-EN", {
+                      style: "percent",
+                      maximumFractionDigits: 2
+                    }).format(value2 / this.props.state.propertyValue.min);
+                  }
+                  if (fullValue > this.props.state.propertyValue.max){
+                    result.proc = new Intl.NumberFormat("en-EN", {
+                      style: "percent",
+                      maximumFractionDigits: 2
+                    }).format(value2 / this.props.state.propertyValue.max);
+                  }
+                } else {
+                  result.proc = new Intl.NumberFormat("en-EN", {
+                    style: "percent",
+                    maximumFractionDigits: 2
+                  }).format(value2 / fullValue);
+                }
+            }
+          }
         }
       }
     }
-    result.proc = "";
     return result;
   };
 
@@ -156,7 +247,9 @@ class CardComponent extends React.Component {
               onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
             />
             <span className="input-helper">
-              <Text type="secondary">??{this.lookForOptions(name).proc}</Text>
+              <Text type="secondary">
+                {this.lookForOptions(name, this.props.isProc).proc}
+              </Text>
             </span>
             {this.showPopover()}
           </Card.Grid>

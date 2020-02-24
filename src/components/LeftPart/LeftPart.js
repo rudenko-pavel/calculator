@@ -161,6 +161,7 @@ class LeftPart extends React.Component {
                   "downPaymentValue",
                   this.downPaymentValueCondition(this.props.state.propertyValue)
                 )}
+                isProc={this.props.state.propertyValue.val}
               />
             </Panel>
             <Panel header="mortgage details" key="2">
@@ -194,6 +195,7 @@ class LeftPart extends React.Component {
                 prefix="$"
                 suffix=""
                 popover={this.returnPopover("amountAnnualTaxesValue")}
+                isProc={this.props.state.propertyValue.val}
               />
               <CardComponent
                 title="Annual heating costs"
@@ -201,6 +203,7 @@ class LeftPart extends React.Component {
                 nameValue="annualHeatingCostsValue"
                 prefix="$"
                 suffix=""
+                isProc={this.props.state.propertyValue.val}
               />
             </Panel>
             <Panel header="closing costs" key="4">
@@ -214,6 +217,7 @@ class LeftPart extends React.Component {
                 nameValue="buyingHomeValue"
                 prefix="$"
                 suffix=""
+                isProc={this.props.state.propertyValue.val}
               />
               <CardComponent
                 title="Costs of selling a home"
@@ -221,6 +225,7 @@ class LeftPart extends React.Component {
                 nameValue="sellingHomeValue"
                 prefix="$"
                 suffix=""
+                isProc={this.props.state.propertyValue.val}
               />
             </Panel>
             <Panel header="maintenance costs" key="5">
@@ -247,6 +252,7 @@ class LeftPart extends React.Component {
                 nameValue="maintenanceValue"
                 prefix=""
                 suffix="%"
+                isProc={this.props.state.propertyValue.val}
               />
               <CardComponent
                 title="Annual homeowner's insurance"
@@ -254,6 +260,7 @@ class LeftPart extends React.Component {
                 nameValue="ownerInsuranceValue"
                 prefix=""
                 suffix="%"
+                isProc={this.props.state.propertyValue.val}
               />
               <CardComponent
                 title="Renter's insurance"
