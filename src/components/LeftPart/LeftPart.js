@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 
 import { resetValues, setValue } from "../../actions";
 import CardComponent from "../CardComponent/CardComponent";
+import MortgageCalculator from "../MortgageCalculator/MortgageCalculator";
 
 class LeftPart extends React.Component {
   constructor(props) {
@@ -122,6 +123,7 @@ class LeftPart extends React.Component {
 
     return (
       <div className="LeftPart">
+        <MortgageCalculator principal="200000" years="30" rate="5" />
         <form>
           <Collapse
             defaultActiveKey={[]}
