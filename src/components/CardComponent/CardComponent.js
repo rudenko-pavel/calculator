@@ -30,10 +30,11 @@ class CardComponent extends React.Component {
     }
     if (typeof this.props.dependencies === "object") {
       const { props } = this;
-      props.dependencies.forEach(function(entry) {
+      props.dependencies.forEach(entry => {
         let newValueMin;
         const eObject = { val: e };
         const ratio = props.downPaymentValueCondition(eObject);
+        const propName = props.state[name];
         switch (entry) {
           case "downPaymentValue":
             switch (ratio) {
@@ -53,18 +54,18 @@ class CardComponent extends React.Component {
             for (const [key] of Object.entries(props.state)) {
               if (`${key}` === entry) {
                 if (
-                  receiveValue < props.state[name].min ||
-                  receiveValue > props.state[name].max
+                  receiveValue < propName.min ||
+                  receiveValue > propName.max
                 ) {
-                  if (receiveValue < props.state[name].min) {
-                    props.setValue(key, props.state[name].min * 0.05, "min");
-                    props.setValue(key, props.state[name].min, "max");
-                    props.setValue(key, props.state[name].min * 0.05);
+                  if (receiveValue < propName.min) {
+                    props.setValue(key, propName.min * 0.05, "min");
+                    props.setValue(key, propName.min, "max");
+                    props.setValue(key, propName.min * 0.05);
                   }
-                  if (receiveValue > props.state[name].max) {
-                    props.setValue(key, props.state[name].max * 0.2, "min");
-                    props.setValue(key, props.state[name].max, "max");
-                    props.setValue(key, props.state[name].max);
+                  if (receiveValue > propName.max) {
+                    props.setValue(key, propName.max * 0.2, "min");
+                    props.setValue(key, propName.max, "max");
+                    props.setValue(key, propName.max);
                   }
                 } else {
                   props.setValue(key, newValueMin, "min");
@@ -147,8 +148,8 @@ class CardComponent extends React.Component {
   };
 
   lookForOptions = (name, fullValue) => {
-    console.log(name, this.props.state.propertyValue.min)
     const result = [];
+    const propertyValue = this.props.state.propertyValue;
     for (const [key, value] of Object.entries(this.props.state)) {
       if (`${key}` === name) {
         // eslint-disable-next-line no-restricted-syntax
@@ -158,23 +159,19 @@ class CardComponent extends React.Component {
             switch (name) {
               case "maintenanceValue":
               case "ownerInsuranceValue":
-
-
-
-
                 if (
-                  fullValue < this.props.state.propertyValue.min ||
-                  fullValue > this.props.state.propertyValue.max
+                  fullValue < propertyValue.min ||
+                  fullValue > propertyValue.max
                 ) {
-                  if (fullValue < this.props.state.propertyValue.min) {
+                  if (fullValue < propertyValue.min) {
                     result.proc = `$${new Intl.NumberFormat("en-EN", {
                       maximumFractionDigits: 2
-                    }).format((value2 / 100) * this.props.state.propertyValue.min)} first year`;
+                    }).format((value2 / 100) * propertyValue.min)} first year`;
                   }
-                  if (fullValue > this.props.state.propertyValue.max){
+                  if (fullValue > propertyValue.max) {
                     result.proc = `$${new Intl.NumberFormat("en-EN", {
                       maximumFractionDigits: 2
-                    }).format((value2 / 100) * this.props.state.propertyValue.max)} first year`;
+                    }).format((value2 / 100) * propertyValue.max)} first year`;
                   }
                 } else {
                   result.proc = `$${new Intl.NumberFormat("en-EN", {
@@ -185,20 +182,20 @@ class CardComponent extends React.Component {
                 break;
               default:
                 if (
-                  fullValue < this.props.state.propertyValue.min ||
-                  fullValue > this.props.state.propertyValue.max
+                  fullValue < propertyValue.min ||
+                  fullValue > propertyValue.max
                 ) {
-                  if (fullValue < this.props.state.propertyValue.min) {
+                  if (fullValue < propertyValue.min) {
                     result.proc = new Intl.NumberFormat("en-EN", {
                       style: "percent",
                       maximumFractionDigits: 2
-                    }).format(value2 / this.props.state.propertyValue.min);
+                    }).format(value2 / propertyValue.min);
                   }
-                  if (fullValue > this.props.state.propertyValue.max){
+                  if (fullValue > propertyValue.max) {
                     result.proc = new Intl.NumberFormat("en-EN", {
                       style: "percent",
                       maximumFractionDigits: 2
-                    }).format(value2 / this.props.state.propertyValue.max);
+                    }).format(value2 / propertyValue.max);
                   }
                 } else {
                   result.proc = new Intl.NumberFormat("en-EN", {
@@ -212,6 +209,35 @@ class CardComponent extends React.Component {
       }
     }
     return result;
+  };
+
+  tipFormatter = (value, flag) => {
+    switch (flag) {
+      case "years":
+        return this.tipFormatterYears;
+      case "%":
+        return this.tipFormatterProc;
+      default:
+        return this.tipFormatterDollar;
+    }
+  };
+
+  tipFormatterDollar = value => {
+    return `$${new Intl.NumberFormat("en-EN", {
+      maximumFractionDigits: 2
+    }).format(value)}`;
+  };
+
+  tipFormatterProc = value => {
+    return `${new Intl.NumberFormat("en-EN", {
+      maximumFractionDigits: 2
+    }).format(value)} %`;
+  };
+
+  tipFormatterYears = value => {
+    return `${new Intl.NumberFormat("en-EN", {
+      maximumFractionDigits: 2
+    }).format(value)} years`;
   };
 
   // eslint-disable-next-line consistent-return
@@ -255,9 +281,15 @@ class CardComponent extends React.Component {
           </Card.Grid>
           <Card.Grid hoverable={false}>
             <span className="minSlider slider-values">
-              {this.lookForOptions(name).min}
+              {new Intl.NumberFormat("en-EN", {
+                maximumFractionDigits: 2
+              }).format(this.lookForOptions(name).min)}
             </span>
             <Slider
+              tipFormatter={this.tipFormatter(
+                this.lookForFieldName(name),
+                this.props.suffix
+              )}
               min={this.lookForOptions(name).min}
               max={this.lookForOptions(name).max}
               step={this.lookForOptions(name).step}
@@ -265,7 +297,9 @@ class CardComponent extends React.Component {
               value={this.lookForFieldName(name)}
             />
             <span className="maxSlider slider-values">
-              {this.lookForOptions(name).max}
+              {new Intl.NumberFormat("en-EN", {
+                maximumFractionDigits: 2
+              }).format(this.lookForOptions(name).max)}
             </span>
           </Card.Grid>
         </Card>

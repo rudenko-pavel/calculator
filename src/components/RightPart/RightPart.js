@@ -6,8 +6,8 @@ import { Button, Card, Col, Divider, Drawer, Row, Typography } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 
-import { resetValues, saveDefault } from "../../actions";
-import initialState from "../../reducers/baseReducer";
+import { resetValues } from "../../actions";
+import { initialState } from "../../reducers/baseReducer";
 
 class RightPart extends React.Component {
   constructor(props) {
@@ -15,10 +15,6 @@ class RightPart extends React.Component {
     this.state = {
       visible: false
     };
-  }
-
-  componentDidMount() {
-    this.props.saveDefault();
   }
 
   showDrawer = () => {
@@ -37,8 +33,7 @@ class RightPart extends React.Component {
     let currentClass = "";
     const nameV = Object.entries(currentValue)[0][0];
     const valueV = Object.entries(currentValue)[0][1];
-    if (valueV === this.props.state.defaultValues[nameV])
-      currentClass = "default-value";
+    if (valueV === initialState[nameV]) currentClass = "default-value";
     else currentClass = "new-value";
     return currentClass;
   };
@@ -48,17 +43,23 @@ class RightPart extends React.Component {
     const valueV = Object.entries(value)[0][1].val;
     return (
       <div className={this.comparisonValues(value)}>
-        {name}:{" "}
-        <span>
-          {preffix} {new Intl.NumberFormat().format(valueV)} {suffix}
-        </span>
-        <Text type="secondary">[default]</Text>
+        <Row>
+          <Col lg={15} md={15} sm={15} xs={15}>
+            {name}:
+          </Col>
+          <Col lg={9} md={9} sm={9} xs={9}>
+            <span>
+              {preffix} {new Intl.NumberFormat().format(valueV)} {suffix}
+            </span>
+            <Text type="secondary">*</Text>
+          </Col>
+        </Row>
       </div>
     );
   };
 
   render() {
-    // console.log("initialState: ",initialState)
+    // console.log("initialState: ", initialState);
     const { state } = this.props;
     const {
       amortizationValue,
@@ -252,6 +253,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  resetValues,
-  saveDefault
+  resetValues
 })(RightPart);

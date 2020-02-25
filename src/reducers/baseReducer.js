@@ -1,11 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-case-declarations */
-import {
-  CHECK_VALUE,
-  RESET_VALUES,
-  SAVE_DEFAULT,
-  SET_VALUE
-} from "../actions/types";
+import { CHECK_VALUE, RESET_VALUES, SET_VALUE } from "../actions/types";
 
 export const initialState = {
   rentValue: { val: 1000, min: 500, max: 4000, step: 50 },
@@ -22,8 +17,7 @@ export const initialState = {
   rentersInsuranceValue: { val: 250, min: 0, max: 1000, step: 50 },
   rentMonthlyCostsValue: { val: 300, min: 0, max: 1000, step: 10 },
   rateOfGrowthValue: { val: 2, min: 0, max: 5, step: 0.1 },
-  returnInvestmentValue: { val: 4, min: 0, max: 10, step: 0.1 },
-  defaultValues: {}
+  returnInvestmentValue: { val: 4, min: 0, max: 10, step: 0.1 }
 };
 
 //  You also can do initial state like that
@@ -64,13 +58,11 @@ export default (state = initialState, action) => {
         }
       } else {
         newUpdateProps = {
-          ...initialState,
-          defaultValues: state.defaultValues
+          ...newUpdateProps,
+          ...initialState
         };
       }
       return { ...state, ...newUpdateProps };
-    case SAVE_DEFAULT:
-      return { ...state, defaultValues: state };
     default:
       return state;
   }

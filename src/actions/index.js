@@ -1,7 +1,6 @@
 import {
   CHECK_VALUE,
   RESET_VALUES,
-  SAVE_DEFAULT,
   SET_AMORTIZATION,
   SET_ANNUAL_TAXES,
   SET_BUYING_HOME,
@@ -151,7 +150,6 @@ export const checkValue = (value_name, value, state) => {
 };
 
 export const setValue = (value_name, value, additional_option_name) => {
-  // console.log("setValue(): ",value_name, additional_option_name )
   // logic here
   return {
     type: SET_VALUE,
@@ -167,12 +165,5 @@ export const resetValues = arrayOfValues => {
   return {
     type: RESET_VALUES,
     payload: arrayOfValues
-  };
-};
-
-export const saveDefault = () => {
-  return {
-    type: SAVE_DEFAULT,
-    payload: null
   };
 };

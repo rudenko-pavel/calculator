@@ -114,8 +114,8 @@ class LeftPart extends React.Component {
 
   render() {
     const { Text } = Typography;
-    function callback(key) {
-      console.log(key);
+    function callbackCollapse(key) {
+      console.log("callbackCollapse(): ", key);
     }
 
     const { Panel } = Collapse;
@@ -125,7 +125,7 @@ class LeftPart extends React.Component {
         <form>
           <Collapse
             defaultActiveKey={[]}
-            onChange={callback}
+            onChange={callbackCollapse}
             className="div-wrapper"
           >
             <Panel header="general data" key="1">
