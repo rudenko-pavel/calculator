@@ -10,7 +10,9 @@ import { connect } from "react-redux";
 
 import { resetValues, setValue } from "../../actions";
 import CardComponent from "../CardComponent/CardComponent";
-import MortgageCalculator from "../MortgageCalculator/MortgageCalculator";
+
+const mortgageJs = require("mortgage-js");
+// import { mortgageJs } from "mortgage-js";
 
 class LeftPart extends React.Component {
   constructor(props) {
@@ -78,6 +80,7 @@ class LeftPart extends React.Component {
         }
       }
     };
+
   }
 
   downPaymentValueCondition = value => {
@@ -112,8 +115,21 @@ class LeftPart extends React.Component {
       return txt;
     }
   };
+  
 
   render() {
+    let payment = mortgageJs.calculatePayment(800000,
+      160000,
+      0.045,
+      360,
+      0.012,
+      0.0013,
+      0.010,
+      true,
+      0.2,
+      100);
+    //let mortgageCalculator = mortgageJs.createMortgageCalculator();
+    console.log("mortgageJs - ", payment)
     const { Text } = Typography;
     function callbackCollapse(key) {
       console.log("callbackCollapse(): ", key);
@@ -123,7 +139,6 @@ class LeftPart extends React.Component {
 
     return (
       <div className="LeftPart">
-        <MortgageCalculator principal="200000" years="30" rate="5" />
         <form>
           <Collapse
             defaultActiveKey={[]}
