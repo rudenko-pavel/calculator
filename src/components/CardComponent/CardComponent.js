@@ -270,7 +270,7 @@ class CardComponent extends React.Component {
               prefix={this.props.prefix}
               suffix={this.props.suffix}
               onChange={e => this.setDataInStore(e.target.value, e.target.name)}
-              onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
+             // onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
             />
             <span className="input-helper">
               <Text type="secondary">

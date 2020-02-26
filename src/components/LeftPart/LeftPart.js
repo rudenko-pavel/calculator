@@ -5,7 +5,6 @@
 import "./LeftPart.scss";
 
 import { Button, Collapse, Typography } from "antd";
-import mortgageJs from "mortgage-js";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -114,20 +113,6 @@ class LeftPart extends React.Component {
   };
 
   render() {
-    const payment = mortgageJs.calculatePayment(
-      800000,
-      160000,
-      0.045,
-      360,
-      0.012,
-      0.0013,
-      0.01,
-      true,
-      0.2,
-      100
-    );
-    // let mortgageCalculator = mortgageJs.createMortgageCalculator();
-    console.log("mortgageJs - ", payment);
     const { Text } = Typography;
     function callbackCollapse(key) {
       console.log("callbackCollapse(): ", key);

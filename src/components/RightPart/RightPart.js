@@ -2,7 +2,17 @@
 /* eslint-disable react/prop-types */
 import "./RightPart.scss";
 
-import { Button, Card, Col, Divider, Drawer, Row, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Drawer,
+  Modal,
+  Row,
+  Typography
+} from "antd";
+import mortgageJs from "mortgage-js";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -13,9 +23,28 @@ class RightPart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: false,
+      visibleModal: false
     };
   }
+
+  showModal = () => {
+    this.setState({
+      visibleModal: true
+    });
+  };
+
+  handleOk = e => {
+    this.setState({
+      visibleModal: false
+    });
+  };
+
+  handleCancel = e => {
+    this.setState({
+      visibleModal: false
+    });
+  };
 
   showDrawer = () => {
     this.setState({
@@ -58,6 +87,54 @@ class RightPart extends React.Component {
     );
   };
 
+  showPaymentSchedule = array => {
+    let result = "";
+    array.forEach(entry => {
+      for (const [key, value] of Object.entries(entry)) {
+        result += "<p>" + key + ":  " + value + "</p>";
+      }
+    });
+
+    return result;
+  };
+
+  showMortgage = () => {
+    const mortgageCalculator = mortgageJs.createMortgageCalculator();
+    mortgageCalculator.totalPrice = initialState.propertyValue.val;
+    mortgageCalculator.downPayment = initialState.downPaymentValue.val;
+    mortgageCalculator.interestRate = 0.045;
+    mortgageCalculator.months = initialState.amortizationValue.val * 12;
+    mortgageCalculator.taxRate = 0.012;
+    mortgageCalculator.insuranceRate = 0.0013;
+    mortgageCalculator.mortgageInsuranceRate = 0.01;
+    mortgageCalculator.mortgageInsuranceEnabled = true;
+    mortgageCalculator.mortgageInsuranceThreshold = 0.2;
+    mortgageCalculator.additionalPrincipalPayment = 100;
+    const payment = mortgageCalculator.calculatePayment();
+
+    return (
+      <div>
+        <p>loanAmount: {payment.loanAmount}</p>
+        <p>principalAndInterest: {payment.principalAndInterest}</p>
+        <p>tax: {payment.tax}</p>
+        <p>insurance: {payment.insurance}</p>
+        <p>total: {payment.total}</p>
+        <p>termMonths: {payment.termMonths}</p>
+        <Button type="primary" onClick={this.showModal}>
+          Payment Schedule
+        </Button>
+        <Modal
+          title="Payment Schedule"
+          visible={this.state.visibleModal}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          {this.showPaymentSchedule(payment.paymentSchedule)}
+        </Modal>
+      </div>
+    );
+  };
+
   render() {
     // console.log("initialState: ", initialState);
     const { state } = this.props;
@@ -81,6 +158,10 @@ class RightPart extends React.Component {
 
     return (
       <div className="RightPart">
+        <div>
+          <h3>showMortgage</h3>
+          {this.showMortgage()}
+        </div>
         <Card title="monthly payments" className="table-money div-wrapper">
           <Row>
             <Col span={10}>&nbsp;</Col>

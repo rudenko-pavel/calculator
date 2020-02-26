@@ -23,7 +23,8 @@ export const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_VALUE:
-      const { name, value } = action.payload.value_name;
+      const { name, value } = action.payload;
+      console.log("SET_VALUE", name, value);
       const newState = { ...state };
       newState[name].val = value;
       return newState;
