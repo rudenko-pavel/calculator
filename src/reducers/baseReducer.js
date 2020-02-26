@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-case-declarations */
-import { CHECK_VALUE, RESET_VALUES, SET_VALUE } from "../actions/types";
+import { RESET_VALUES, SET_VALUE } from "../actions/types";
 
 export const initialState = {
   rentValue: { val: 1000, min: 500, max: 4000, step: 50 },
@@ -20,49 +20,15 @@ export const initialState = {
   returnInvestmentValue: { val: 4, min: 0, max: 10, step: 0.1 }
 };
 
-//  You also can do initial state like that
 export default (state = initialState, action) => {
   switch (action.type) {
-    // see to `src/actions/index.js`
     case SET_VALUE:
-      let result = "";
-      if (typeof action.payload.additional_option_name !== "string") {
-        const changingVal = action.payload.value_name;
-        const newState = { ...state[changingVal], val: action.payload.value };
-        result = { ...state, [changingVal]: newState };
-      } else {
-        const changingVal = action.payload.value_name;
-        const addOption = action.payload.additional_option_name;
-        const newState = {
-          ...state[changingVal],
-          [addOption]: action.payload.value
-        };
-        result = { ...state, [changingVal]: newState };
-      }
-      return result;
-    case CHECK_VALUE:
-      const changingVal = action.payload.value_name;
-      const newState = { ...state[changingVal], val: action.payload.value };
-      return { ...state, [changingVal]: newState };
+      const { name, value } = action.payload.value_name;
+      const newState = { ...state };
+      newState[name].val = value;
+      return newState;
     case RESET_VALUES:
-      let newUpdateProps = {};
-      if (action.payload.length > 0) {
-        for (let i = 0; i < action.payload.length; i += 1) {
-          if (initialState.hasOwnProperty(action.payload[i])) {
-            const nameProp = action.payload[i];
-            newUpdateProps = {
-              ...newUpdateProps,
-              [nameProp]: initialState[nameProp]
-            };
-          }
-        }
-      } else {
-        newUpdateProps = {
-          ...newUpdateProps,
-          ...initialState
-        };
-      }
-      return { ...state, ...newUpdateProps };
+      return { ...initialState };
     default:
       return state;
   }

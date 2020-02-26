@@ -5,14 +5,12 @@
 import "./LeftPart.scss";
 
 import { Button, Collapse, Typography } from "antd";
+import mortgageJs from "mortgage-js";
 import React from "react";
 import { connect } from "react-redux";
 
 import { resetValues, setValue } from "../../actions";
 import CardComponent from "../CardComponent/CardComponent";
-
-const mortgageJs = require("mortgage-js");
-// import { mortgageJs } from "mortgage-js";
 
 class LeftPart extends React.Component {
   constructor(props) {
@@ -80,7 +78,6 @@ class LeftPart extends React.Component {
         }
       }
     };
-
   }
 
   downPaymentValueCondition = value => {
@@ -115,21 +112,22 @@ class LeftPart extends React.Component {
       return txt;
     }
   };
-  
 
   render() {
-    let payment = mortgageJs.calculatePayment(800000,
+    const payment = mortgageJs.calculatePayment(
+      800000,
       160000,
       0.045,
       360,
       0.012,
       0.0013,
-      0.010,
+      0.01,
       true,
       0.2,
-      100);
-    //let mortgageCalculator = mortgageJs.createMortgageCalculator();
-    console.log("mortgageJs - ", payment)
+      100
+    );
+    // let mortgageCalculator = mortgageJs.createMortgageCalculator();
+    console.log("mortgageJs - ", payment);
     const { Text } = Typography;
     function callbackCollapse(key) {
       console.log("callbackCollapse(): ", key);
