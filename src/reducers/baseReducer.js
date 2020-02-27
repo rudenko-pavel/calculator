@@ -32,10 +32,8 @@ export default (state = initialState, action) => {
       }
       return newState;
     case RESET_VALUES:
-      console.log("RESET_VALUES",initialState)
       return initialState;
     default:
-      console.log("default")
       return state;
   }
 };
