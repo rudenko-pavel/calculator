@@ -34,13 +34,13 @@ class RightPart extends React.Component {
     });
   };
 
-  handleOk = e => {
+  handleOk = () => {
     this.setState({
       visibleModal: false
     });
   };
 
-  handleCancel = e => {
+  handleCancel = () => {
     this.setState({
       visibleModal: false
     });
@@ -90,8 +90,9 @@ class RightPart extends React.Component {
   showPaymentSchedule = array => {
     let result = "";
     array.forEach(entry => {
+      // eslint-disable-next-line no-restricted-syntax
       for (const [key, value] of Object.entries(entry)) {
-        result += "<p>" + key + ":  " + value + "</p>";
+        result += `<p> + ${key} + :   + ${value} + </p>`;
       }
     });
 
@@ -136,7 +137,7 @@ class RightPart extends React.Component {
   };
 
   render() {
-    // console.log("initialState: ", initialState);
+     console.log("initialState: ", initialState);
     const { state } = this.props;
     const {
       amortizationValue,

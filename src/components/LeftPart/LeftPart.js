@@ -100,9 +100,10 @@ class LeftPart extends React.Component {
     return result;
   };
 
+  // eslint-disable-next-line consistent-return
   returnPopover = (name, condition) => {
     let txt = "";
-    if (this.state.popover.hasOwnProperty(name)) {
+    if (this.state.popover.hasOwnProperty.call(name, "key")) {
       if (this.state.popover[name].conditions === false)
         txt = this.state.popover[name].response.text;
       else {

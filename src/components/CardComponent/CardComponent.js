@@ -16,125 +16,13 @@ import {
 import React from "react";
 import { connect } from "react-redux";
 
-import { checkValue, setValue } from "../../actions";
+import { setValue } from "../../actions";
 
 class CardComponent extends React.Component {
-  setDataInStore = (e, name) => {
-    let receiveValue;
-    const newValue = parseFloat(e);
-    const reg = /^-?[0-9]*(\.[0-9]*)?$/;
-    if ((!isNaN(newValue) && reg.test(newValue)) || newValue === "") {
-      receiveValue = parseFloat(e);
-    } else {
-      receiveValue = 0;
-    }
-    if (typeof this.props.dependencies === "object") {
-      const { props } = this;
-      props.dependencies.forEach(entry => {
-        let newValueMin;
-        const eObject = { val: e };
-        const ratio = props.downPaymentValueCondition(eObject);
-        const propName = props.state[name];
-        switch (entry) {
-          case "downPaymentValue":
-            switch (ratio) {
-              case 0:
-              case 1:
-                newValueMin = e * 0.05;
-                break;
-              case 2:
-                newValueMin = 500000 * 0.05 + (e - 500000) * 0.1;
-                break;
-              case 3:
-                newValueMin = e * 0.2;
-                break;
-              default:
-                newValueMin = 0;
-            }
-            for (const [key] of Object.entries(props.state)) {
-              if (`${key}` === entry) {
-                if (
-                  receiveValue < propName.min ||
-                  receiveValue > propName.max
-                ) {
-                  if (receiveValue < propName.min) {
-                    props.setValue(key, propName.min * 0.05, "min");
-                    props.setValue(key, propName.min, "max");
-                    props.setValue(key, propName.min * 0.05);
-                  }
-                  if (receiveValue > propName.max) {
-                    props.setValue(key, propName.max * 0.2, "min");
-                    props.setValue(key, propName.max, "max");
-                    props.setValue(key, propName.max);
-                  }
-                } else {
-                  props.setValue(key, newValueMin, "min");
-                  props.setValue(key, newValue, "max");
-                }
-                break;
-              }
-            }
-            console.log("Excellent", entry);
-            break;
-          case "amountAnnualTaxesValue":
-          case "buyingHomeValue":
-          case "annualHeatingCostsValue":
-            for (const [key] of Object.entries(props.state)) {
-              if (`${key}` === entry) {
-                if (
-                  receiveValue < props.state[name].min ||
-                  receiveValue > props.state[name].max
-                ) {
-                  if (receiveValue < props.state[name].min) {
-                    props.setValue(key, props.state[name].min * 0.04, "max");
-                    props.setValue(key, 0);
-                  }
-                  if (receiveValue > props.state[name].max) {
-                    props.setValue(key, props.state[name].max * 0.04, "max");
-                    props.setValue(key, props.state[name].max * 0.04);
-                  }
-                } else {
-                  props.setValue(key, receiveValue * 0.04, "max");
-                }
-                break;
-              }
-            }
-            console.log("Excellent", entry);
-            break;
-          case "sellingHomeValue":
-            for (const [key] of Object.entries(props.state)) {
-              if (`${key}` === entry) {
-                if (
-                  receiveValue < props.state[name].min ||
-                  receiveValue > props.state[name].max
-                ) {
-                  if (receiveValue < props.state[name].min) {
-                    props.setValue(key, props.state[name].min * 0.1, "max");
-                    props.setValue(key, 0);
-                  }
-                  if (receiveValue > props.state[name].max) {
-                    props.setValue(key, props.state[name].max * 0.1, "max");
-                    props.setValue(key, props.state[name].max * 0.1);
-                  }
-                } else {
-                  props.setValue(key, receiveValue * 0.1, "max");
-                }
-                break;
-              }
-            }
-            console.log("Excellent", entry);
-            break;
-          default:
-            console.log("Invalid choice");
-            break;
-        }
-      });
-    }
-    this.props.setValue(name, receiveValue);
-  };
-
-  checkDataInStore = (e, name) => {
-    this.props.checkValue(name, e, this.props.state);
+  setDataInStore = (e, name, flag, dependencies, state) => {
+    // eslint-disable-next-line no-param-reassign
+    if (Number.isNaN(e)) e = 0;
+    this.props.setValue(name, e, flag, dependencies, state);
   };
 
   lookForFieldName = name => {
@@ -149,7 +37,7 @@ class CardComponent extends React.Component {
 
   lookForOptions = (name, fullValue) => {
     const result = [];
-    const propertyValue = this.props.state.propertyValue;
+    const { propertyValue } = this.props.state;
     for (const [key, value] of Object.entries(this.props.state)) {
       if (`${key}` === name) {
         // eslint-disable-next-line no-restricted-syntax
@@ -269,8 +157,18 @@ class CardComponent extends React.Component {
               value={[this.lookForFieldName(name)]}
               prefix={this.props.prefix}
               suffix={this.props.suffix}
-              onChange={e => this.setDataInStore(e.target.value, e.target.name)}
-             // onBlur={e => this.checkDataInStore(e.target.value, e.target.name)}
+              onChange={e =>
+                this.setDataInStore(parseFloat(e.target.value), e.target.name)
+              }
+              onBlur={e =>
+                this.setDataInStore(
+                  parseFloat(e.target.value),
+                  e.target.name,
+                  true,
+                  this.props.dependencies,
+                  this.props.state
+                )
+              }
             />
             <span className="input-helper">
               <Text type="secondary">
@@ -293,7 +191,15 @@ class CardComponent extends React.Component {
               min={this.lookForOptions(name).min}
               max={this.lookForOptions(name).max}
               step={this.lookForOptions(name).step}
-              onChange={v => this.setDataInStore(v, name)}
+              onChange={v =>
+                this.setDataInStore(
+                  parseFloat(v),
+                  name,
+                  true,
+                  this.props.dependencies,
+                  this.props.state
+                )
+              }
               value={this.lookForFieldName(name)}
             />
             <span className="maxSlider slider-values">
@@ -314,6 +220,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { checkValue, setValue })(
-  CardComponent
-);
+export default connect(mapStateToProps, { setValue })(CardComponent);

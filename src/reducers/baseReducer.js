@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-case-declarations */
 import { RESET_VALUES, SET_VALUE } from "../actions/types";
@@ -23,14 +24,18 @@ export const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_VALUE:
-      const { name, value } = action.payload;
-      console.log("SET_VALUE", name, value);
+      const { name, value, dependenciesValues } = action.payload;
       const newState = { ...state };
       newState[name].val = value;
+      for (const [key, val] of Object.entries(dependenciesValues)) {
+        newState[key] = val;
+      }
       return newState;
     case RESET_VALUES:
-      return { ...initialState };
+      console.log("RESET_VALUES",initialState)
+      return initialState;
     default:
+      console.log("default")
       return state;
   }
 };
