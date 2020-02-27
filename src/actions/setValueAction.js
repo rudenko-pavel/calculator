@@ -1,7 +1,10 @@
 /* eslint-disable no-return-assign */
 import { SET_VALUE } from "./types";
+import { initialState } from "../reducers/baseReducer";
 
-export default function setValue(name, value, flag, dependencies, state) {
+
+export default function setValue(name, value, flag, dependencies) {
+  console.log("DDDD", initialState)
   const dependenciesValues = {};
   if (flag === true) {
     let receiveValue;
@@ -14,7 +17,7 @@ export default function setValue(name, value, flag, dependencies, state) {
     }
 
     // eslint-disable-next-line no-restricted-syntax
-    for (const [key, val] of Object.entries(state)) {
+    for (const [key, val] of Object.entries(initialState)) {
       if (`${key}` === name) {
         if (receiveValue < `${val.min}`) receiveValue = `${val.min}`;
         else if (receiveValue > `${val.max}`) receiveValue = `${val.max}`;
@@ -28,7 +31,7 @@ export default function setValue(name, value, flag, dependencies, state) {
       dependencies.forEach(nameItem => {
         let newMin = 0;
         let newMax;
-        let newVal = state[nameItem].val;
+        let newVal = initialState[nameItem].val;
         switch (nameItem) {
           case "downPaymentValue":
             newMax = value;

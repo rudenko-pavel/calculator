@@ -19,10 +19,10 @@ import { connect } from "react-redux";
 import { setValue } from "../../actions";
 
 class CardComponent extends React.Component {
-  setDataInStore = (e, name, flag, dependencies, state) => {
+  setDataInStore = (e, name, flag, dependencies) => {
     // eslint-disable-next-line no-param-reassign
     if (Number.isNaN(e)) e = 0;
-    this.props.setValue(name, e, flag, dependencies, state);
+    this.props.setValue(name, e, flag, dependencies);
   };
 
   lookForFieldName = name => {
@@ -165,8 +165,7 @@ class CardComponent extends React.Component {
                   parseFloat(e.target.value),
                   e.target.name,
                   true,
-                  this.props.dependencies,
-                  this.props.state
+                  this.props.dependencies
                 )
               }
             />
@@ -196,8 +195,7 @@ class CardComponent extends React.Component {
                   parseFloat(v),
                   name,
                   true,
-                  this.props.dependencies,
-                  this.props.state
+                  this.props.dependencies
                 )
               }
               value={this.lookForFieldName(name)}
