@@ -1,0 +1,15 @@
+@import "../../scss/palette";
+.Payments{
+    p{
+        margin-bottom: 0em;
+    }
+    .ant-spin-container{
+        .ant-table {
+            background-color: $white-color;
+        }
+        .ant-pagination {
+            float: right;
+            margin: 16px 54px 16px 0 !important;
+        }
+    }
+}

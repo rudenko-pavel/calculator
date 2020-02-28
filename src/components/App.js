@@ -1,23 +1,26 @@
 import "./App.scss";
 
-import { BackTop, Col, Row } from "antd";
+import { BackTop } from "antd";
 import React from "react";
+import { HashRouter, Route } from "react-router-dom";
 
-import LeftPart from "./LeftPart/LeftPart";
-import RightPart from "./RightPart/RightPart";
+import Charts from "./Charts/Charts";
+import HeaderMenu from "./HeaderMenu/HeaderMenu";
+import HomePage from "./HomePage/HomePage";
+import Payments from "./Payments/Payments";
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Row>
-          <Col lg={14} md={14} sm={24}>
-            <LeftPart />
-          </Col>
-          <Col lg={10} md={10} sm={24}>
-            <RightPart />
-          </Col>
-        </Row>
+        <HashRouter>
+          <div>
+            <HeaderMenu />
+            <Route path="/" exact component={HomePage} />
+            <Route path="/payments" exact component={Payments} />
+            <Route path="/charts" exact component={Charts} />
+          </div>
+        </HashRouter>
         <BackTop visibilityHeight={100}>
           <div className="ant-back-top-inner">UP</div>
         </BackTop>
