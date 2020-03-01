@@ -7,7 +7,7 @@ export const initialState = {
   rentValue: { val: 1000, min: 500, max: 4000, step: 50 },
   propertyValue: { val: 50000, min: 50000, max: 2000000, step: 10000 },
   downPaymentValue: { val: 2500, min: 2500, max: 50000, step: 10 },
-  amortizationValue: { val: 25, min: 1, max: 25, step: 1 },
+  amortizationValue: { val: 3, min: 1, max: 25, step: 1 },
   mortgageRateValue: { val: 2, min: 1, max: 8, step: 0.1 },
   amountAnnualTaxesValue: { val: 500, min: 0, max: 2000, step: 10 },
   annualHeatingCostsValue: { val: 500, min: 0, max: 2000, step: 10 },
