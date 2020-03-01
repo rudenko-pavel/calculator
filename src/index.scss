@@ -126,11 +126,13 @@
         border-color: $dark-red-color;
     }
   }
+
   .show-selected-data{
     position: fixed;
     right: 0px;
     top: 10px;
     margin: 0px;
+    z-index: 9999;
     }
 .ant-drawer-content-wrapper{ 
     .ant-drawer-content{

@@ -1,9 +1,12 @@
 import "./Payments.scss";
 
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import mortgageJs from "mortgage-js";
 import React from "react";
 import { connect } from "react-redux";
+import Pdf from "react-to-pdf";
+
+const ref = React.createRef();
 
 class Payments extends React.Component {
   constructor(props) {
@@ -50,6 +53,7 @@ class Payments extends React.Component {
   }
 
   showMortgage = payment => {
+
     return (
       <div>
         <p>loanAmount: {payment.loanAmount}</p>
@@ -60,6 +64,30 @@ class Payments extends React.Component {
         <p>termMonths: {payment.termMonths}</p>
       </div>
     );
+  };
+
+  showPageSize = value => {
+    const txtValue = value.toString();
+    return txtValue;
+  };
+
+  formattedPaymentsArray = obj => {
+    const newArr = [];
+    const formatter = new Intl.NumberFormat("en-EN", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2
+    });
+
+    obj.forEach(item => {
+      const newItem = { ...item };
+      for (const [key, val] of Object.entries(item)) {
+        if (key!=='count')
+          newItem[key] = formatter.format(val); 
+      }
+      newArr.push(newItem);
+    });
+    return newArr;
   };
 
   render() {
@@ -78,13 +106,38 @@ class Payments extends React.Component {
     const payment = mortgageCalculator.calculatePayment();
     return (
       <div className="Payments">
-        {this.showMortgage(payment)}
-        <hr />
-        <Table
-          columns={this.state.columns}
-          dataSource={payment.paymentSchedule}
-          rowKey={record => record.count}
-        />
+        <Pdf targetRef={ref} filename="code-example.pdf">
+          {({ toPdf }) => (
+            <Button
+              type="primary"
+              className="show-selected-data"
+              onClick={toPdf}
+            >
+              Generate Pdf
+            </Button>
+          )}
+        </Pdf>
+        <div ref={ref}>
+          {this.showMortgage(payment)}
+          <hr />
+          <Table
+            className="payments"
+            columns={this.state.columns}
+            dataSource={this.formattedPaymentsArray(payment.paymentSchedule)}
+            rowKey={record => record.count}
+            pagination={{
+              defaultPageSize: mortgageCalculator.months,
+              showSizeChanger: true,
+              pageSizeOptions: [
+                "12",
+                "24",
+                "60",
+                "120",
+                this.showPageSize(mortgageCalculator.months)
+              ]
+            }}
+          />
+        </div>
       </div>
     );
   }
