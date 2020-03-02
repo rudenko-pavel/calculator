@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 
 import { resetValues, setValue } from "../../actions";
 import CardComponent from "../CardComponent/CardComponent";
+import CardComponentLogic from "../CardComponent/CardComponentLogic";
 
 class LeftPart extends React.Component {
   constructor(props) {
@@ -130,6 +131,13 @@ class LeftPart extends React.Component {
             className="div-wrapper"
           >
             <Panel header="general data" key="1">
+              <CardComponentLogic
+                title="Rent"
+                text="Indicate the amount of your current or projected monthly rent."
+                name="rentValue"
+                prefix="$"
+                suffix=""
+              />
               <CardComponent
                 title="Rent"
                 text="Indicate the amount of your current or projected monthly rent."
