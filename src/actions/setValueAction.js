@@ -1,10 +1,42 @@
 /* eslint-disable no-return-assign */
-import { SET_VALUE } from "./types";
 import { initialState } from "../reducers/baseReducer";
+import { SET_VALUE } from "./types";
 
+const DOWN_PAYMENT_PERCENT_VALUES = { c1: 0.05, c2: 0.1, c3: 0.2 };
+const DOWN_PAYMENT_CONDITIONS = { c1: 500000, c2: 1000000 };
+const AMOUNT_ANNUAL_TAXES_PERCENT_VALUES = { min: 0, max: 0.04 };
+const SELLING_HOME_PERCENT_VALUES = { min: 0, max: 0.04 };
+
+/*
+name - имя переменной в state
+value - новое значение
+flag - флаг (неожиданно)). 
+    навешивается на событие onBlur и на Slider (flag=true).
+    Т.е. пока происходят изменения в Input (без потери фокуса) - 
+    обработка зависимых значений не присходит
+
+dependencies - зависмые значения
+    Правила следующие:
+      propertyValue                                   = value
+      Значения полей должны быть в диапазоне:
+        - downPaymentValue
+              value <= 500 K                          =  5%*value ... value
+              500K < value <= 1M                      =  500K * 5% + (value - 500K) * 10%;
+              value > 1M                              =  20%*value ... value
+
+        - amountAnnualTaxesValue                      =  0 ... 4%*value
+          annualHeatingCostsValue
+          buyingHomeValue
+          
+        - sellingHomeValue                            =  0 ... 10%*value
+
+        Если значения этих полей выходятза пределы диапазона - значения должны 
+        приравниваться одному из граничных значений
+
+*/
 
 export default function setValue(name, value, flag, dependencies) {
-  console.log("DDDD", initialState)
+  console.log("DDDD", initialState);
   const dependenciesValues = {};
   if (flag === true) {
     let receiveValue;
@@ -35,18 +67,25 @@ export default function setValue(name, value, flag, dependencies) {
         switch (nameItem) {
           case "downPaymentValue":
             newMax = value;
-            if (value < 50001) newMin = value * 0.05;
-            if (value > 50001 && value < 1000001)
-              newMin = 500000 * 0.05 + (value - 500000) * 0.1;
-            if (value > 1000001) newMin = value * 0.2;
+            if (value <= DOWN_PAYMENT_CONDITIONS.c1)
+              newMin = value * DOWN_PAYMENT_PERCENT_VALUES.c1;
+            if (
+              value > DOWN_PAYMENT_CONDITIONS.c1 &&
+              value <= DOWN_PAYMENT_CONDITIONS.c2
+            )
+              newMin =
+                DOWN_PAYMENT_CONDITIONS.c1 * DOWN_PAYMENT_PERCENT_VALUES.c1 +
+                (value - DOWN_PAYMENT_CONDITIONS.c1) *
+                  DOWN_PAYMENT_PERCENT_VALUES.c2;
+            if (value > DOWN_PAYMENT_CONDITIONS.c2) newMin = value * DOWN_PAYMENT_PERCENT_VALUES.c3;
             break;
           case "amountAnnualTaxesValue":
           case "buyingHomeValue":
           case "annualHeatingCostsValue":
-            newMax = value * 0.04;
+            newMax = value * AMOUNT_ANNUAL_TAXES_PERCENT_VALUES.max;
             break;
           case "sellingHomeValue":
-            newMax = value * 0.1;
+            newMax = value * SELLING_HOME_PERCENT_VALUES;
             break;
           default:
             break;

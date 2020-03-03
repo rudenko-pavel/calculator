@@ -27,10 +27,11 @@ const CardComponentLogic = props => {
       name={name}
       prefix={prefix}
       suffix={suffix}
+      step={10}
       popover={popover}
       min={0}
-      max={23456}
-      value={3}
+      max={234560}
+      value={10}
       onChange={v => dispatch(setValue(name, v))}
     />
   );

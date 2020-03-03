@@ -101,6 +101,18 @@ class LeftPart extends React.Component {
     return result;
   };
 
+  /*
+    returnPopover()
+    возвращает popup для выбранного поля
+    Поля могут иметь безусловный popup или popup, который зависит от какого-то условия.
+    Например, поле downPaymentValue, в зависимости от значения поля propertyValue 
+    может иметь различный popup
+
+    condition - значение берется из  downPaymentValueCondition()
+
+
+*/
+
   // eslint-disable-next-line consistent-return
   returnPopover = (name, condition) => {
     let txt = "";
@@ -126,7 +138,7 @@ class LeftPart extends React.Component {
       <div className="LeftPart">
         <form>
           <Collapse
-            defaultActiveKey={[]}
+            defaultActiveKey={[1]}
             onChange={callbackCollapse}
             className="div-wrapper"
           >
