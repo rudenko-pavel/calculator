@@ -1,10 +1,13 @@
 import "./Payments.scss";
 
 import { PDFExport } from "@progress/kendo-react-pdf";
+import { Document, Page, PDFDownloadLink } from "@react-pdf/renderer";
 import { Button, Table } from "antd";
 import mortgageJs from "mortgage-js";
 import React from "react";
 import { connect } from "react-redux";
+
+import MyDoc from "./MyDoc";
 
 class Payments extends React.Component {
   pdfExportComponent;
@@ -89,6 +92,7 @@ class Payments extends React.Component {
     return newArr;
   };
 
+
   render() {
     const { state } = this.props;
     const mortgageCalculator = mortgageJs.createMortgageCalculator();
@@ -105,6 +109,12 @@ class Payments extends React.Component {
     const payment = mortgageCalculator.calculatePayment();
     return (
       <div className="Payments">
+
+<MyDoc data={this.formattedPaymentsArray(payment.paymentSchedule)} />
+
+
+
+
         <div>
           <Button
             type="primary"

@@ -143,111 +143,32 @@ class LeftPart extends React.Component {
             className="div-wrapper"
           >
             <Panel header="general data" key="1">
-              <CardComponentLogic
-                title="Rent"
-                text="Indicate the amount of your current or projected monthly rent."
-                name="rentValue"
-                prefix="$"
-                suffix=""
-              />
-              <CardComponent
-                title="Rent"
-                text="Indicate the amount of your current or projected monthly rent."
-                nameValue="rentValue"
-                prefix="$"
-                suffix=""
-              />
-              <CardComponent
-                title="Property Value"
-                text="Indicate the value of the property you are looking to buy."
-                nameValue="propertyValue"
-                prefix="$"
-                suffix=""
-                dependencies={[
-                  "downPaymentValue",
-                  "amountAnnualTaxesValue",
-                  "annualHeatingCostsValue",
-                  "buyingHomeValue",
-                  "sellingHomeValue"
-                ]}
-                downPaymentValueCondition={this.downPaymentValueCondition}
-              />
-              <CardComponent
-                title="Down Payment"
-                text="Indicate how much you could pay for your down payment. Loans with a down payment of less than 20% of property value will require loan-insurance with CMHC or Genworth."
-                nameValue="downPaymentValue"
-                prefix="$"
-                suffix=""
-                popover={this.returnPopover(
-                  "downPaymentValue",
-                  this.downPaymentValueCondition(this.props.state.propertyValue)
-                )}
-                isProc={this.props.state.propertyValue.val}
-              />
+              <CardComponentLogic name="rentValue" />
+              <CardComponentLogic name="propertyValue" />
+              <CardComponentLogic name="downPaymentValue" />
             </Panel>
             <Panel header="mortgage details" key="2">
               <Text className="hint">
                 Imagine a scenario where you are buying a house and indicate the
                 characteristics of your mortgage.
               </Text>
-              <CardComponent
-                title="Amortization"
-                text=" "
-                nameValue="amortizationValue"
-                prefix=""
-                suffix="years"
-              />
-              <CardComponent
-                title="mortgage rate"
-                text=" "
-                nameValue="mortgageRateValue"
-                prefix=""
-                suffix="%"
-              />
+              <CardComponentLogic name="amortizationValue" />
+              <CardComponentLogic name="mortgageRateValue" />
             </Panel>
             <Panel header="taxes and basic costs" key="3">
               <Text className="hint">
                 Buying a home comes with some expenses that should be expected.
               </Text>
-              <CardComponent
-                title="Amount of annual municipal and school taxes."
-                text=" "
-                nameValue="amountAnnualTaxesValue"
-                prefix="$"
-                suffix=""
-                popover={this.returnPopover("amountAnnualTaxesValue")}
-                isProc={this.props.state.propertyValue.val}
-              />
-              <CardComponent
-                title="Annual heating costs"
-                text=" "
-                nameValue="annualHeatingCostsValue"
-                prefix="$"
-                suffix=""
-                isProc={this.props.state.propertyValue.val}
-              />
+              <CardComponentLogic name="amountAnnualTaxesValue" />
+              <CardComponentLogic name="annualHeatingCostsValue" />
             </Panel>
             <Panel header="closing costs" key="4">
               <Text className="hint">
                 Closing costs are the initial charge you have to pay when you
                 buy or sell a home.
               </Text>
-              <CardComponent
-                title="Costs of buying a home"
-                text=" "
-                nameValue="buyingHomeValue"
-                prefix="$"
-                suffix=""
-                isProc={this.props.state.propertyValue.val}
-              />
-              <CardComponent
-                title="Costs of selling a home"
-                text=" "
-                nameValue="sellingHomeValue"
-                prefix="$"
-                suffix=""
-                isProc={this.props.state.propertyValue.val}
-              />
+              <CardComponentLogic name="buyingHomeValue" />
+              <CardComponentLogic name="sellingHomeValue" />
             </Panel>
             <Panel header="maintenance costs" key="5">
               <Text className="hint">
@@ -267,36 +188,10 @@ class LeftPart extends React.Component {
               >
                 Reset maintenance costs
               </Button>
-              <CardComponent
-                title="Maintenance and renovation"
-                text=" "
-                nameValue="maintenanceValue"
-                prefix=""
-                suffix="%"
-                isProc={this.props.state.propertyValue.val}
-              />
-              <CardComponent
-                title="Annual homeowner's insurance"
-                text=" "
-                nameValue="ownerInsuranceValue"
-                prefix=""
-                suffix="%"
-                isProc={this.props.state.propertyValue.val}
-              />
-              <CardComponent
-                title="Renter's insurance"
-                text=" "
-                nameValue="rentersInsuranceValue"
-                prefix="$"
-                suffix=""
-              />
-              <CardComponent
-                title="Rent monthly heating costs"
-                text=" "
-                nameValue="rentMonthlyCostsValue"
-                prefix="$"
-                suffix=""
-              />
+              <CardComponentLogic name="maintenanceValue" />
+              <CardComponentLogic name="ownerInsuranceValue" />
+              <CardComponentLogic name="rentersInsuranceValue" />
+              <CardComponentLogic name="rentMonthlyCostsValue" />
             </Panel>
             <Panel header="market trends" key="6">
               <Text className="hint">
@@ -314,20 +209,8 @@ class LeftPart extends React.Component {
               >
                 Reset market trends
               </Button>
-              <CardComponent
-                title="Property rate of growth"
-                text=" "
-                nameValue="rateOfGrowthValue"
-                prefix=""
-                suffix="years"
-              />
-              <CardComponent
-                title="Rate of return on investment"
-                text=" "
-                nameValue="returnInvestmentValue"
-                prefix=""
-                suffix="%"
-              />
+              <CardComponentLogic name="rateOfGrowthValue" />
+              <CardComponentLogic name="returnInvestmentValue" />
             </Panel>
           </Collapse>
         </form>

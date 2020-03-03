@@ -4,20 +4,22 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { setValue } from "../../actions";
 import CardComponent2 from "./CardComponent2";
+import config from "./config";
 
 const CardComponentLogic = props => {
+  const { name } = props;
   const {
-    name,
-    title, // todo move title and text where min and max is, prefix and suffix too
+    title,
     text,
     prefix,
     suffix,
-    popover
-  } = props;
-
-  const data = useSelector(state => state[name]);
-  console.log("data ", data);
-
+    popover,
+    min,
+    max,
+    step,
+    dependencies
+  } = config[name];
+  const data = useSelector(state => state.state[name]);
   const dispatch = useDispatch();
 
   return (
@@ -27,11 +29,12 @@ const CardComponentLogic = props => {
       name={name}
       prefix={prefix}
       suffix={suffix}
-      step={10}
+      step={step}
       popover={popover}
-      min={0}
-      max={234560}
-      value={10}
+      min={min}
+      max={max}
+      value={data.val}
+      dependencies={dependencies}
       onChange={v => dispatch(setValue(name, v))}
     />
   );
@@ -40,16 +43,5 @@ const CardComponentLogic = props => {
 export default CardComponentLogic;
 
 CardComponentLogic.propTypes = {
-  name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  prefix: PropTypes.string,
-  suffix: PropTypes.string,
-  popover: PropTypes.string
-};
-
-CardComponentLogic.defaultProps = {
-  prefix: "",
-  suffix: "",
-  popover: ""
+  name: PropTypes.string.isRequired
 };

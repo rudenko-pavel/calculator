@@ -79,7 +79,7 @@ export default CardComponent;
 CardComponent.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   prefix: PropTypes.string,
   suffix: PropTypes.string,
   min: PropTypes.number.isRequired,
@@ -87,11 +87,14 @@ CardComponent.propTypes = {
   step: PropTypes.number.isRequired,
   popover: PropTypes.string,
   value: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  dependencies: PropTypes.array
 };
 
 CardComponent.defaultProps = {
+  text: "",
   prefix: "",
   suffix: "",
-  popover: ""
+  popover: "",
+  dependencies: []
 };
