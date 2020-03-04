@@ -1,3 +1,5 @@
+import "./CardComponent.scss";
+
 import {
   Button,
   Card,
@@ -22,8 +24,33 @@ const CardComponent = props => {
     max,
     step,
     popover,
+    dependencies,
     onChange
   } = props;
+
+  /**
+   * Returns formatted string: pref + val + suff
+   * val, pref, suff - newValue, preffix, suffix
+   */
+  function returnFormatter(val, pref, suff) {
+    let formatter;
+    if (pref === "$") {
+      formatter = `${pref} ${val}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      formatter = `${val}${suff}`;
+    }
+    return formatter;
+  }
+
+  function returnParcer(val, pref, suff) {
+    let parcer;
+    if (pref === "$") {
+      parcer = val.replace(/\$\s?|(,*)/g, "");
+    } else {
+      parcer = val.replace(`${suff}`, "");
+    }
+    return parcer;
+  }
 
   // eslint-disable-next-line react/destructuring-assignment
   const [value, setValue] = useState(props.value);
@@ -32,6 +59,7 @@ const CardComponent = props => {
     [min]: min,
     [max]: max
   };
+
   return (
     <div className="CardComponent">
       <Divider orientation="left">{title}</Divider>
@@ -45,10 +73,15 @@ const CardComponent = props => {
             value={value}
             prefix={prefix}
             suffix={suffix}
+            min={min}
+            max={max}
+            step={step}
+            formatter={val => returnFormatter(val, prefix, suffix)}
+            parser={val => returnParcer(val, prefix, suffix)}
             onChange={v => setValue(v)}
             onBlur={() => onChange(value)}
           />
-          {typeof popover === "object" && (
+          {Object.keys(popover).length > 0 && (
             <Popover placement="top" content={popover} trigger="click">
               <Button type="primary" shape="circle">
                 i
@@ -85,7 +118,7 @@ CardComponent.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  popover: PropTypes.string,
+  popover: PropTypes.object,
   value: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   dependencies: PropTypes.array

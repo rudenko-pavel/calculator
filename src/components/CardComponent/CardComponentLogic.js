@@ -3,8 +3,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setValue } from "../../actions";
+import config from "../../configs/configCards";
+import configPopover from "../../configs/configPopover";
 import CardComponent2 from "./CardComponent2";
-import config from "./config";
 
 const CardComponentLogic = props => {
   const { name } = props;
@@ -13,14 +14,37 @@ const CardComponentLogic = props => {
     text,
     prefix,
     suffix,
-    popover,
+    popoverCheckValue,
     min,
     max,
     step,
     dependencies
   } = config[name];
   const data = useSelector(state => state.state[name]);
+  const data2 = useSelector(state2 => state2.state[popoverCheckValue]);
   const dispatch = useDispatch();
+
+  const popovers = configPopover.popover;
+
+  /**
+   * Returns text for popover from configPopover
+   * nameField - name of field
+   */
+  function returnPopover(nameField) {
+    let result = {};
+    if (typeof popovers[nameField] !== "undefined") {
+      if (popovers[nameField].conditions === true) {
+        let numberCondition = 0;
+        if (data2.val > 250000 && data2.val <= 500000) numberCondition = 1;
+        if (data2.val > 500000 && data2.val <= 1000000) numberCondition = 2;
+        if (data2.val > 1000000) numberCondition = 3;
+        result = popovers[nameField].response[numberCondition].text;
+      } else {
+        result = popovers[nameField].response.text;
+      }
+    }
+    return result;
+  }
 
   return (
     <CardComponent2
@@ -30,7 +54,7 @@ const CardComponentLogic = props => {
       prefix={prefix}
       suffix={suffix}
       step={step}
-      popover={popover}
+      popover={returnPopover(name)}
       min={min}
       max={max}
       value={data.val}

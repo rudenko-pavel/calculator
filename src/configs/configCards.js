@@ -1,4 +1,25 @@
 const config = {
+  panelNumber: {
+    "2": {
+      text:
+        "Imagine a scenario where you are buying a house and indicate the characteristics of your mortgage."
+    },
+    "3": {
+      text: "Buying a home comes with some expenses that should be expected."
+    },
+    "4": {
+      text:
+        "Closing costs are the initial charge you have to pay when you buy or sell a home."
+    },
+    "5": {
+      text:
+        "When buying a house, you have to think about its maintenance. It’s best to set an amount aside for maintenance related costs."
+    },
+    "6": {
+      text:
+        "The value of a property changes over time, following market trends."
+    }
+  },
   rentValue: {
     title: "Rent",
     text: "Indicate the amount of your current or projected monthly rent.",
@@ -27,10 +48,10 @@ const config = {
     text:
       "Indicate how much you could pay for your down payment. Loans with a down payment of less than 20% of property value will require loan-insurance with CMHC or Genworth.",
     prefix: "$",
-    popover: "..........",
     min: 2500,
     max: 50000,
-    step: 10
+    step: 10,
+    popoverCheckValue: "propertyValue"
   },
   amortizationValue: {
     title: "Amortization",
@@ -49,7 +70,6 @@ const config = {
   amountAnnualTaxesValue: {
     title: "Amount of annual municipal and school taxes",
     prefix: "$",
-    popover: "..........",
     min: 0,
     max: 2000,
     step: 10
