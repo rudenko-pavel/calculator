@@ -6,6 +6,9 @@
     padding-left: 15px;
     padding-right: 15px; 
 }
+.ant-drawer-content-wrapper{ 
+    min-width: 60% !important;
+}
 .div-wrapper{
     box-shadow: 3px 3px 10px;
     border: 1px solid $collapse-border;

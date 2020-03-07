@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
       }
       return newState;
     case RESET_VALUES:
-      return initialState;
+      return { ...initialState };
     default:
       return state;
   }
