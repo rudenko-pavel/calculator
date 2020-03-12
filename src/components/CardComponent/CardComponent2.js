@@ -51,9 +51,8 @@ const CardComponent = props => {
     }
     return parcer;
   }
-
-  // eslint-disable-next-line react/destructuring-assignment
-  const [value, setValue] = useState(props.value);
+  const { val } = props;
+  const [value, setValue] = useState(val);
 
   const marks = {
     [min]: min,
@@ -76,8 +75,8 @@ const CardComponent = props => {
             min={min}
             max={max}
             step={step}
-            formatter={val => returnFormatter(val, prefix, suffix)}
-            parser={val => returnParcer(val, prefix, suffix)}
+            formatter={valIn => returnFormatter(valIn, prefix, suffix)}
+            parser={valIn => returnParcer(valIn, prefix, suffix)}
             onChange={v => setValue(v)}
             onBlur={() => onChange(value)}
           />
@@ -119,7 +118,7 @@ CardComponent.propTypes = {
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
   popover: PropTypes.object,
-  value: PropTypes.number.isRequired,
+  val: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   dependencies: PropTypes.array
 };

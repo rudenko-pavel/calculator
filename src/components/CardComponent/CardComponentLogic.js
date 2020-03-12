@@ -57,7 +57,7 @@ const CardComponentLogic = props => {
       popover={returnPopover(name)}
       min={min}
       max={max}
-      value={data.val}
+      val={data.val}
       dependencies={dependencies}
       onChange={v => dispatch(setValue(name, v))}
     />

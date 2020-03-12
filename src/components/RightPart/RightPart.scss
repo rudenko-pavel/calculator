@@ -24,11 +24,9 @@
 }
 
 
-.ant-drawer-right {
-    .ant-drawer-open{
-        .ant-drawer-content-wrapper{ 
-            min-width: 60% !important;
-            width: 60% !important;
-        }
+.drawer-custom {
+    .ant-drawer-content-wrapper{ 
+        min-width: 60% !important;
+        width: 60% !important;
     }
 }

@@ -1,6 +1,6 @@
 import "./RightPart.scss";
 
-import { Button, Card, Col, Divider, Drawer, Row, Typography } from "antd";
+import { Button, Card, Col, Divider, Drawer, Row } from "antd";
 import React, { useState } from "react";
 
 import { resetValues } from "../../actions";
@@ -11,53 +11,40 @@ import ShowDataLogic from "./ShowDataLogic";
 const RightPart = () => {
   const iState = initialState;
   console.log("initialState: ", iState);
-  const {
-    amortizationValue,
-    mortgageRateValue,
-    rentValue,
-    propertyValue,
-    downPaymentValue,
-    amountAnnualTaxesValue,
-    annualHeatingCostsValue,
-    buyingHomeValue,
-    sellingHomeValue,
-    maintenanceValue,
-    ownerInsuranceValue,
-    rentersInsuranceValue,
-    rentMonthlyCostsValue,
-    rateOfGrowthValue,
-    returnInvestmentValue
-  } = iState;
+  const { rentValue } = iState;
 
   const [visiblePanel, toggleDrawer] = useState(false);
-  const { buttons } = configTFE;
+  const { buttons, divElements } = configTFE;
 
   return (
     <div className="RightPart">
-      <Card title="monthly payments" className="table-money div-wrapper">
+      <Card
+        title={divElements.summaryBlock.div0.text}
+        className="table-money div-wrapper"
+      >
         <Row>
           <Col span={10}>&nbsp;</Col>
-          <Col span={7}>RENT</Col>
-          <Col span={7}>BUY</Col>
+          <Col span={7}>{divElements.summaryBlock.div1.text}</Col>
+          <Col span={7}>{divElements.summaryBlock.div2.text}</Col>
         </Row>
         <Row>
-          <Col span={10}>Rent or Mortgage</Col>
+          <Col span={10}>{divElements.summaryBlock.div3.text}</Col>
           <Col span={7}>{new Intl.NumberFormat().format(rentValue.val)}</Col>
           <Col span={7}>col-8</Col>
         </Row>
         <Row>
-          <Col span={10}>Property expenses</Col>
+          <Col span={10}>{divElements.summaryBlock.div4.text}</Col>
           <Col span={7}>col-8</Col>
           <Col span={7}>col-8</Col>
         </Row>
         <Row>
-          <Col span={10}>Monthly savings</Col>
+          <Col span={10}>{divElements.summaryBlock.div5.text}</Col>
           <Col span={7}>col-8</Col>
           <Col span={7}>col-8</Col>
         </Row>
         <Row>
           <Col span={10} className="caption">
-            Total
+            {divElements.summaryBlock.div6.text}
           </Col>
           <Col span={7}>col-8</Col>
           <Col span={7}>col-8</Col>
@@ -75,6 +62,7 @@ const RightPart = () => {
         {buttons.commonButtons.showSelectedData.text}
       </Button>
       <Drawer
+        className="drawer-custom"
         placement="right"
         closable={false}
         onClose={() => toggleDrawer(!visiblePanel)}
@@ -83,7 +71,9 @@ const RightPart = () => {
         <Card title="selected data" className="selectedData div-wrapper">
           <Row>
             <Col lg={12} md={24}>
-              <Divider orientation="left">general data</Divider>
+              <Divider orientation="left">
+                {divElements.titles.title1.text}
+              </Divider>
               <Card type="inner">
                 <ShowDataLogic name="rentValue" />
                 <ShowDataLogic name="propertyValue" />
@@ -91,7 +81,9 @@ const RightPart = () => {
               </Card>
             </Col>
             <Col lg={12} md={24}>
-              <Divider orientation="left">mortgage details</Divider>
+              <Divider orientation="left">
+                {divElements.titles.title2.text}
+              </Divider>
               <Card type="inner">
                 <ShowDataLogic name="amortizationValue" />
                 <ShowDataLogic name="mortgageRateValue" />
@@ -100,14 +92,18 @@ const RightPart = () => {
           </Row>
           <Row>
             <Col lg={12} md={24}>
-              <Divider orientation="left">taxes and basic costs</Divider>
+              <Divider orientation="left">
+                {divElements.titles.title3.text}
+              </Divider>
               <Card type="inner">
                 <ShowDataLogic name="amountAnnualTaxesValue" />
                 <ShowDataLogic name="annualHeatingCostsValue" />
               </Card>
             </Col>
             <Col lg={12} md={24}>
-              <Divider orientation="left">closing costs</Divider>
+              <Divider orientation="left">
+                {divElements.titles.title4.text}
+              </Divider>
               <Card type="inner">
                 <ShowDataLogic name="buyingHomeValue" />
                 <ShowDataLogic name="sellingHomeValue" />
@@ -116,7 +112,9 @@ const RightPart = () => {
           </Row>
           <Row>
             <Col lg={12} md={24}>
-              <Divider orientation="left">maintenance costs</Divider>
+              <Divider orientation="left">
+                {divElements.titles.title5.text}
+              </Divider>
               <Card type="inner">
                 <ShowDataLogic name="maintenanceValue" />
                 <ShowDataLogic name="ownerInsuranceValue" />
@@ -125,7 +123,9 @@ const RightPart = () => {
               </Card>
             </Col>
             <Col lg={12} md={24}>
-              <Divider orientation="left">market trends</Divider>
+              <Divider orientation="left">
+                {divElements.titles.title6.text}
+              </Divider>
               <Card type="inner">
                 <ShowDataLogic name="rateOfGrowthValue" />
                 <ShowDataLogic name="returnInvestmentValue" />

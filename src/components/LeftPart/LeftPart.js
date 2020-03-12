@@ -14,37 +14,37 @@ const LeftPart = () => {
   }
 
   const { Panel } = Collapse;
-  const buttons = configTFE.buttons.resetValues;
+  const { buttons, divElements } = configTFE;
 
   return (
     <div className="LeftPart">
       <form>
         <Collapse
-          defaultActiveKey={[1]}
+          defaultActiveKey={[]}
           onChange={callbackCollapse}
           className="div-wrapper"
         >
-          <Panel header="general data" key="1">
+          <Panel header={divElements.titles.title1.text} key="1">
             <CardComponentLogic name="rentValue" />
             <CardComponentLogic name="propertyValue" />
             <CardComponentLogic name="downPaymentValue" />
           </Panel>
-          <Panel header="mortgage details" key="2">
+          <Panel header={divElements.titles.title2.text} key="2">
             <TextPanel num="2" />
             <CardComponentLogic name="amortizationValue" />
             <CardComponentLogic name="mortgageRateValue" />
           </Panel>
-          <Panel header="taxes and basic costs" key="3">
+          <Panel header={divElements.titles.title3.text} key="3">
             <TextPanel num="3" />
             <CardComponentLogic name="amountAnnualTaxesValue" />
             <CardComponentLogic name="annualHeatingCostsValue" />
           </Panel>
-          <Panel header="closing costs" key="4">
+          <Panel header={divElements.titles.title4.text} key="4">
             <TextPanel num="4" />
             <CardComponentLogic name="buyingHomeValue" />
             <CardComponentLogic name="sellingHomeValue" />
           </Panel>
-          <Panel header="maintenance costs" key="5">
+          <Panel header={divElements.titles.title5.text} key="5">
             <TextPanel num="5" />
             <Button
               type="primary"
@@ -57,14 +57,14 @@ const LeftPart = () => {
                 ])
               }
             >
-              {buttons.btn2.text}
+              {buttons.resetValues.btn2.text}
             </Button>
             <CardComponentLogic name="maintenanceValue" />
             <CardComponentLogic name="ownerInsuranceValue" />
             <CardComponentLogic name="rentersInsuranceValue" />
             <CardComponentLogic name="rentMonthlyCostsValue" />
           </Panel>
-          <Panel header="market trends" key="6">
+          <Panel header={divElements.titles.title6.text} key="6">
             <TextPanel num="6" />
             <Button
               type="primary"
@@ -72,7 +72,7 @@ const LeftPart = () => {
                 resetValues(["rateOfGrowthValue", "returnInvestmentValue"])
               }
             >
-              {buttons.btn3.text}
+              {buttons.resetValues.btn3.text}
             </Button>
             <CardComponentLogic name="rateOfGrowthValue" />
             <CardComponentLogic name="returnInvestmentValue" />
