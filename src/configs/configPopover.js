@@ -4,9 +4,10 @@ const configPopover = {
   popover: {
     downPaymentValue: {
       conditions: true,
-      response: [
-        {
+      response: {
+        0: {
           condition: 0,
+          value: 50000,
           text: (
             <div>
               The minimum downpayment is based on property value:{" "}
@@ -16,8 +17,9 @@ const configPopover = {
             </div>
           )
         },
-        {
+        1: {
           condition: 1,
+          value: 250000,
           text: (
             <div>
               Your down payment should represent at least 5% of the value of the
@@ -25,8 +27,9 @@ const configPopover = {
             </div>
           )
         },
-        {
+        2: {
           condition: 2,
+          value: 500000,
           text: (
             <div>
               Your down payment should represent 5% of the first $500k + 10% the
@@ -35,8 +38,9 @@ const configPopover = {
             </div>
           )
         },
-        {
+        3: {
           condition: 3,
+          value: 1000000,
           text: (
             <div>
               Your down payment should represent 20% of the value of the
@@ -44,7 +48,7 @@ const configPopover = {
             </div>
           )
         }
-      ]
+      }
     },
     amountAnnualTaxesValue: {
       conditions: false,

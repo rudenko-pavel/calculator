@@ -9,22 +9,13 @@ import CardComponentLogic from "../CardComponent/CardComponentLogic";
 import TextPanel from "../TextPanel/TextPanel";
 
 const LeftPart = () => {
-  // Q: why do we need it?
-  function callbackCollapse(key) {
-    console.log("callbackCollapse(): ", key);
-  }
-
   const { Panel } = Collapse;
   const { buttons, divElements } = configTFE;
 
   return (
     <div className="LeftPart">
       <form>
-        <Collapse
-          defaultActiveKey={[]}
-          onChange={callbackCollapse}
-          className="div-wrapper"
-        >
+        <Collapse defaultActiveKey={[]} className="div-wrapper">
           <Panel header={divElements.titles.title1.text} key="1">
             <CardComponentLogic name="rentValue" />
             <CardComponentLogic name="propertyValue" />
