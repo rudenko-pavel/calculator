@@ -1,221 +1,147 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
 import "./CardComponent.scss";
 
 import {
   Button,
   Card,
   Divider,
-  Input,
+  InputNumber,
   Popover,
   Slider,
   Typography
 } from "antd";
-import React from "react";
-import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 
-import { setValue } from "../../actions";
+// Q: pls remove CardComponent and rename this file to CardComponent.js
+const CardComponent = props => {
+  const { Text } = Typography;
+  const {
+    val,
+    name,
+    title,
+    text,
+    prefix,
+    suffix,
+    min,
+    max,
+    step,
+    popover,
+    dependencies, // Q: ?
+    onChange
+  } = props;
 
-class CardComponent extends React.Component {
-  setDataInStore = (e, name, flag, dependencies) => {
-    // eslint-disable-next-line no-param-reassign
-    if (Number.isNaN(e)) e = 0;
-    this.props.setValue(name, e, flag, dependencies);
-  };
-
-  lookForFieldName = name => {
-    let fieldValue = "";
-    for (const [key, value] of Object.entries(this.props.state)) {
-      if (`${key}` === name) {
-        fieldValue = value.val;
-      }
+  /**
+   * Returns formatted string: pref + val + suff
+   * val, pref, suff - newValue, preffix, suffix
+   */
+  function returnFormatter(val, pref, suff) {
+    let formatter;
+    // Q: I know you can do better.... spaceially take a look on 3years in Amortization
+    if (pref === "$") {
+      formatter = `${pref} ${val}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    } else {
+      formatter = `${val}${suff}`;
     }
-    return fieldValue;
-  };
+    return formatter;
+  }
 
-  lookForOptions = (name, fullValue) => {
-    const result = [];
-    const { propertyValue } = this.props.state;
-    for (const [key, value] of Object.entries(this.props.state)) {
-      if (`${key}` === name) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key2, value2] of Object.entries(value)) {
-          result[`${key2}`] = value2;
-          if (fullValue > 0 && key2 === "val") {
-            switch (name) {
-              case "maintenanceValue":
-              case "ownerInsuranceValue":
-                if (
-                  fullValue < propertyValue.min ||
-                  fullValue > propertyValue.max
-                ) {
-                  if (fullValue < propertyValue.min) {
-                    result.proc = `$${new Intl.NumberFormat("en-EN", {
-                      maximumFractionDigits: 2
-                    }).format((value2 / 100) * propertyValue.min)} first year`;
-                  }
-                  if (fullValue > propertyValue.max) {
-                    result.proc = `$${new Intl.NumberFormat("en-EN", {
-                      maximumFractionDigits: 2
-                    }).format((value2 / 100) * propertyValue.max)} first year`;
-                  }
-                } else {
-                  result.proc = `$${new Intl.NumberFormat("en-EN", {
-                    maximumFractionDigits: 2
-                  }).format((value2 / 100) * fullValue)} first year`;
-                }
-
-                break;
-              default:
-                if (
-                  fullValue < propertyValue.min ||
-                  fullValue > propertyValue.max
-                ) {
-                  if (fullValue < propertyValue.min) {
-                    result.proc = new Intl.NumberFormat("en-EN", {
-                      style: "percent",
-                      maximumFractionDigits: 2
-                    }).format(value2 / propertyValue.min);
-                  }
-                  if (fullValue > propertyValue.max) {
-                    result.proc = new Intl.NumberFormat("en-EN", {
-                      style: "percent",
-                      maximumFractionDigits: 2
-                    }).format(value2 / propertyValue.max);
-                  }
-                } else {
-                  result.proc = new Intl.NumberFormat("en-EN", {
-                    style: "percent",
-                    maximumFractionDigits: 2
-                  }).format(value2 / fullValue);
-                }
-            }
-          }
-        }
-      }
+  function returnParcer(val, pref, suff) {
+    let parcer;
+    if (pref === "$") {
+      parcer = val.replace(/\$\s?|(,*)/g, "");
+    } else {
+      parcer = val.replace(`${suff}`, "");
     }
+    return parcer;
+  }
+
+  // Q: description?
+  function formattedData(valF) {
+    const formatter = new Intl.NumberFormat("en-EN").format(valF);
+    const result = `${prefix}${formatter}${suffix}`;
     return result;
-  };
-
-  tipFormatter = (value, flag) => {
-    switch (flag) {
-      case "years":
-        return this.tipFormatterYears;
-      case "%":
-        return this.tipFormatterProc;
-      default:
-        return this.tipFormatterDollar;
-    }
-  };
-
-  tipFormatterDollar = value => {
-    return `$${new Intl.NumberFormat("en-EN", {
-      maximumFractionDigits: 2
-    }).format(value)}`;
-  };
-
-  tipFormatterProc = value => {
-    return `${new Intl.NumberFormat("en-EN", {
-      maximumFractionDigits: 2
-    }).format(value)} %`;
-  };
-
-  tipFormatterYears = value => {
-    return `${new Intl.NumberFormat("en-EN", {
-      maximumFractionDigits: 2
-    }).format(value)} years`;
-  };
-
-  // eslint-disable-next-line consistent-return
-  showPopover() {
-    if (typeof this.props.popover === "object") {
-      return (
-        <Popover placement="top" content={this.props.popover} trigger="click">
-          <Button type="primary" shape="circle">
-            i
-          </Button>
-        </Popover>
-      );
-    }
   }
+  const [value, setValue] = useState(val);
 
-  render() {
-    const { Text } = Typography;
-    const name = this.props.nameValue;
-    return (
-      <div className="CardComponent">
-        <Divider orientation="left">{this.props.title}</Divider>
-        <Card>
-          <Card.Grid hoverable={false}>
-            <Text type="secondary">{this.props.text}</Text>
-          </Card.Grid>
-          <Card.Grid hoverable={false}>
-            <Input
-              name={name}
-              value={[this.lookForFieldName(name)]}
-              prefix={this.props.prefix}
-              suffix={this.props.suffix}
-              onChange={e =>
-                this.setDataInStore(parseFloat(e.target.value), e.target.name)
-              }
-              onBlur={e =>
-                this.setDataInStore(
-                  parseFloat(e.target.value),
-                  e.target.name,
-                  true,
-                  this.props.dependencies
-                )
-              }
-            />
-            <span className="input-helper">
-              <Text type="secondary">
-                {this.lookForOptions(name, this.props.isProc).proc}
-              </Text>
-            </span>
-            {this.showPopover()}
-          </Card.Grid>
-          <Card.Grid hoverable={false}>
-            <span className="minSlider slider-values">
-              {new Intl.NumberFormat("en-EN", {
-                maximumFractionDigits: 2
-              }).format(this.lookForOptions(name).min)}
-            </span>
-            <Slider
-              tipFormatter={this.tipFormatter(
-                this.lookForFieldName(name),
-                this.props.suffix
-              )}
-              min={this.lookForOptions(name).min}
-              max={this.lookForOptions(name).max}
-              step={this.lookForOptions(name).step}
-              onChange={v =>
-                this.setDataInStore(
-                  parseFloat(v),
-                  name,
-                  true,
-                  this.props.dependencies
-                )
-              }
-              value={this.lookForFieldName(name)}
-            />
-            <span className="maxSlider slider-values">
-              {new Intl.NumberFormat("en-EN", {
-                maximumFractionDigits: 2
-              }).format(this.lookForOptions(name).max)}
-            </span>
-          </Card.Grid>
-        </Card>
-      </div>
-    );
-  }
-}
+  // update inner value if val is changed
+  useEffect(() => {
+    setValue(val);
+  }, [val]);
 
-const mapStateToProps = state => {
-  return {
-    state: state.state
+  const marks = {
+    [min]: formattedData(min),
+    [max]: formattedData(max)
   };
+
+  return (
+    <div className="CardComponent">
+      <Divider orientation="left">{title}</Divider>
+      <Card>
+        <Card.Grid hoverable={false}>
+          <Text type="secondary">{text}</Text>
+        </Card.Grid>
+        <Card.Grid hoverable={false}>
+          <InputNumber
+            name={name}
+            value={value}
+            prefix={prefix}
+            suffix={suffix}
+            min={min}
+            max={max}
+            step={step}
+            formatter={valIn => returnFormatter(valIn, prefix, suffix)}
+            parser={valIn => returnParcer(valIn, prefix, suffix)}
+            onChange={v => setValue(v)}
+            onBlur={() => onChange(value)}
+          />
+          {Object.keys(popover).length > 0 && (
+            <Popover placement="top" content={popover} trigger="click">
+              <Button type="primary" shape="circle">
+                i
+              </Button>
+            </Popover>
+          )}
+        </Card.Grid>
+        <Card.Grid hoverable={false}>
+          <Slider
+            marks={marks}
+            tipFormatter={formattedData}
+            onAfterChange={() => onChange(value)}
+            min={min}
+            max={max}
+            step={step}
+            onChange={v => setValue(v)}
+            value={value}
+          />
+        </Card.Grid>
+      </Card>
+    </div>
+  );
 };
 
-export default connect(mapStateToProps, { setValue })(CardComponent);
+export default CardComponent;
+
+CardComponent.propTypes = {
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string,
+  prefix: PropTypes.string,
+  suffix: PropTypes.string,
+  min: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  popover: PropTypes.object,
+  val: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  dependencies: PropTypes.array
+};
+
+CardComponent.defaultProps = {
+  text: "",
+  prefix: "",
+  suffix: "",
+  popover: "",
+  dependencies: []
+};
