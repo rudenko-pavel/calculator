@@ -76,6 +76,16 @@ const CardComponent = props => {
     [max]: formattedData(max)
   };
 
+  /**
+   * Change value if value isNumber
+   */
+  function onHandleChangeNumeric(e) {
+    if (!Number(e)) {
+      return;
+    }
+    setValue(e);
+  }
+
   return (
     <div className="CardComponent">
       <Divider orientation="left">{title}</Divider>
@@ -94,7 +104,7 @@ const CardComponent = props => {
             step={step}
             formatter={valIn => returnFormatter(valIn, prefix, suffix)}
             parser={valIn => returnParcer(valIn, prefix, suffix)}
-            onChange={v => setValue(v)}
+            onChange={onHandleChangeNumeric}
             onBlur={() => onChange(value)}
           />
           {Object.keys(popover).length > 0 && (
