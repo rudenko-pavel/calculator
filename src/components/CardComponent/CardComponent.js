@@ -35,11 +35,10 @@ const CardComponent = props => {
    */
   function returnFormatter(valF, pref, suff) {
     let formatter;
-    // Q: I know you can do better.... spaceially take a look on 3years in Amortization
     if (pref === "$") {
       formatter = `${pref} ${valF}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     } else {
-      formatter = `${valF}${suff}`;
+      formatter = `${valF} ${suff}`;
     }
     return formatter;
   }
@@ -51,6 +50,7 @@ const CardComponent = props => {
     } else {
       parcer = valP.replace(`${suff}`, "");
     }
+    parcer = parcer.replace(/\s+/g, "");
     return parcer;
   }
 
