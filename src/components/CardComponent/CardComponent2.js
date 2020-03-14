@@ -10,12 +10,13 @@ import {
   Typography
 } from "antd";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Q: pls remove CardComponent and rename this file to CardComponent.js
 const CardComponent = props => {
   const { Text } = Typography;
   const {
+    val,
     name,
     title,
     text,
@@ -60,8 +61,12 @@ const CardComponent = props => {
     const result = `${prefix}${formatter}${suffix}`;
     return result;
   }
-  const { val } = props;
   const [value, setValue] = useState(val);
+
+  // update inner value if val is changed
+  useEffect(() => {
+    setValue(val);
+  }, [val]);
 
   const marks = {
     [min]: formattedData(min),

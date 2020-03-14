@@ -3,7 +3,7 @@
 /* eslint-disable no-case-declarations */
 import { RESET_VALUES, SET_VALUE } from "../actions/types";
 
-export const initialState = {
+const initialState = {
   rentValue: { val: 1000, min: 500, max: 4000, step: 50 },
   propertyValue: { val: 50000, min: 50000, max: 2000000, step: 10000 },
   downPaymentValue: { val: 2500, min: 2500, max: 50000, step: 10 },
@@ -21,18 +21,28 @@ export const initialState = {
   returnInvestmentValue: { val: 4, min: 0, max: 10, step: 0.1 }
 };
 
-export default (state = initialState, action) => {
+// todo: yeah it's can be better: for now quick solution.
+const getDeepCopy = obj => {
+  return JSON.parse(JSON.stringify(obj));
+};
+
+// always return deep copy of initialState
+export const getInitialState = () => {
+  return getDeepCopy(initialState);
+};
+
+export default (state = getInitialState(), action) => {
   switch (action.type) {
     case SET_VALUE:
       const { name, value, dependenciesValues } = action.payload;
-      const newState = { ...state };
+      const newState = getDeepCopy(state);
       newState[name].val = value;
       for (const [key, val] of Object.entries(dependenciesValues)) {
         newState[key] = val;
       }
       return newState;
     case RESET_VALUES:
-      return { ...initialState };
+      return getInitialState();
     default:
       return state;
   }

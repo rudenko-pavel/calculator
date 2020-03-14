@@ -2,19 +2,19 @@ import "./RightPart.scss";
 
 import { Button, Card, Col, Divider, Drawer, Row } from "antd";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { resetValues } from "../../actions";
 import configTFE from "../../configs/configTextForElements";
-import { initialState } from "../../reducers/baseReducer";
+import { getInitialState } from "../../reducers/baseReducer";
 import ShowDataLogic from "./ShowDataLogic";
 
 const RightPart = () => {
-  const iState = initialState;
-  console.log("initialState: ", iState);
-  const { rentValue } = iState;
+  const { rentValue } = getInitialState();
 
   const [visiblePanel, toggleDrawer] = useState(false);
   const { buttons, divElements } = configTFE;
+  const dispatch = useDispatch();
 
   return (
     <div className="RightPart">
@@ -51,7 +51,7 @@ const RightPart = () => {
         </Row>
       </Card>
       <Divider dashed />
-      <Button type="primary" onClick={() => resetValues([])}>
+      <Button type="primary" onClick={() => dispatch(resetValues([]))}>
         {buttons.resetValues.btn1.text}
       </Button>
       <Button

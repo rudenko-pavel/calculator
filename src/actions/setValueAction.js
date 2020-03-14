@@ -1,5 +1,5 @@
 /* eslint-disable no-return-assign */
-import { initialState } from "../reducers/baseReducer";
+import { getInitialState } from "../reducers/baseReducer";
 import { SET_VALUE } from "./types";
 
 const DOWN_PAYMENT_PERCENT_VALUES = { c1: 0.05, c2: 0.1, c3: 0.2 };
@@ -36,7 +36,6 @@ dependencies - зависмые значения
 */
 
 export default function setValue(name, value, flag, dependencies) {
-  console.log("DDDD", initialState);
   const dependenciesValues = {};
   if (flag === true) {
     let receiveValue;
@@ -49,7 +48,7 @@ export default function setValue(name, value, flag, dependencies) {
     }
 
     // eslint-disable-next-line no-restricted-syntax
-    for (const [key, val] of Object.entries(initialState)) {
+    for (const [key, val] of Object.entries(getInitialState())) {
       if (`${key}` === name) {
         if (receiveValue < `${val.min}`) receiveValue = `${val.min}`;
         else if (receiveValue > `${val.max}`) receiveValue = `${val.max}`;
@@ -63,7 +62,7 @@ export default function setValue(name, value, flag, dependencies) {
       dependencies.forEach(nameItem => {
         let newMin = 0;
         let newMax;
-        let newVal = initialState[nameItem].val;
+        let newVal = getInitialState()[nameItem].val;
         switch (nameItem) {
           case "downPaymentValue":
             newMax = value;
@@ -77,7 +76,8 @@ export default function setValue(name, value, flag, dependencies) {
                 DOWN_PAYMENT_CONDITIONS.c1 * DOWN_PAYMENT_PERCENT_VALUES.c1 +
                 (value - DOWN_PAYMENT_CONDITIONS.c1) *
                   DOWN_PAYMENT_PERCENT_VALUES.c2;
-            if (value > DOWN_PAYMENT_CONDITIONS.c2) newMin = value * DOWN_PAYMENT_PERCENT_VALUES.c3;
+            if (value > DOWN_PAYMENT_CONDITIONS.c2)
+              newMin = value * DOWN_PAYMENT_PERCENT_VALUES.c3;
             break;
           case "amountAnnualTaxesValue":
           case "buyingHomeValue":
