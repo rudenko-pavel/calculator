@@ -9,6 +9,7 @@ import CardComponentLogic from "../CardComponent/CardComponentLogic";
 import TextPanel from "../TextPanel/TextPanel";
 
 const LeftPart = () => {
+  // Q: why do we need it?
   function callbackCollapse(key) {
     console.log("callbackCollapse(): ", key);
   }

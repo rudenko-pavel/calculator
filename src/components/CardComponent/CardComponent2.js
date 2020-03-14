@@ -12,6 +12,7 @@ import {
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
+// Q: pls remove CardComponent and rename this file to CardComponent.js
 const CardComponent = props => {
   const { Text } = Typography;
   const {
@@ -24,7 +25,7 @@ const CardComponent = props => {
     max,
     step,
     popover,
-    dependencies,
+    dependencies, // Q: ?
     onChange
   } = props;
 
@@ -34,6 +35,7 @@ const CardComponent = props => {
    */
   function returnFormatter(val, pref, suff) {
     let formatter;
+    // Q: I know you can do better.... spaceially take a look on 3years in Amortization
     if (pref === "$") {
       formatter = `${pref} ${val}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     } else {
@@ -52,6 +54,7 @@ const CardComponent = props => {
     return parcer;
   }
 
+  // Q: description?
   function formattedData(valF) {
     const formatter = new Intl.NumberFormat("en-EN").format(valF);
     const result = `${prefix}${formatter}${suffix}`;
@@ -122,9 +125,11 @@ CardComponent.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   popover: PropTypes.object,
   val: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
   dependencies: PropTypes.array
 };
 

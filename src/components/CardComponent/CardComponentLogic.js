@@ -35,6 +35,7 @@ const CardComponentLogic = props => {
     if (typeof popovers[nameField] !== "undefined") {
       if (popovers[nameField].conditions === true) {
         let numberCondition = 0;
+        // Q: why hardcode? Please move logic somewhere else: create another file
         if (data2.val > 250000 && data2.val <= 500000) numberCondition = 1;
         if (data2.val > 500000 && data2.val <= 1000000) numberCondition = 2;
         if (data2.val > 1000000) numberCondition = 3;
