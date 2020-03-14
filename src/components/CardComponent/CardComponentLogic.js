@@ -31,7 +31,6 @@ const CardComponentLogic = props => {
    * nameField - name of field
    */
   function returnPopover(nameField) {
-    console.log("popovers[nameField] ", popovers[nameField])
     let result = {};
     if (typeof popovers[nameField] !== "undefined") {
       if (popovers[nameField].conditions === true) {

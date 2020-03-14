@@ -12,7 +12,6 @@ import {
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
-// Q: pls remove CardComponent and rename this file to CardComponent.js
 const CardComponent = props => {
   const { Text } = Typography;
   const {
@@ -31,31 +30,35 @@ const CardComponent = props => {
   } = props;
 
   /**
-   * Returns formatted string: pref + val + suff
-   * val, pref, suff - newValue, preffix, suffix
+   * Returns formatted string: pref + valF + suff
+   * valF, pref, suff - newValue, preffix, suffix
    */
-  function returnFormatter(val, pref, suff) {
+  function returnFormatter(valF, pref, suff) {
     let formatter;
     // Q: I know you can do better.... spaceially take a look on 3years in Amortization
     if (pref === "$") {
-      formatter = `${pref} ${val}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      formatter = `${pref} ${valF}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     } else {
-      formatter = `${val}${suff}`;
+      formatter = `${valF}${suff}`;
     }
     return formatter;
   }
 
-  function returnParcer(val, pref, suff) {
+  function returnParcer(valP, pref, suff) {
     let parcer;
     if (pref === "$") {
-      parcer = val.replace(/\$\s?|(,*)/g, "");
+      parcer = valP.replace(/\$\s?|(,*)/g, "");
     } else {
-      parcer = val.replace(`${suff}`, "");
+      parcer = valP.replace(`${suff}`, "");
     }
     return parcer;
   }
 
-  // Q: description?
+  /**
+   * Returns formatted string: pref + val + suff
+   * val = number (Required),
+   * pref,suff = string. Get variables from props (e.g. preffix="$", value=4000, suffix="")
+   */
   function formattedData(valF) {
     const formatter = new Intl.NumberFormat("en-EN").format(valF);
     const result = `${prefix}${formatter}${suffix}`;

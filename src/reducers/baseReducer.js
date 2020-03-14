@@ -42,7 +42,18 @@ export default (state = getInitialState(), action) => {
       }
       return newState;
     case RESET_VALUES:
-      return getInitialState();
+      let returnResetValues = getDeepCopy(state);
+      if (action.payload.length === 0) {
+        returnResetValues = getInitialState();
+      } else {
+        // if changed some (less then all) values
+        const iState = getInitialState();
+        const arrayOfNames = action.payload;
+        arrayOfNames.forEach(item => {
+          returnResetValues[item] = iState[item];
+        });
+      }
+      return returnResetValues;
     default:
       return state;
   }

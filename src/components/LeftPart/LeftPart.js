@@ -2,6 +2,7 @@ import "./LeftPart.scss";
 
 import { Button, Collapse } from "antd";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { resetValues } from "../../actions";
 import configTFE from "../../configs/configTextForElements";
@@ -11,6 +12,7 @@ import TextPanel from "../TextPanel/TextPanel";
 const LeftPart = () => {
   const { Panel } = Collapse;
   const { buttons, divElements } = configTFE;
+  const dispatch = useDispatch();
 
   return (
     <div className="LeftPart">
@@ -41,12 +43,14 @@ const LeftPart = () => {
             <Button
               type="primary"
               onClick={() =>
-                resetValues([
-                  "maintenanceValue",
-                  "ownerInsuranceValue",
-                  "rentersInsuranceValue",
-                  "rentMonthlyCostsValue"
-                ])
+                dispatch(
+                  resetValues([
+                    "maintenanceValue",
+                    "ownerInsuranceValue",
+                    "rentersInsuranceValue",
+                    "rentMonthlyCostsValue"
+                  ])
+                )
               }
             >
               {buttons.resetValues.btn2.text}
@@ -61,7 +65,9 @@ const LeftPart = () => {
             <Button
               type="primary"
               onClick={() =>
-                resetValues(["rateOfGrowthValue", "returnInvestmentValue"])
+                dispatch(
+                  resetValues(["rateOfGrowthValue", "returnInvestmentValue"])
+                )
               }
             >
               {buttons.resetValues.btn3.text}
