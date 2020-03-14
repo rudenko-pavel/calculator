@@ -51,12 +51,18 @@ const CardComponent = props => {
     }
     return parcer;
   }
+
+  function formattedData(valF) {
+    const formatter = new Intl.NumberFormat("en-EN").format(valF);
+    const result = `${prefix}${formatter}${suffix}`;
+    return result;
+  }
   const { val } = props;
   const [value, setValue] = useState(val);
 
   const marks = {
-    [min]: min,
-    [max]: max
+    [min]: formattedData(min),
+    [max]: formattedData(max)
   };
 
   return (
@@ -91,8 +97,7 @@ const CardComponent = props => {
         <Card.Grid hoverable={false}>
           <Slider
             marks={marks}
-            /*  tipFormatter={// todo
-              } */
+            tipFormatter={formattedData}
             onAfterChange={() => onChange(value)}
             min={min}
             max={max}

@@ -1,4 +1,17 @@
 @import "../../scss/palette";
 .LeftPart{
     padding: 10px;
+    
+    .ant-slider-mark{
+        span:nth-child(1){
+            color: $slider-default;
+            left: 15px !important;
+            right: auto;
+        } 
+        span:nth-child(2){
+            color: $slider-default;
+            left: auto !important;
+            right: -20px;
+        }
+    }
 }
