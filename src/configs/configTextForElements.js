@@ -22,7 +22,7 @@ const configTextForElements = {
       title6: { text: "market trends" }
     },
     summaryBlock: {
-      div0: { text: "monthly payments" },
+      div0: { text: "monthly payments!" },
       div1: { text: "rent" },
       div2: { text: "buy" },
       div3: { text: "rent or mortgage" },
