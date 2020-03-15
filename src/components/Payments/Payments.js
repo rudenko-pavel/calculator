@@ -1,6 +1,8 @@
 import "./Payments.scss";
 
-import { Table } from "antd";
+import { Button, Table } from "antd";
+import JsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -47,8 +49,28 @@ const Payments = () => {
   mortgageCalculator.additionalPrincipalPayment = 100;
   const payment = mortgageCalculator.calculatePayment();
 
+  function PdfFromHTML() {
+    const columns = configPayments.columns;
+    const rows = formattedPaymentsArray(payment.paymentSchedule);
+    const doc = new JsPDF("p", "pt");
+    doc.autoTable(columns, rows, {
+      styles: { fillColor: [160, 183, 235] },
+      columnStyles: {
+        id: { fillColor: 255 }
+      },
+      margin: { top: 60 },
+      didDrawPage() {
+        doc.text("Payments", 40, 30);
+      }
+    });
+    doc.save("payments.pdf");
+  }
+
   return (
     <div className="Payments">
+      <Button type="primary" onClick={() => PdfFromHTML()}>
+        PDF FILE{" "}
+      </Button>
       {showMortgage(payment)}
       <hr />
       <Table
