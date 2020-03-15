@@ -11,10 +11,10 @@ class HomePage extends React.Component {
     return (
       <div className="HomePage">
         <Row>
-          <Col lg={14} md={14} sm={24}>
+          <Col lg={14} md={24} sm={24}>
             <LeftPart />
           </Col>
-          <Col lg={10} md={10} sm={24}>
+          <Col lg={10} className="onlyWeb">
             <RightPart />
           </Col>
         </Row>

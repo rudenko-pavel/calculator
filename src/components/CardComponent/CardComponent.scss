@@ -62,3 +62,20 @@
     }
 }
 
+@media only screen and (max-device-width:767px) {
+    .ant-table-content {overflow-x: scroll;}
+}
+
+@media only screen and (max-device-width:575px) {
+    .LeftPart{
+        .ant-card{
+            .ant-card-body{
+                & > div{
+                    &:nth-child(1){ width: 100% !important; }
+                    &:nth-child(2){ width: 100% !important; }
+                    &:nth-child(3){ width: 100% !important; }
+                }
+            }
+        }
+    }
+}

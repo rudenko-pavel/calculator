@@ -11,6 +11,7 @@ html{
         min-height: 100%;
         height:auto;
         .App{
+            .onlyWeb{ display:block}
             margin: 1px !important;
             min-height: 100%;
             position: relative;
@@ -55,4 +56,8 @@ html{
 
 .ant-collapse-extra {
     color: $blue-7
+}
+
+@media only screen and (max-device-width:991px) {
+    .onlyWeb{ display:none !important}
 }

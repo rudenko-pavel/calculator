@@ -1,6 +1,12 @@
 const configPayments = {
   columns: [
-    { title: "Count", dataIndex: "count", key: "count" },
+    {
+      title: "Count",
+      dataIndex: "count",
+      key: "count",
+      width: 100,
+      fixed: "left"
+    },
     {
       title: "Interest Payment",
       dataIndex: "interestPayment",
