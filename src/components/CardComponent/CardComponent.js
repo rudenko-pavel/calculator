@@ -77,6 +77,16 @@ const CardComponent = props => {
     [max]: formattedData(max)
   };
 
+  /**
+   * Change value if value isNumber
+   */
+  function onHandleChangeNumeric(e) {
+    if (!Number(e)) {
+      return;
+    }
+    setValue(e);
+  }
+
   return (
     <Card size="small" title={title}>
       <Card.Grid
@@ -106,7 +116,7 @@ const CardComponent = props => {
           step={step}
           formatter={valIn => returnFormatter(valIn, prefix, suffix)}
           parser={valIn => returnParcer(valIn, prefix, suffix)}
-          onChange={v => setValue(v)}
+          onChange={onHandleChangeNumeric}
           onBlur={() => onChange(value)}
         />
       </Card.Grid>
