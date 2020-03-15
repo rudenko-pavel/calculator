@@ -1,16 +1,32 @@
 import "./CardComponent.scss";
 
-import {
-  Button,
-  Card,
-  Divider,
-  InputNumber,
-  Popover,
-  Slider,
-  Typography
-} from "antd";
+import { InfoOutlined } from "@ant-design/icons";
+import { Button, Card, InputNumber, Popover, Slider, Typography } from "antd";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+
+/**
+ * Returns formatted string: pref + valF + suff
+ * valF, pref, suff - newValue, preffix, suffix
+ */
+export function returnFormatter(valF, pref, suff) {
+  let formatter;
+  if (pref === "$") {
+    // https://stackoverflow.com/a/16233919
+    /* return valF.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    }); */
+    console.log("fuck: ", valF, pref);
+    formatter = `${pref} ${Number(valF).toFixed(0)}`.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ","
+    );
+  } else {
+    formatter = `${valF} ${suff}`;
+  }
+  return formatter;
+}
 
 const CardComponent = props => {
   const { Text } = Typography;
@@ -28,21 +44,6 @@ const CardComponent = props => {
     dependencies, // Q: ?
     onChange
   } = props;
-
-  /**
-   * Returns formatted string: pref + valF + suff
-   * valF, pref, suff - newValue, preffix, suffix
-   */
-  function returnFormatter(valF, pref, suff) {
-    let formatter;
-    if (pref === "$") {
-      formatter = `${pref} ${valF}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    } else {
-      formatter = `${valF} ${suff}`;
-    }
-    return formatter;
-  }
-
   function returnParcer(valP, pref, suff) {
     let parcer;
     if (pref === "$") {
@@ -77,48 +78,51 @@ const CardComponent = props => {
   };
 
   return (
-    <div className="CardComponent">
-      <Divider orientation="left">{title}</Divider>
-      <Card>
-        <Card.Grid hoverable={false}>
-          <Text type="secondary">{text}</Text>
-        </Card.Grid>
-        <Card.Grid hoverable={false}>
-          <InputNumber
-            name={name}
-            value={value}
-            prefix={prefix}
-            suffix={suffix}
-            min={min}
-            max={max}
-            step={step}
-            formatter={valIn => returnFormatter(valIn, prefix, suffix)}
-            parser={valIn => returnParcer(valIn, prefix, suffix)}
-            onChange={v => setValue(v)}
-            onBlur={() => onChange(value)}
-          />
-          {Object.keys(popover).length > 0 && (
-            <Popover placement="top" content={popover} trigger="click">
-              <Button type="primary" shape="circle">
-                i
-              </Button>
-            </Popover>
-          )}
-        </Card.Grid>
-        <Card.Grid hoverable={false}>
-          <Slider
-            marks={marks}
-            tipFormatter={formattedData}
-            onAfterChange={() => onChange(value)}
-            min={min}
-            max={max}
-            step={step}
-            onChange={v => setValue(v)}
-            value={value}
-          />
-        </Card.Grid>
-      </Card>
-    </div>
+    <Card size="small" title={title}>
+      <Card.Grid
+        hoverable={false}
+        style={{
+          display: "flex",
+          "justify-content": "space-between",
+          "align-items": "center"
+        }}
+      >
+        <Text type="secondary">{text}</Text>
+
+        {Object.keys(popover).length > 0 && (
+          <Popover content={popover} trigger="click">
+            <Button type="primary" shape="circle" icon={<InfoOutlined />} />
+          </Popover>
+        )}
+      </Card.Grid>
+      <Card.Grid hoverable={false}>
+        <InputNumber
+          name={name}
+          value={value}
+          prefix={prefix}
+          suffix={suffix}
+          min={min}
+          max={max}
+          step={step}
+          formatter={valIn => returnFormatter(valIn, prefix, suffix)}
+          parser={valIn => returnParcer(valIn, prefix, suffix)}
+          onChange={v => setValue(v)}
+          onBlur={() => onChange(value)}
+        />
+      </Card.Grid>
+      <Card.Grid hoverable={false}>
+        <Slider
+          marks={marks}
+          tipFormatter={formattedData}
+          onAfterChange={() => onChange(value)}
+          min={min}
+          max={max}
+          step={step}
+          onChange={v => setValue(v)}
+          value={value}
+        />
+      </Card.Grid>
+    </Card>
   );
 };
 

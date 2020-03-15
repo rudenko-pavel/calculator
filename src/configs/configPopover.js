@@ -2,7 +2,7 @@ import React from "react";
 
 const configPopover = {
   popover: {
-    downPaymentValue: {
+    /* downPaymentValue: {
       conditions: true,
       response: {
         0: {
@@ -49,8 +49,8 @@ const configPopover = {
           )
         }
       }
-    },
-    amountAnnualTaxesValue: {
+    }, */
+    /* amountAnnualTaxesValue: {
       conditions: false,
       response: {
         text: (
@@ -63,7 +63,7 @@ const configPopover = {
           </div>
         )
       }
-    }
+    } */
   }
 };
 

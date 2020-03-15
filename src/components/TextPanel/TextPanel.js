@@ -11,6 +11,9 @@ const TextPanel = props => {
   const { Text } = Typography;
 
   const showText = config.panelNumber[num].text;
+  if (!showText) {
+    return "";
+  }
   return (
     <div className="TextPanel">
       <Text className="hint">{showText}</Text>

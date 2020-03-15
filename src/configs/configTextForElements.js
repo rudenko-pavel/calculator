@@ -7,19 +7,19 @@ const configTextForElements = {
       pdf: { text: "create pdf" }
     },
     resetValues: {
-      btn1: { text: "reset all" },
-      btn2: { text: "reset maintenance costs" },
-      btn3: { text: "reset market trends" }
+      btn1: { text: "Reset all" },
+      btn2: { text: "Reset maintenance costs" },
+      btn3: { text: "Reset market trends" }
     }
   },
   divElements: {
     titles: {
-      title1: { text: "general data" },
-      title2: { text: "mortgage details" },
-      title3: { text: "taxes and basic costs" },
-      title4: { text: "closing costs" },
-      title5: { text: "maintenance costs" },
-      title6: { text: "market trends" }
+      title1: { text: "General data" },
+      title2: { text: "Mortgage details" },
+      title3: { text: "Taxes and basic costs" },
+      title4: { text: "Closing costs" },
+      title5: { text: "Maintenance and Taxes" },
+      title6: { text: "Property rate of growth" } // "Market trends"
     },
     summaryBlock: {
       div0: { text: "monthly payments!" },

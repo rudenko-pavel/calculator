@@ -2,14 +2,15 @@ import "./Charts.scss";
 
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import mortgageJs from "mortgage-js";
 import React from "react";
 import { useSelector } from "react-redux";
+
+import getMortgageCalculator from "../../lib/mortgage";
 
 const Charts = () => {
   const data = useSelector(state => state.state);
 
-  const mortgageCalculator = mortgageJs.createMortgageCalculator();
+  const mortgageCalculator = getMortgageCalculator();
   mortgageCalculator.totalPrice = data.propertyValue.val;
   mortgageCalculator.downPayment = data.downPaymentValue.val;
   mortgageCalculator.interestRate = 0.045;

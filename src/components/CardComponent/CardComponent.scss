@@ -1,129 +1,62 @@
 @import "../../scss/palette";
-.CardComponent{
-    padding:10px;
-    .ant-card{
-        margin: 0 auto 15px auto;
 
-        .ant-card-body{
-            padding: 0px;
-            width: 100%;
-            & > div{
-                -webkit-box-shadow: none;
-                box-shadow: none;
-                &:nth-child(1){ width: 100% !important; }
-                &:nth-child(2){ width: 40% !important; }
-                &:nth-child(3){ width: 60% !important; }
-            }
-            .ant-card-grid{ 
-                position: relative;
-                padding: 5px 5px 20px 5px; 
-                .ant-input{
-                    border: none;
-                    border-bottom: 1px solid $collapse-border;
-                    width: 100%;
-                    font-size: 1.1em;
-                    border-radius: 0px;
-                    outline:none !important;
-                    &:focus {
-                        outline: 0;
-                        box-shadow: none;
-                        border-bottom: 2px solid $red-color;
-                        color: $red-color;
-                        }
-                }
-                .input-helper{
-                    font-size: 0.9375em;
-                    color: $collapse-border;
-                    letter-spacing: 0.0275rem;
-                    margin: 0.125rem 0.875rem;
-                }
-                .slider-values{
-                    display: block;
-                    position: absolute;
-                    bottom: 0px;
-                    &.minSlider {left: 15px;}
-                    &.maxSlider {right: 15px;}
-                }
-                button{
-                    position: absolute;
-                    right: 0;
-                    bottom: -10px;
-                }
-                .input-helper{
-                    display: block;
-                }
-            }
-            .ant-input-number{ width: 150px !important; }
+.ant-card-bordered {
+    border: 0px solid #e8e8e8;
+    border-top: 1px solid #e8e8e8;
+}
+.ant-card-head {
+    border-bottom: 0px solid #e8e8e8;
+}
+
+.ant-card{
+    margin: 0 auto 5px auto;
+    .ant-card-body{
+        padding: 0px;
+        width: 100%;
+        & > div{
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            &:nth-child(1){ width: 100% !important; }
+            &:nth-child(2){ width: 40% !important; }
+            &:nth-child(3){ width: 60% !important; }
         }
-    }
-
-    /* .ant-slider{
-        background: $slider-bg;
-        position: relative;
-        height: 10px;
-        border-radius: 10px;
-        .ant-slider-rail{ display: none;}
-        .ant-slider-track{
-            position: absolute;
-            top: 0;
-            background-color: $slider-default;
-            height: 100%;
-            border-radius: 10px;
-        }
-        
-        .default-data{
-            &.ant-slider-track{
-                background-color: $slider-track-bg;
+        .ant-card-grid{ 
+            position: relative;
+            padding: 0px 5px 15px 14px;
+            .ant-input{
+                border: none;
+                border-bottom: 1px solid $collapse-border;
+                width: 100%;
+                font-size: 1.1em;
+                border-radius: 0px;
+                outline:none !important;
+                &:focus {
+                    outline: 0;
+                    box-shadow: none;
+                    border-bottom: 2px solid $red-color;
+                    color: $red-color;
+                    }
             }
-        }
-
-        .ant-slider-handle{
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: $white-color;
-            border: 1px solid $grey-color;
-            cursor: pointer;
-            display: inline-block;
-            background-size: 100%;
-            background-image: -moz-linear-gradient($linear-gradient-1 );
-            background-image: -webkit-linear-gradient($linear-gradient-1 );
-            background-image: linear-gradient($linear-gradient-1 );
-            -moz-box-shadow: $box-shadow-1;
-            -webkit-box-shadow: $box-shadow-1;
-            box-shadow: $box-shadow-1;
-            -moz-border-radius: 50%;
-            -webkit-border-radius: 50%;
-            border-radius: 50%;
-            top: -5px;
-
-            &:after{
-                content: "";
+            .input-helper{
+                font-size: 0.9375em;
+                color: $collapse-border;
+                letter-spacing: 0.0275rem;
+                margin: 0.125rem 0.875rem;
+            }
+            .slider-values{
                 display: block;
-                width: 12px;
-                height: 12px;
-                margin: auto;
                 position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                background-size: 100%;
-                background-image: -moz-linear-gradient($linear-gradient-2);
-                background-image: -webkit-linear-gradient($linear-gradient-2);
-                background-image: linear-gradient($linear-gradient-2);
-                -moz-border-radius: 50%;
-                -webkit-border-radius: 50%;
-                border-radius: 50%;
-                background-image: none;
-                background-color: $slider-track-bg;
+                bottom: 0px;
+                &.minSlider {left: 15px;}
+                &.maxSlider {right: 15px;}
             }
-                &:active{
-                    &:after{
-                    background-color: $red-color !important;
-                }
+            button{
+                margin: 0 5px;
+            }
+            .input-helper{
+                display: block;
             }
         }
-    } */
-    
+        .ant-input-number{ width: 150px !important; }
+    }
 }

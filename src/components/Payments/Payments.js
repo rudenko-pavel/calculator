@@ -1,11 +1,11 @@
 import "./Payments.scss";
 
 import { Table } from "antd";
-import mortgageJs from "mortgage-js";
 import React from "react";
 import { useSelector } from "react-redux";
 
 import configPayments from "../../configs/configPayments";
+import getMortgageCalculator from "../../lib/mortgage";
 import PaymentSummary from "./PaymentSummary";
 
 const Payments = () => {
@@ -34,7 +34,7 @@ const Payments = () => {
     return newArr;
   }
 
-  const mortgageCalculator = mortgageJs.createMortgageCalculator();
+  const mortgageCalculator = getMortgageCalculator();
   mortgageCalculator.totalPrice = data.propertyValue.val;
   mortgageCalculator.downPayment = data.downPaymentValue.val;
   mortgageCalculator.interestRate = 0.045;
