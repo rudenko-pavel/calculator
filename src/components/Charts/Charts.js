@@ -5,6 +5,7 @@ import React from "react";
 import {
   Caption,
   Chart,
+  ColumnSeries,
   HighchartsChart,
   Legend,
   LineSeries,
@@ -21,7 +22,14 @@ import configChart from "../../configs/configChart";
 import getMortgageCalculator from "../../lib/mortgage";
 
 const Charts = () => {
-  const { title, subtitle, xaxisTitle, yaxisTitle, caption } = configChart;
+  const {
+    lines,
+    title,
+    subtitle,
+    xaxisTitle,
+    yaxisTitle,
+    caption
+  } = configChart;
   const data = useSelector(state => state.state);
 
   const mortgageCalculator = getMortgageCalculator();
@@ -65,14 +73,11 @@ const Charts = () => {
         </XAxis>
         <YAxis>
           <YAxis.Title>{yaxisTitle}</YAxis.Title>
-          <LineSeries name="arrayBalance" data={arrayBalance} />
-          <LineSeries name="arrayInterestPayment" data={arrayInterestPayment} />
-          <LineSeries name="arrayTotalInterest" data={arrayTotalInterest} />
-          <LineSeries
-            name="arrayPrincipalPayment"
-            data={arrayPrincipalPayment}
-          />
-          <LineSeries name="arrayTotalPayments" data={arrayTotalPayments} />
+          <ColumnSeries name={lines[0]} data={arrayBalance} />
+          <LineSeries name={lines[1]} data={arrayInterestPayment} />
+          <LineSeries name={lines[2]} data={arrayTotalInterest} />
+          <LineSeries name={lines[3]} data={arrayPrincipalPayment} />
+          <LineSeries name={lines[4]} data={arrayTotalPayments} />
         </YAxis>
         <Caption align="center">{caption}</Caption>
       </HighchartsChart>

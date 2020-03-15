@@ -3,7 +3,14 @@ const configChart = {
   subtitle: "mysite.com",
   xaxisTitle: "Months",
   yaxisTitle: "Money",
-  caption: "caption caption caption caption"
+  caption: "caption caption caption caption",
+  lines: [
+    "Balance",
+    "Interest Payment",
+    "Total Interest",
+    "Principal Payment",
+    "Total Payments"
+  ]
 };
 
 export default configChart;
