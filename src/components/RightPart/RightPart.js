@@ -100,7 +100,6 @@ const RightPart = () => {
                 {divElements.titles.title1.text}
               </Divider>
               <Card type="inner">
-                <ShowDataLogic name="rentValue" />
                 <ShowDataLogic name="propertyValue" />
                 <ShowDataLogic name="downPaymentValue" />
               </Card>
@@ -118,15 +117,6 @@ const RightPart = () => {
           <Row>
             <Col lg={12} md={24}>
               <Divider orientation="left">
-                {divElements.titles.title3.text}
-              </Divider>
-              <Card type="inner">
-                <ShowDataLogic name="amountAnnualTaxesValue" />
-                <ShowDataLogic name="annualHeatingCostsValue" />
-              </Card>
-            </Col>
-            <Col lg={12} md={24}>
-              <Divider orientation="left">
                 {divElements.titles.title4.text}
               </Divider>
               <Card type="inner">
@@ -134,26 +124,25 @@ const RightPart = () => {
                 <ShowDataLogic name="sellingHomeValue" />
               </Card>
             </Col>
-          </Row>
-          <Row>
             <Col lg={12} md={24}>
               <Divider orientation="left">
                 {divElements.titles.title5.text}
               </Divider>
               <Card type="inner">
+                <ShowDataLogic name="amountAnnualTaxesValue" />
                 <ShowDataLogic name="maintenanceValue" />
                 <ShowDataLogic name="ownerInsuranceValue" />
-                <ShowDataLogic name="rentersInsuranceValue" />
-                <ShowDataLogic name="rentMonthlyCostsValue" />
+                <ShowDataLogic name="annualHeatingCostsValue" />
               </Card>
             </Col>
+          </Row>
+          <Row>
             <Col lg={12} md={24}>
               <Divider orientation="left">
                 {divElements.titles.title6.text}
               </Divider>
               <Card type="inner">
                 <ShowDataLogic name="rateOfGrowthValue" />
-                <ShowDataLogic name="returnInvestmentValue" />
               </Card>
             </Col>
           </Row>

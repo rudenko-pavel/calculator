@@ -10,6 +10,7 @@ const ShowDataLogic = props => {
   const { prefix, suffix, title } = config[name];
 
   const data = useSelector(state => state.state[name]);
+  console.log(name,data)
 
   /**
    * Returns formatted string: pref + val + suff

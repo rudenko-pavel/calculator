@@ -15,9 +15,6 @@ const CardComponentLogic = props => {
     prefix,
     suffix,
     popoverCheckValue,
-    min,
-    max,
-    step,
     dependencies
   } = config[name];
   const data = useSelector(state => state.state[name]);
@@ -56,10 +53,10 @@ const CardComponentLogic = props => {
       name={name}
       prefix={prefix}
       suffix={suffix}
-      step={step}
+      step={data.step}
       popover={returnPopover(name)}
-      min={min}
-      max={max}
+      min={data.min}
+      max={data.max}
       val={data.val}
       dependencies={dependencies}
       onChange={v => dispatch(setValue(name, v))}

@@ -93,8 +93,8 @@ const CardComponent = props => {
         hoverable={false}
         style={{
           display: "flex",
-          "justify-content": "space-between",
-          "align-items": "center"
+          justifyContent: "space-between",
+          alignItems: "center"
         }}
       >
         <Text type="secondary">{text}</Text>
