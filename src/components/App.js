@@ -1,6 +1,6 @@
 import "./App.scss";
 
-import { BackTop } from "antd";
+import { BackTop, Layout } from "antd";
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
 
@@ -9,6 +9,9 @@ import Charts from "./Charts/Charts";
 import HeaderMenu from "./HeaderMenu/HeaderMenu";
 import HomePage from "./HomePage/HomePage";
 import Payments from "./Payments/Payments";
+import RightPart from "./RightPart/RightPart";
+
+const { Header, Content } = Layout;
 
 class App extends React.Component {
   render() {
@@ -16,12 +19,17 @@ class App extends React.Component {
     return (
       <div className="App">
         <HashRouter>
-          <div>
-            <HeaderMenu />
-            <Route path="/" exact component={HomePage} />
-            <Route path="/payments" exact component={Payments} />
-            <Route path="/charts" exact component={Charts} />
-          </div>
+          <Layout className="container">
+            <Header className="header">
+              <HeaderMenu />
+            </Header>
+            <Content className="site-layout">
+              <Route path="/" exact component={HomePage} />
+              <Route path="/payments" exact component={Payments} />
+              <Route path="/charts" exact component={Charts} />
+              <Route path="/overview" exact component={RightPart} />
+            </Content>
+          </Layout>
         </HashRouter>
         <BackTop visibilityHeight={100}>
           <div className="ant-btn ant-btn-primary ant-btn-circle">

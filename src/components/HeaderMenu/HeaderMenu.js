@@ -1,51 +1,42 @@
 import "./HeaderMenu.scss";
 
 import { Menu } from "antd";
-import React from "react";
+import React, { useState } from "react";
 
-class HeaderMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 1,
-      headermenu: [
-        { id: 1, name: "home", link: "#/" },
-        { id: 2, name: "payments", link: "#/payments" },
-        { id: 3, name: "charts", link: "#/charts" }
-      ]
-    };
+import configHeaderMenu from "../../configs/configHeaderMenu";
+
+const HeaderMenu = () => {
+  const { headermenu } = configHeaderMenu;
+  const [currItem, setCurrItem] = useState(window.location.hash);
+
+  function handleClick(e) {
+    console.log("click ", e.key);
+    setCurrItem(e.key)
   }
 
-  handleClick = e => {
-    console.log("click ", e);
-    this.setState({
-      current: e.key
-    });
-  };
-
-  renderList() {
-    return this.state.headermenu.map(headermenu => {
+  function renderListFunc() {
+    console.log("render", headermenu)
+    return headermenu.map(item => {
       return (
-        <Menu.Item to={headermenu.link} key={headermenu.id}>
-          <a href={headermenu.link}>{headermenu.name}</a>
+        <Menu.Item to={item.link} key={item.name} className={item.addClass}>
+          <a href={item.link}>{item.name}</a>
         </Menu.Item>
       );
     });
   }
+  const renderList = renderListFunc();
 
-  render() {
-    return (
-      <div className="HeaderMenu">
-        <Menu
-          onClick={this.handleClick}
-          selectedKeys={[this.state.current]}
-          mode="horizontal"
-        >
-          {this.renderList()}
-        </Menu>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="HeaderMenu">
+      <Menu
+        onClick={e => handleClick(e)}
+        selectedKeys={currItem}
+        mode="horizontal"
+      >
+        {renderList}
+      </Menu>
+    </div>
+  );
+};
 
 export default HeaderMenu;

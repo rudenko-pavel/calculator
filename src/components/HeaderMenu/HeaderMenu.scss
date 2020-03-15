@@ -1,4 +1,9 @@
 @import "../../scss/palette";
 .HeaderMenu{
-    
+    .onlyMobile{ display:none}
+    text-transform: capitalize;
+}
+
+@media only screen and (max-device-width:991px) {
+    .onlyMobile{ display:inline-block !important}
 }
