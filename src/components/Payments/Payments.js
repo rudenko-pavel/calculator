@@ -11,7 +11,7 @@ import getMortgageCalculator from "../../lib/mortgage";
 import PaymentSummary from "./PaymentSummary";
 
 const Payments = () => {
-  const { columns } = configPayments;
+  const { columns, btn, headerText, nameFile, paymentSummary } = configPayments;
   const data = useSelector(state => state.state);
 
   function showMortgage(payment) {
@@ -48,30 +48,68 @@ const Payments = () => {
   mortgageCalculator.mortgageInsuranceThreshold = 0.2;
   mortgageCalculator.additionalPrincipalPayment = 100;
   const payment = mortgageCalculator.calculatePayment();
+  const summaryBody = [
+    payment.loanAmount.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    }),
+    payment.principalAndInterest.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    }),
+    `${payment.tax.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    })} /year`,
+    payment.insurance,
+    payment.total.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    }),
+    payment.termMonths
+  ];
+  let dataToBody = [];
+  for (let i = 0; i < paymentSummary.length; i++) {
+    dataToBody.push([paymentSummary[i], summaryBody[i]]);
+  }
 
   function PdfFromHTML() {
-    const columns = configPayments.columns;
-    const rows = formattedPaymentsArray(payment.paymentSchedule);
-    const doc = new JsPDF("p", "pt");
-    doc.autoTable(columns, rows, {
-      styles: { fillColor: [160, 183, 235] },
-      columnStyles: {
-        id: { fillColor: 255 }
-      },
-      margin: { top: 60 },
+    const doc = new JsPDF("p", "mm");
+    doc.text("Paymentsdss", 40, 30);
+
+    doc.autoTable({
+      head: [],
+      body: dataToBody,
+      theme: "grid",
+      margin: { top: 15 },
       didDrawPage() {
-        doc.text("Payments", 40, 30);
+        doc.setTextColor(150);
+        doc.setFontSize(12);
+        doc.text(headerText, 40, 10);
       }
     });
-    doc.save("payments.pdf");
+
+    const {columns} = configPayments;
+    const rows = formattedPaymentsArray(payment.paymentSchedule);
+
+    doc.autoTable(columns, rows, {
+      theme: "grid",
+      margin: { top: 15 },
+      didDrawPage() {
+        doc.setTextColor(150);
+        doc.setFontSize(12);
+        doc.text(headerText, 40, 10);
+      }
+    });
+    doc.save(nameFile);
   }
 
   return (
     <div className="Payments">
-      <Button type="primary" onClick={() => PdfFromHTML()}>
-        PDF FILE{" "}
-      </Button>
       {showMortgage(payment)}
+      <Button className="btn-pdf" type="primary" onClick={() => PdfFromHTML()}>
+        {btn}
+      </Button>
       <hr />
       <Table
         className="payments"

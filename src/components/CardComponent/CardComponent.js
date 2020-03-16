@@ -17,7 +17,7 @@ export function returnFormatter(valF, pref, suff) {
       style: "currency",
       currency: "USD"
     }); */
-    console.log("fuck: ", valF, pref);
+    // console.log("fuck: ", valF, pref);
     formatter = `${pref} ${Number(valF).toFixed(0)}`.replace(
       /\B(?=(\d{3})+(?!\d))/g,
       ","

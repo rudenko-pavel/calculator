@@ -1,4 +1,7 @@
 const configPayments = {
+  btn: "Create PDF",
+  nameFile: "Mortgage_OurBeautifulSite.pdf",
+  headerText: "www.OurBeautifulSite.com",
   columns: [
     {
       title: "Count",
@@ -35,12 +38,12 @@ const configPayments = {
     { title: "Balance", dataIndex: "balance", key: "balance" }
   ],
   paymentSummary: [
-    "loanAmount",
-    "principalAndInterest",
-    "tax",
-    "insurance",
-    "total",
-    "termMonths"
+    "Loan Amount",
+    "Principal and Interest",
+    "Tax",
+    "Insurance",
+    "Total",
+    "Term Months"
   ]
 };
 
