@@ -1,42 +1,22 @@
 import "./Charts.scss";
 
-import Highcharts from "highcharts";
+import { LineChart } from "@opd/g2plot-react";
 import React from "react";
-import {
-  Caption,
-  Chart,
-  ColumnSeries,
-  HighchartsChart,
-  Legend,
-  LineSeries,
-  Subtitle,
-  Title,
-  Tooltip,
-  withHighcharts,
-  XAxis,
-  YAxis
-} from "react-jsx-highcharts";
 import { useSelector } from "react-redux";
 
 import configChart from "../../configs/configChart";
 import getMortgageCalculator from "../../lib/mortgage";
 
 const Charts = () => {
-  const {
-    lines,
-    title,
-    subtitle,
-    xaxisTitle,
-    yaxisTitle,
-    caption
-  } = configChart;
-  const data = useSelector(state => state.state);
+  const { title, description, serie } = configChart;
+  const stateValue = useSelector(state => state.state);
+  let dataChart = [];
 
   const mortgageCalculator = getMortgageCalculator();
-  mortgageCalculator.totalPrice = data.propertyValue.val;
-  mortgageCalculator.downPayment = data.downPaymentValue.val;
+  mortgageCalculator.totalPrice = stateValue.propertyValue.val;
+  mortgageCalculator.downPayment = stateValue.downPaymentValue.val;
   mortgageCalculator.interestRate = 0.045;
-  mortgageCalculator.months = data.amortizationValue.val * 12;
+  mortgageCalculator.months = stateValue.amortizationValue.val * 12;
   mortgageCalculator.taxRate = 0.012;
   mortgageCalculator.insuranceRate = 0.0013;
   mortgageCalculator.mortgageInsuranceRate = 0.01;
@@ -45,44 +25,74 @@ const Charts = () => {
   mortgageCalculator.additionalPrincipalPayment = 100;
   const payment = mortgageCalculator.calculatePayment();
   const arrayPaymentShedule = payment.paymentSchedule;
-  const arrayBalance = arrayPaymentShedule.map(v => v.balance);
-  const arrayInterestPayment = arrayPaymentShedule.map(v => v.interestPayment);
-  const arrayTotalInterest = arrayPaymentShedule.map(v => v.totalInterest);
-  const arrayPrincipalPayment = arrayPaymentShedule.map(
-    v => v.principalPayment
-  );
-  const arrayTotalPayments = arrayPaymentShedule.map(v => v.totalPayments);
-  // console.log("arrayBalance ", arrayBalance,arrayPaymentShedule)
 
-  const plotOptions = {
-    series: {
-      pointStart: 1
-    }
+  arrayPaymentShedule.forEach(function aaa(item) {
+    const itemBalance = {
+      count: item.count,
+      type: serie[0],
+      value: item.balance
+    };
+    const itemInterestPayment = {
+      count: item.count,
+      type: serie[1],
+      value: item.interestPayment
+    };
+    const itemTotalInterest = {
+      count: item.count,
+      type: serie[2],
+      value: item.totalInterest
+    };
+    const itemPrincipalPayment = {
+      count: item.count,
+      type: serie[3],
+      value: item.principalPayment
+    };
+    const itemTotalPayments = {
+      count: item.count,
+      type: serie[4],
+      value: item.totalPayments
+    };
+    dataChart = [
+      ...dataChart,
+      itemBalance,
+      itemInterestPayment,
+      itemTotalInterest,
+      itemPrincipalPayment,
+      itemTotalPayments
+    ];
+  });
+
+  const config1 = {
+    title: {
+      visible: true,
+      text: title
+    },
+    description: {
+      visible: true,
+      text: description
+    },
+    padding: "auto",
+    forceFit: true,
+    data: dataChart,
+    xField: "count",
+    yField: "value",
+    yAxis: {
+      label: {
+        formatter: v => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, s => `${s},`)
+      }
+    },
+    legend: {
+      position: "top"
+    },
+    seriesField: "type",
+    responsive: true
   };
 
   return (
     <div className="Charts">
-      <HighchartsChart plotOptions={plotOptions}>
-        <Chart />
-        <Title>{title}</Title>
-        <Subtitle>{subtitle}</Subtitle>
-        <Legend layout="vertical" align="right" verticalAlign="middle" />
-        <Tooltip valuePrefix="$ " />
-        <XAxis>
-          <XAxis.Title>{xaxisTitle}</XAxis.Title>
-        </XAxis>
-        <YAxis>
-          <YAxis.Title>{yaxisTitle}</YAxis.Title>
-          <ColumnSeries name={lines[0]} data={arrayBalance} />
-          <LineSeries name={lines[1]} data={arrayInterestPayment} />
-          <LineSeries name={lines[2]} data={arrayTotalInterest} />
-          <LineSeries name={lines[3]} data={arrayPrincipalPayment} />
-          <LineSeries name={lines[4]} data={arrayTotalPayments} />
-        </YAxis>
-        <Caption align="center">{caption}</Caption>
-      </HighchartsChart>
+      <LineChart {...config1} />
     </div>
   );
 };
 
-export default withHighcharts(Charts, Highcharts);
+export default Charts;

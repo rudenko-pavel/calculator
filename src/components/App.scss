@@ -61,3 +61,13 @@ html{
 @media only screen and (max-device-width:991px) {
     .onlyWeb{ display:none !important}
 }
+
+@media only screen and (max-device-width:767px) {
+    .site-layout{
+        padding: 0 7px !important;
+    } 
+    .ant-drawer-body{
+        padding: 7px;
+        .ant-card-body {padding: 5px;}
+    }
+}

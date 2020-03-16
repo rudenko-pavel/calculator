@@ -7,3 +7,10 @@
 @media only screen and (max-device-width:991px) {
     .onlyMobile{ display:inline-block !important}
 }
+
+@media only screen and (max-device-width:767px) {
+    .ant-layout-header{
+        padding: 0 10px;
+    }
+}
+
