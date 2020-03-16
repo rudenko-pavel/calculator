@@ -75,7 +75,6 @@ const Payments = () => {
 
   function PdfFromHTML() {
     const doc = new JsPDF("p", "mm");
-    doc.text("Paymentsdss", 40, 30);
 
     doc.autoTable({
       head: [],
