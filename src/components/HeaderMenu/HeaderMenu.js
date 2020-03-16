@@ -1,6 +1,6 @@
 import "./HeaderMenu.scss";
 
-import { Menu } from "antd";
+import { Menu, Popover } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -15,20 +15,22 @@ const HeaderMenu = () => {
   const data = useSelector(state => state.state);
   const dispatch = useDispatch();
   const [marker, count] = useState(true);
+  const [wizardLink, wlChange] = useState("");
+
   /**
    * Changes  state if url has additional values
    *  e.g. ...?rentValue=1000&propertyValue=50000...
    */
   function checkUrl() {
-    console.log("marker", marker)
-    if (marker === true){
-      if (window.location.hash.indexOf("?") > -1) {
+    if (marker === true) {
+      const startStr = window.location.hash.indexOf("?");
+      if (startStr > -1) {
         const cHash = window.location.hash;
-        const clearStr = cHash.substring(3, cHash.length);
+        const clearStr = cHash.substring(startStr + 1, cHash.length);
         const arrayKeyVal = clearStr.split("&");
         arrayKeyVal.forEach(oneString => {
           const toState = oneString.split("=");
-          dispatch(setValue(toState[0], parseInt(toState[1])));
+          dispatch(setValue(toState[0], parseFloat(toState[1])));
         });
         count(false);
       }
@@ -60,24 +62,33 @@ const HeaderMenu = () => {
    * Add to URL data from state
    */
   function getUrl() {
+    wlChange("");
     let result = "?";
     for (const [key, val] of Object.entries(data)) {
       result = `${result + key}=${val.val}&`;
     }
-
+    wlChange(window.location + result.substring(0, result.length - 1));
+    navigator.clipboard.writeText(wizardLink);
     return result.substring(0, result.length - 1);
   }
 
   return (
     <div className="HeaderMenu">
       <UrlSync>
-        <Link
-          to={() => getUrl()}
-          className="ant-btn ant-btn-primary create-link"
-          title="/?other=eee&answers=1"
+        <Popover
+          content={wizardLink}
+          placement="bottom"
+          title="Copied Link"
+          trigger="click"
         >
-          Create link
-        </Link>
+          <Link
+            to={() => getUrl()}
+            className="ant-btn ant-btn-primary create-link"
+            title=""
+          >
+            Create link
+          </Link>
+        </Popover>
       </UrlSync>
       <Menu
         onClick={e => handleClick(e)}
