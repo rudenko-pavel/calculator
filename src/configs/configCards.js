@@ -39,8 +39,8 @@ const config = {
     title: "Down Payment",
     text:
       "Indicate how much you could pay for your down payment. Usually loans with a down payment of less than 20% of property value will require additional loan-insurance.",
-    prefix: "$"
-    // todo only fo canada: popoverCheckValue: "propertyValue"
+    prefix: "$",
+    percentOf: "propertyValue"
   },
   amortizationValue: {
     title: "Amortization",
@@ -54,19 +54,23 @@ const config = {
     title: "Amount of annual municipal taxes",
     text:
       "These amounts are determined by your municipality, according to the value of the property.",
-    prefix: "$"
+    prefix: "$",
+    percentOf: "propertyValue"
   },
   annualHeatingCostsValue: {
     title: "Annual heating costs",
-    prefix: "$"
+    prefix: "$",
+    percentOf: "propertyValue"
   },
   buyingHomeValue: {
     title: "Costs of buying a home",
-    prefix: "$"
+    prefix: "$",
+    percentOf: "propertyValue"
   },
   sellingHomeValue: {
     title: "Costs of selling a home",
-    prefix: "$"
+    prefix: "$",
+    percentOf: "propertyValue"
   },
   maintenanceValue: {
     title: "Maintenance and renovation",

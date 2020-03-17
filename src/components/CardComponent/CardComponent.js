@@ -40,7 +40,7 @@ const CardComponent = props => {
     min,
     max,
     step,
-    popover,
+    percentOf,
     onChange
   } = props;
   function returnParcer(valP, pref, suff) {
@@ -97,12 +97,6 @@ const CardComponent = props => {
         }}
       >
         <Text type="secondary">{text}</Text>
-
-        {Object.keys(popover).length > 0 && (
-          <Popover content={popover} trigger="click">
-            <Button type="primary" shape="circle" icon={<InfoOutlined />} />
-          </Popover>
-        )}
       </Card.Grid>
       <Card.Grid hoverable={false}>
         <InputNumber
@@ -118,6 +112,9 @@ const CardComponent = props => {
           onChange={onHandleChangeNumeric}
           onBlur={() => onChange(value)}
         />
+        <div>
+          <Text type="secondary">{percentOf}</Text>
+        </div>
       </Card.Grid>
       <Card.Grid hoverable={false}>
         <Slider
@@ -147,7 +144,8 @@ CardComponent.propTypes = {
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  popover: PropTypes.object,
+  // popover: PropTypes.object,
+  percentOf: PropTypes.string,
   val: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired
 };
@@ -156,5 +154,6 @@ CardComponent.defaultProps = {
   text: "",
   prefix: "",
   suffix: "",
-  popover: ""
+  percentOf: ""
+  // popover: ""
 };
