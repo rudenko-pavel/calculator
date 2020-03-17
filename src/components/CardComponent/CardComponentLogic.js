@@ -15,7 +15,6 @@ const CardComponentLogic = props => {
 
   function returnPercent(a, b) {
     let result = "";
-    console.log(a, typeof a, b, typeof b);
     if (typeof a === "object" && typeof b === "number") {
       result = `${((b / a.val) * 100).toFixed(2)} %`;
     }

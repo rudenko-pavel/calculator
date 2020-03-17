@@ -1,7 +1,6 @@
 import "./CardComponent.scss";
 
-import { InfoOutlined } from "@ant-design/icons";
-import { Button, Card, InputNumber, Popover, Slider, Typography } from "antd";
+import { Card, InputNumber, Slider, Typography } from "antd";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
@@ -17,7 +16,6 @@ export function returnFormatter(valF, pref, suff) {
       style: "currency",
       currency: "USD"
     }); */
-    // console.log("fuck: ", valF, pref);
     formatter = `${pref} ${Number(valF).toFixed(0)}`.replace(
       /\B(?=(\d{3})+(?!\d))/g,
       ","

@@ -26,8 +26,6 @@ const RightPart = () => {
   mortgageCalculator.insuranceRate = data.ownerInsuranceValue.val / 100;
   const payment = mortgageCalculator.calculatePayment();
 
-  console.log("payment ", payment);
-
   // tax + maint + insurance + heating
   const mMonthlyExpenses =
     (data.amountAnnualTaxesValue.val +
