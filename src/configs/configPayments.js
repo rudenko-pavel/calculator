@@ -1,7 +1,4 @@
 const configPayments = {
-  btn: "Create PDF",
-  nameFile: "Mortgage_OurBeautifulSite.pdf",
-  headerText: "www.OurBeautifulSite.com",
   columns: [
     {
       title: "Count",

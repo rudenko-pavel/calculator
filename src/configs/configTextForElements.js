@@ -1,4 +1,5 @@
 const configTextForElements = {
+  siteName: "http://theBestSite.com",
   buttons: {
     commonButtons: {
       showSelectedData: { text: "show selected data" },
@@ -30,6 +31,15 @@ const configTextForElements = {
       div5: { text: "monthly savings" },
       div6: { text: "total" }
     }
+  },
+  pdfBlock: {
+    btn: "Create PDF",
+    nameFile: "Mortgage_OurBeautifulSite.pdf",
+    headerText: "www.OurBeautifulSite.com"
+  },
+  copyLinkBlock: {
+    btn: "Copy link",
+    title: "Link was copied:"
   }
 };
 
