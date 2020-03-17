@@ -1,29 +1,4 @@
 @import "../../scss/palette";
-/* .RightPart{
-    padding: 10px;
-    .ant-card-head{
-        background-color: $dark-grey-color;
-    }
-    .table-money{
-        .ant-card-body{
-            padding: 0px;
-            .ant-row{
-                border: 1px solid $grey-color;
-                & > div{
-                    padding: 10px;
-                    &:nth-child(1){
-                        font-weight: 600;
-                    }
-                    &.caption{
-                        color: $red-color
-                    }
-                }
-            }
-        }
-    }
-} */
-
-
 .drawer-custom {
     .ant-drawer-content-wrapper{ 
         min-width: 60% !important;

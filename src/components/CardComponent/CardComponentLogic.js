@@ -9,14 +9,7 @@ import CardComponent from "./CardComponent";
 
 const CardComponentLogic = props => {
   const { name } = props;
-  const {
-    title,
-    text,
-    prefix,
-    suffix,
-    popoverCheckValue,
-    dependencies
-  } = config[name];
+  const { title, text, prefix, suffix, popoverCheckValue } = config[name];
   const data = useSelector(state => state.state[name]);
   const data2 = useSelector(state2 => state2.state[popoverCheckValue]);
   const dispatch = useDispatch();
@@ -58,7 +51,6 @@ const CardComponentLogic = props => {
       min={data.min}
       max={data.max}
       val={data.val}
-      dependencies={dependencies}
       onChange={v => dispatch(setValue(name, v))}
     />
   );

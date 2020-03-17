@@ -34,12 +34,9 @@ export const getInitialState = () => {
 export default (state = getInitialState(), action) => {
   switch (action.type) {
     case SET_VALUE:
-      const { name, value, dependenciesValues } = action.payload;
+      const { name, value } = action.payload;
       const newState = getDeepCopy(state);
       newState[name].val = value;
-      for (const [key, val] of Object.entries(dependenciesValues)) {
-        newState[key] = val;
-      }
       return newState;
     case RESET_VALUES:
       let returnResetValues = getDeepCopy(state);

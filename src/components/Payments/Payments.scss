@@ -1,28 +1,21 @@
 @import "../../scss/palette";
 .Payments{
-    p{
-        margin-bottom: 0em;
-    }
+    p{ margin-bottom: 0em; }
     .txt-right{
         div:first-child{
             text-align: right;
             padding-right: 10px;
         }
-
     }
     .ant-spin-container{
-        .ant-table {
-            background-color: $white-color;
-        }
+        .ant-table { background-color: $white-color; }
         .ant-pagination {
             float: right;
             margin: 16px 54px 16px 0 !important;
         }
     }
     .payments{
-        colgroup{
-            display: none;
-        }
+        colgroup{ display: none; }
     }
     .btn-pdf{
       position: fixed;

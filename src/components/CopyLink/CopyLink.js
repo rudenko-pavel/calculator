@@ -1,7 +1,7 @@
 import { Button, Popover } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import UrlSync from "react-url-sync";
+
 
 import { setValue } from "../../actions";
 import configTextForElements from "../../configs/configTextForElements";
@@ -51,22 +51,20 @@ const CopyLink = () => {
   }
 
   return (
-    <UrlSync>
-      <Popover
-        content={wizardLink}
-        placement="bottom"
-        title={copyLinkBlock.title}
-        trigger="click"
+    <Popover
+      content={wizardLink}
+      placement="bottom"
+      title={copyLinkBlock.title}
+      trigger="click"
+    >
+      <Button
+        onClick={() => getUrl()}
+        className="ant-btn ant-btn-primary create-link"
+        title=""
       >
-        <Button
-          onClick={() => getUrl()}
-          className="ant-btn ant-btn-primary create-link"
-          title=""
-        >
-          {copyLinkBlock.btn}
-        </Button>
-      </Popover>
-    </UrlSync>
+        {copyLinkBlock.btn}
+      </Button>
+    </Popover>
   );
 };
 

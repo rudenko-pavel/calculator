@@ -41,7 +41,6 @@ const CardComponent = props => {
     max,
     step,
     popover,
-    dependencies, // Q: ?
     onChange
   } = props;
   function returnParcer(valP, pref, suff) {
@@ -150,15 +149,12 @@ CardComponent.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   popover: PropTypes.object,
   val: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  dependencies: PropTypes.array
+  onChange: PropTypes.func.isRequired
 };
 
 CardComponent.defaultProps = {
   text: "",
   prefix: "",
   suffix: "",
-  popover: "",
-  dependencies: []
+  popover: ""
 };

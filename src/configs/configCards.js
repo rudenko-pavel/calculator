@@ -33,14 +33,7 @@ const config = {
   propertyValue: {
     title: "Property Value",
     text: "Indicate the value of the property you are looking to buy.",
-    prefix: "$",
-    dependencies: [
-      "downPaymentValue",
-      "amountAnnualTaxesValue",
-      "annualHeatingCostsValue",
-      "buyingHomeValue",
-      "sellingHomeValue"
-    ]
+    prefix: "$"
   },
   downPaymentValue: {
     title: "Down Payment",
