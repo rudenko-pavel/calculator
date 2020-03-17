@@ -37,16 +37,16 @@ const CopyLink = () => {
    */
   function getUrl() {
     wlChange("");
-    let result = "?";
+    const res = window.location.href.split("?");
+    let result = `${res[0]}?`;
     // eslint-disable-next-line array-callback-return
     Object.keys(data).map(function rk(key) {
       result = `${result + key}=${data[key].val}&`;
     });
 
     // eslint-disable-next-line no-undef
-    navigator.clipboard.writeText(result);
-    console.log(window.location + result.substring(0, result.length - 1));
-    wlChange(window.location + result.substring(0, result.length - 1));
+    navigator.clipboard.writeText(result.substring(0, result.length - 1));
+    wlChange(result.substring(0, result.length - 1));
     return wizardLink;
   }
 
