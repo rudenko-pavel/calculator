@@ -8,17 +8,23 @@ import CopyLink from "../CopyLink/CopyLink";
 
 const HeaderMenu = () => {
   const { headermenu } = configHeaderMenu;
-  const [currItem, setCurrItem] = useState(window.location.hash);
 
-  /**
-   * Changes  current vutton in HeaderMenu
-   */
-  function handleClick(e) {
-    setCurrItem(e.key);
+  function getUrlHash(str){
+    console.log("getUrlHash1 :'"+str+"'")
+    let res = str;
+    if (str === "#/") res = "main";
+    console.log("getUrlHash2 ", res, str)
+    return res;
   }
 
-  function sds(val) {
-    return val
+  const [currItem, setCurrItem] = useState(getUrlHash(window.location.hash));
+console.log(window.location.hash)
+  /**
+   * Changes  current button in HeaderMenu
+   */
+  function handleClick(e) {
+    console.log(e)
+    setCurrItem(e.key);
   }
 
   /**

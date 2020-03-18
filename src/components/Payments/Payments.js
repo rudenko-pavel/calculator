@@ -47,7 +47,6 @@ const Payments = () => {
   mortgageCalculator.additionalPrincipalPayment = 100;
   const payment = mortgageCalculator.calculatePayment();
 
-  console.log(columns)
   return (
     <div className="Payments">
       <PaymentSummary payment={payment} />
