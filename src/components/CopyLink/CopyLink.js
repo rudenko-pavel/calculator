@@ -52,8 +52,8 @@ const CopyLink = () => {
 
   return (
     <Popover
-      content={wizardLink}
-      placement="bottom"
+      content={copyLinkBlock.description}
+      placement="right"
       title={copyLinkBlock.title}
       trigger="click"
     >

@@ -1,6 +1,6 @@
 import "./HeaderMenu.scss";
 
-import { Menu } from "antd";
+import { Button, Menu } from "antd";
 import React, { useState } from "react";
 
 import configHeaderMenu from "../../configs/configHeaderMenu";
@@ -17,6 +17,10 @@ const HeaderMenu = () => {
     setCurrItem(e.key);
   }
 
+  function sds(val) {
+    return val
+  }
+
   /**
    * Returns all buttons for HeaderMenu
    */
@@ -24,7 +28,7 @@ const HeaderMenu = () => {
     return headermenu.map(item => {
       return (
         <Menu.Item to={item.link} key={item.name} className={item.addClass}>
-          <a href={item.link}>{item.name}</a>
+          <Button  danger type={item.type} ><a href={item.link}>{item.name}</a></Button>
         </Menu.Item>
       );
     });

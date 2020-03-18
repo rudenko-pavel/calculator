@@ -1,17 +1,15 @@
 import "./RightPart.scss";
 
-import { Button, Card, Col, Divider, Drawer, Row } from "antd";
-import React, { useState } from "react";
+import { Button, Col, Divider, Row } from "antd";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { resetValues } from "../../actions";
 import configTFE from "../../configs/configTextForElements";
 import getMortgageCalculator from "../../lib/mortgage";
 import { returnFormatter } from "../CardComponent/CardComponent";
-import ShowDataLogic from "./ShowDataLogic";
 
 const RightPart = () => {
-  const [visiblePanel, toggleDrawer] = useState(false);
   const { buttons, divElements } = configTFE;
   const dispatch = useDispatch();
 
@@ -77,75 +75,6 @@ const RightPart = () => {
       <Button type="primary" onClick={() => dispatch(resetValues([]))}>
         {buttons.resetValues.btn1.text}
       </Button>
-      <Button
-        type="primary"
-        className="show-selected-data"
-        onClick={() => toggleDrawer(!visiblePanel)}
-      >
-        {buttons.commonButtons.showSelectedData.text}
-      </Button>
-      <Drawer
-        className="drawer-custom"
-        placement="right"
-        closable={false}
-        onClose={() => toggleDrawer(!visiblePanel)}
-        visible={visiblePanel}
-      >
-        <Card title="selected data" className="selectedData div-wrapper">
-          <Row>
-            <Col lg={12} md={24}>
-              <Divider orientation="left">
-                {divElements.titles.title1.text}
-              </Divider>
-              <Card type="inner">
-                <ShowDataLogic name="propertyValue" />
-                <ShowDataLogic name="downPaymentValue" />
-              </Card>
-            </Col>
-            <Col lg={12} md={24}>
-              <Divider orientation="left">
-                {divElements.titles.title2.text}
-              </Divider>
-              <Card type="inner">
-                <ShowDataLogic name="amortizationValue" />
-                <ShowDataLogic name="mortgageRateValue" />
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={12} md={24}>
-              <Divider orientation="left">
-                {divElements.titles.title4.text}
-              </Divider>
-              <Card type="inner">
-                <ShowDataLogic name="buyingHomeValue" />
-                <ShowDataLogic name="sellingHomeValue" />
-              </Card>
-            </Col>
-            <Col lg={12} md={24}>
-              <Divider orientation="left">
-                {divElements.titles.title5.text}
-              </Divider>
-              <Card type="inner">
-                <ShowDataLogic name="amountAnnualTaxesValue" />
-                <ShowDataLogic name="maintenanceValue" />
-                <ShowDataLogic name="ownerInsuranceValue" />
-                <ShowDataLogic name="annualHeatingCostsValue" />
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col lg={12} md={24}>
-              <Divider orientation="left">
-                {divElements.titles.title6.text}
-              </Divider>
-              <Card type="inner">
-                <ShowDataLogic name="rateOfGrowthValue" />
-              </Card>
-            </Col>
-          </Row>
-        </Card>
-      </Drawer>
     </div>
   );
 };

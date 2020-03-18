@@ -62,11 +62,11 @@
     }
 }
 
-@media only screen and (max-device-width:767px) {
+@media only screen and (max-width:767px) {
     .ant-table-content {overflow-x: scroll;}
 }
 
-@media only screen and (max-device-width:575px) {
+@media only screen and (max-width:575px) {
     .LeftPart{
         .ant-card{
             .ant-card-body{

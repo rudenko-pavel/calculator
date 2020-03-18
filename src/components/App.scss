@@ -54,11 +54,11 @@ html{
 
 .ant-collapse-extra { color: $blue-7 }
 
-@media only screen and (max-device-width:991px) {
+@media only screen and (max-width:991px) {
     .onlyWeb{ display:none !important}
 }
 
-@media only screen and (max-device-width:767px) {
+@media only screen and (max-width:767px) {
     .site-layout{ padding: 0 7px !important; } 
     .ant-drawer-body{
         padding: 7px;

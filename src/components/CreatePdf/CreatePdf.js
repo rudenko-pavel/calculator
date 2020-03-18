@@ -74,9 +74,11 @@ const CreatePdf = props => {
     doc.save(pdfBlock.nameFile);
   }
   return (
-    <Button className="btn-pdf" type="primary" onClick={() => PdfFromHTML()}>
-      {pdfBlock.btn}
-    </Button>
+    <div className="btn-pdf">
+      <Button type="primary" onClick={() => PdfFromHTML()}>
+        {pdfBlock.btn}
+      </Button>
+    </div>
   );
 };
 

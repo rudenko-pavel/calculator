@@ -3,9 +3,7 @@ const configTextForElements = {
   buttons: {
     commonButtons: {
       showSelectedData: { text: "show selected data" },
-      up: { text: "up" },
-      i: { text: "i" },
-      pdf: { text: "create pdf" }
+      up: { text: "UP" }
     },
     resetValues: {
       btn1: { text: "Reset all" },
@@ -39,7 +37,9 @@ const configTextForElements = {
   },
   copyLinkBlock: {
     btn: "Copy link",
-    title: "Link was copied:"
+    title: "Success!",
+    description:
+      "Link was copied to Clipboard. Use Ctrl+V to share Link in your favorite messenger."
   }
 };
 
