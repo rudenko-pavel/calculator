@@ -20,6 +20,10 @@ const CreatePdf = props => {
     minimumFractionDigits: 2
   });
 
+  /* Return array of objects with formatted values
+   * input: {count: 1, interestPayment: 178.13, totalInterest: 178.13,  ...}
+   * output:{count: 1, interestPayment: "$178.13", totalInterest: "$178.13", ... }
+   */
   function formattedPaymentsArray(obj) {
     const newArr = [];
     obj.forEach(item => {
@@ -33,6 +37,7 @@ const CreatePdf = props => {
     return newArr;
   }
 
+  // create array of formatted data for doc.autoTable
   const summaryBody = [
     formatter.format(payment.loanAmount),
     formatter.format(payment.principalAndInterest),
@@ -45,6 +50,7 @@ const CreatePdf = props => {
   for (let i = 0; i < paymentSummary.length; i += 1) {
     dataToBody.push([paymentSummary[i], summaryBody[i]]);
   }
+
   function PdfFromHTML() {
     const doc = new JsPDF("p", "mm");
 

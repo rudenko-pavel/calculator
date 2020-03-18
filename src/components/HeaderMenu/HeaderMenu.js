@@ -9,27 +9,20 @@ import CopyLink from "../CopyLink/CopyLink";
 const HeaderMenu = () => {
   const { headermenu } = configHeaderMenu;
 
-  function getUrlHash(str){
-    console.log("getUrlHash1 :'"+str+"'")
+  // create default `key` for current itemMenu
+  function getUrlHash(str) {
     let res = str;
     if (str === "#/") res = "main";
-    console.log("getUrlHash2 ", res, str)
     return res;
   }
-
   const [currItem, setCurrItem] = useState(getUrlHash(window.location.hash));
-console.log(window.location.hash)
-  /**
-   * Changes  current button in HeaderMenu
-   */
+
+  // Changes  current button in HeaderMenu
   function handleClick(e) {
-    console.log(e)
     setCurrItem(e.key);
   }
 
-  /**
-   * Returns all buttons for HeaderMenu
-   */
+  // Returns all buttons for HeaderMenu
   function renderListFunc() {
     return headermenu.map(item => {
       return (
