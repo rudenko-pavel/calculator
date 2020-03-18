@@ -1,1 +1,13 @@
 @import "../../scss/palette";
+.RightPart{
+    h3 {
+        text-align: center;
+        text-transform: capitalize;
+        padding: 15px 0;
+    }
+    .summary-table{
+        .ant-pagination {display: none;}
+        th, td {text-transform: capitalize;}
+    }
+    .ant-btn {float: right;}
+}

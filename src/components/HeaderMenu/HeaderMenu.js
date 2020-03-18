@@ -28,7 +28,9 @@ const HeaderMenu = () => {
     return headermenu.map(item => {
       return (
         <Menu.Item to={item.link} key={item.name} className={item.addClass}>
-          <Button  danger type={item.type} ><a href={item.link}>{item.name}</a></Button>
+          <Button danger type={item.type}>
+            <a href={item.link}>{item.name}</a>
+          </Button>
         </Menu.Item>
       );
     });

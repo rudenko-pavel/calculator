@@ -27,7 +27,8 @@ const configTextForElements = {
       div3: { text: "rent or mortgage" },
       div4: { text: "property expenses" },
       div5: { text: "monthly savings" },
-      div6: { text: "total" }
+      div6: { text: "total" },
+      divEmpty: { text: "" }
     }
   },
   pdfBlock: {

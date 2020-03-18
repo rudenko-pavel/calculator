@@ -1,7 +1,7 @@
 const configPayments = {
   columns: [
     {
-      title: "Count",
+      title: "Month",
       dataIndex: "count",
       key: "count",
       width: 100,

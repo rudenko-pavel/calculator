@@ -1,16 +1,17 @@
 @import "../../scss/palette";
 .HeaderMenu{
     .onlyMobile{ display:none}
+    .ant-menu{ 
+        button{ text-transform: capitalize;}
+    }
     text-transform: capitalize;
     .create-link{
         display: block;
         position: fixed;
-        top: 95px;
+        top: 50px;
         z-index: 654;
-        writing-mode: tb-rl;
-        transform: rotate(270deg);
         font-size: inherit;
-        left: -30px;
+        left: 0px;
     }
     .ant-menu-item-selected{
         .ant-btn-link {color: $blue-color2}    

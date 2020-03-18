@@ -1,6 +1,6 @@
 import "./RightPart.scss";
 
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Divider, Table } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -41,36 +41,40 @@ const RightPart = () => {
   const mSaving = total - mTotal;
   const rSaving = total - rTotal;
 
+  // data for Table .summary-table
+  const short = divElements.summaryBlock;
+  const columns = [
+    { title: short.divEmpty.text, dataIndex: "isTitle", key: "isTitle" },
+    { title: short.div1.text, dataIndex: "isRent", key: "isRent" },
+    { title: short.div2.text, dataIndex: "isBuy", key: "isBuy" }
+  ];
+  const dataSource = [
+    {
+      isTitle: short.div3.text,
+      isRent: returnFormatter(data.rentValue.val, "$"),
+      isBuy: returnFormatter(payment.principalAndInterest, "$")
+    },
+    {
+      isTitle: short.div4.text,
+      isRent: returnFormatter(rMonthlyExpenses, "$"),
+      isBuy: returnFormatter(mMonthlyExpenses, "$")
+    },
+    {
+      isTitle: short.div5.text,
+      isRent: returnFormatter(rSaving, "$"),
+      isBuy: returnFormatter(mSaving, "$")
+    }
+  ];
+
   return (
     <div className="RightPart">
       <h3>{divElements.summaryBlock.div0.text}</h3>
-      <Row>
-        <Col span={8}>&nbsp;</Col>
-        <Col span={8}>{divElements.summaryBlock.div1.text}</Col>
-        <Col span={8}>{divElements.summaryBlock.div2.text}</Col>
-      </Row>
-      <Row>
-        <Col span={8}>{divElements.summaryBlock.div3.text}</Col>
-        <Col span={8}>{returnFormatter(data.rentValue.val, "$")}</Col>
-        <Col span={8}>{returnFormatter(payment.principalAndInterest, "$")}</Col>
-      </Row>
-      <Row>
-        <Col span={8}>{divElements.summaryBlock.div4.text}</Col>
-        <Col span={8}>{returnFormatter(rMonthlyExpenses, "$")}</Col>
-        <Col span={8}>{returnFormatter(mMonthlyExpenses, "$")}</Col>
-      </Row>
-      <Row>
-        <Col span={8}>{divElements.summaryBlock.div5.text}</Col>
-        <Col span={8}>{returnFormatter(rSaving, "$")}</Col>
-        <Col span={8}>{returnFormatter(mSaving, "$")}</Col>
-      </Row>
-      <Row>
-        <Col span={8} className="caption">
-          {divElements.summaryBlock.div6.text}
-        </Col>
-        <Col span={8}>{returnFormatter(total, "$")}</Col>
-        <Col span={8}>{returnFormatter(total, "$")}</Col>
-      </Row>
+      <Table
+        className="summary-table"
+        columns={columns}
+        dataSource={dataSource}
+        rowKey={record => record.isTitle}
+      />
       <Divider dashed />
       <Button type="primary" onClick={() => dispatch(resetValues([]))}>
         {buttons.resetValues.btn1.text}
