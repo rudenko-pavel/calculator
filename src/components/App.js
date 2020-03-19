@@ -15,8 +15,8 @@ import SwitchTheme from "./SwitchTheme/SwitchTheme";
 const { Header, Content } = Layout;
 
 const App = () => {
-  const { buttons } = configTFE;
-  const [Theme, setTheme] = useState("light");
+  const { buttons, switchBlock } = configTFE;
+  const [Theme, setTheme] = useState(switchBlock.values[0]);
 
   // set value `Theme`
   function onChangeTheme(val) {

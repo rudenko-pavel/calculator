@@ -1,5 +1,8 @@
 const configTextForElements = {
   siteName: "http://theBestSite.com",
+  switchBlock: {
+    values: ["light", "dark"]
+  },
   buttons: {
     commonButtons: {
       showSelectedData: { text: "show selected data" },

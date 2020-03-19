@@ -44,7 +44,7 @@ const config = {
   },
   amortizationValue: {
     title: "Amortization period",
-    suffix: "years"
+    suffix: " years"
   },
   mortgageRateValue: {
     title: "Mortgage Rate",

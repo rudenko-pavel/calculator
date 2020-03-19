@@ -7,6 +7,8 @@ import React from "react";
 import configChart from "../../configs/configChart";
 import { useLogic } from "../../logic";
 
+ import ChartLogic from "./ChartLogic";
+
 const Charts = () => {
   const { serie } = configChart;
   const fieldsChart = [];
@@ -89,6 +91,7 @@ const Charts = () => {
 
   return (
     <div className="Charts">
+      <ChartLogic />
       <Chart height={400} data={chart1Data} forceFit>
         <Legend />
         <Axis name="Key" />

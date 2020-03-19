@@ -13,6 +13,9 @@ const CardComponentLogic = props => {
   const dataPercentOf = useSelector(state => state.state[percentOf]);
   const dispatch = useDispatch();
 
+  /* counting percent: b from a
+   *
+   */
   function returnPercent(a, b) {
     let result = "";
     if (typeof a === "object" && typeof b === "number") {
