@@ -16,7 +16,6 @@ const SwitchTheme = props => {
   function onChange(checked) {
     let result = light;
     if (checked === false) result = dark;
-    console.log(`switch to ${checked}`);
     onChangeTheme(result);
   }
 

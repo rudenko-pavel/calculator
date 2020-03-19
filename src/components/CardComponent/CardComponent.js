@@ -4,6 +4,8 @@ import { Card, InputNumber, Slider, Typography } from "antd";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
+import FieldPercent from "./FieldPercent";
+
 /**
  * Returns formatted string: pref + valF + suff
  * valF, pref, suff - newValue, preffix, suffix
@@ -73,7 +75,6 @@ const CardComponent = props => {
     [min]: formattedData(min),
     [max]: formattedData(max)
   };
-
   /**
    * Change value if value isNumber
    */
@@ -84,49 +85,58 @@ const CardComponent = props => {
     setValue(e);
   }
 
+  function showFieldPercent(nameComp) {
+    if (nameComp === "downPaymentValue") {
+      return <FieldPercent name={name} />;
+    }
+  }
+
   return (
-    <Card size="small" title={title}>
-      <Card.Grid
-        hoverable={false}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center"
-        }}
-      >
-        <Text type="secondary">{text}</Text>
-      </Card.Grid>
-      <Card.Grid hoverable={false}>
-        <InputNumber
-          name={name}
-          value={value}
-          prefix={prefix}
-          suffix={suffix}
-          min={min}
-          max={max}
-          step={step}
-          formatter={valIn => returnFormatter(valIn, prefix, suffix)}
-          parser={valIn => returnParcer(valIn, prefix, suffix)}
-          onChange={onHandleChangeNumeric}
-          onBlur={() => onChange(value)}
-        />
-        <div>
-          <Text type="secondary">{percentOf}</Text>
-        </div>
-      </Card.Grid>
-      <Card.Grid hoverable={false}>
-        <Slider
-          marks={marks}
-          tipFormatter={formattedData}
-          onAfterChange={() => onChange(value)}
-          min={min}
-          max={max}
-          step={step}
-          onChange={v => setValue(v)}
-          value={value}
-        />
-      </Card.Grid>
-    </Card>
+    <div>
+      <Card size="small" title={title}>
+        <Card.Grid
+          hoverable={false}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <Text type="secondary">{text}</Text>
+        </Card.Grid>
+        <Card.Grid hoverable={false}>
+          <InputNumber
+            name={name}
+            value={value}
+            prefix={prefix}
+            suffix={suffix}
+            min={min}
+            max={max}
+            step={step}
+            formatter={valIn => returnFormatter(valIn, prefix, suffix)}
+            parser={valIn => returnParcer(valIn, prefix, suffix)}
+            onChange={onHandleChangeNumeric}
+            onBlur={() => onChange(value)}
+          />
+          <div>
+            <Text type="secondary">{percentOf}</Text>
+          </div>
+        </Card.Grid>
+        <Card.Grid hoverable={false}>
+          <Slider
+            marks={marks}
+            tipFormatter={formattedData}
+            onAfterChange={() => onChange(value)}
+            min={min}
+            max={max}
+            step={step}
+            onChange={v => setValue(v)}
+            value={value}
+          />
+        </Card.Grid>
+      </Card>
+      {showFieldPercent(name)}
+    </div>
   );
 };
 
@@ -153,5 +163,4 @@ CardComponent.defaultProps = {
   prefix: "",
   suffix: "",
   percentOf: ""
-  // popover: ""
 };
