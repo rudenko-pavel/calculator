@@ -29,7 +29,6 @@ const Charts = () => {
   const arrayInterestPrincipal = [objInterestPayment, objPrincipalPayment];
   const arrayBalanceTotalPayments = [objBalance, objTotalPayments];
   let arrayTotalInterest = [];
-  const titleTotalInterest = serie[4];
 
   let numberOfYear = 1;
 
@@ -111,7 +110,7 @@ const Charts = () => {
         <Geom
           type="intervalStack"
           position="Key*Value"
-          color={"name"}
+          color="name"
           style={{
             stroke: "#fff",
             lineWidth: 1
@@ -127,7 +126,7 @@ const Charts = () => {
         <Geom
           type="intervalStack"
           position="Key*Value"
-          color={"name"}
+          color="name"
           style={{
             stroke: "#fff",
             lineWidth: 1

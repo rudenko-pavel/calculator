@@ -43,7 +43,7 @@ const config = {
     percentOf: "propertyValue"
   },
   amortizationValue: {
-    title: "Amortization",
+    title: "Amortization period",
     suffix: "years"
   },
   mortgageRateValue: {

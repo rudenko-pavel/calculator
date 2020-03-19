@@ -5,9 +5,9 @@ import { RESET_VALUES, SET_VALUE } from "../actions/types";
 
 const initialState = {
   rentValue: { val: 1000, min: 500, max: 4000, step: 50 },
-  propertyValue: { val: 50000, min: 50000, max: 2000000, step: 10000 },
-  downPaymentValue: { val: 2500, min: 2500, max: 80000, step: 10 },
-  amortizationValue: { val: 25, min: 5, max: 25, step: 1 },
+  propertyValue: { val: 50000, min: 50000, max: 4000000, step: 10000 },
+  downPaymentValue: { val: 2500, min: 2500, max: 800000, step: 10 },
+  amortizationValue: { val: 25, min: 5, max: 30, step: 1 },
   mortgageRateValue: { val: 2.79, min: 0.01, max: 12, step: 0.01 },
   amountAnnualTaxesValue: { val: 500, min: 0, max: 2000, step: 10 },
   annualHeatingCostsValue: { val: 500, min: 0, max: 2000, step: 10 },
@@ -34,9 +34,15 @@ export const getInitialState = () => {
 export default (state = getInitialState(), action) => {
   switch (action.type) {
     case SET_VALUE:
-      const { name, value } = action.payload;
+      const { name } = action.payload;
+      let { value } = action.payload;
       const newState = getDeepCopy(state);
-      newState[name].val = value;
+      const v = newState[name];
+      if (v) {
+        if (v.min > value) value = v.min;
+        if (v.max < value) value = v.max;
+        v.val = value;
+      }
       return newState;
     case RESET_VALUES:
       let returnResetValues = getDeepCopy(state);

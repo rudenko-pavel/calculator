@@ -2,7 +2,6 @@ import { Button, Popover } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import { setValue } from "../../actions";
 import configTextForElements from "../../configs/configTextForElements";
 
@@ -11,7 +10,6 @@ const CopyLink = () => {
   const data = useSelector(state => state.state);
   const dispatch = useDispatch();
   const [marker, count] = useState(true);
-  const [wizardLink, wlChange] = useState("");
   /**
    * Changes  state if url has additional values
    *  e.g. ...?rentValue=1000&propertyValue=50000...
@@ -35,19 +33,15 @@ const CopyLink = () => {
   /**
    * Add to URL data from state
    */
-  function getUrl() {
-    wlChange("");
+  function copyURL() {
     const res = window.location.href.split("?");
     let result = `${res[0]}?`;
-    // eslint-disable-next-line array-callback-return
-    Object.keys(data).map(function rk(key) {
+    Object.keys(data).forEach(function rk(key) {
       result = `${result + key}=${data[key].val}&`;
     });
 
     // eslint-disable-next-line no-undef
     navigator.clipboard.writeText(result.substring(0, result.length - 1));
-    wlChange(result.substring(0, result.length - 1));
-    return wizardLink;
   }
 
   return (
@@ -58,7 +52,7 @@ const CopyLink = () => {
       trigger="click"
     >
       <Button
-        onClick={() => getUrl()}
+        onClick={copyURL}
         className="ant-btn ant-btn-primary create-link"
         title=""
       >

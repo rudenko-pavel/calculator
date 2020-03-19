@@ -9,13 +9,7 @@ import CopyLink from "../CopyLink/CopyLink";
 const HeaderMenu = () => {
   const { headermenu } = configHeaderMenu;
 
-  // create default `key` for current itemMenu
-  function getUrlHash(str) {
-    let res = str;
-    if (str === "#/") res = "main";
-    return res;
-  }
-  const [currItem, setCurrItem] = useState(getUrlHash(window.location.hash));
+  const [currItem, setCurrItem] = useState(window.location.hash || "#/");
 
   // Changes  current button in HeaderMenu
   function handleClick(e) {
@@ -26,7 +20,7 @@ const HeaderMenu = () => {
   function renderListFunc() {
     return headermenu.map(item => {
       return (
-        <Menu.Item to={item.link} key={item.name} className={item.addClass}>
+        <Menu.Item to={item.link} key={item.link} className={item.addClass}>
           <Button danger type={item.type}>
             <a href={item.link}>{item.name}</a>
           </Button>
@@ -35,13 +29,12 @@ const HeaderMenu = () => {
     });
   }
   const renderList = renderListFunc();
-
   return (
     <div className="HeaderMenu">
       <CopyLink />
       <Menu
         onClick={e => handleClick(e)}
-        selectedKeys={currItem}
+        selectedKeys={[currItem]}
         mode="horizontal"
       >
         {renderList}
