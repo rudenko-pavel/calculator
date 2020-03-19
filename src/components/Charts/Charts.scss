@@ -3,4 +3,22 @@
     #container {
         padding-top:50px;
     }
+    .chart-area{
+        width: 80%;
+        margin: 0 auto 10px auto;
+        border-bottom: 1px dotted $dark-gray-color;
+        h3{
+            text-align: center;
+            color: $dark-gray-color;
+        }
+    }
+    .g2-tooltip{
+        position: absolute !important;
+        border: 1px solid $collapse-border !important;
+        background-color: $white-color !important;
+        color: $black-color !important;
+        opacity: 0.9 !important;
+        padding: 5px 15px !important;
+        transition: top 200ms,left 200ms !important;
+    }
 }

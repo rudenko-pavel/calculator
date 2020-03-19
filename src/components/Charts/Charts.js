@@ -1,17 +1,30 @@
 import "./Charts.scss";
 
-import DataSet from "@antv/data-set";
-import { Axis, Chart, Geom, Legend, Tooltip } from "bizcharts";
 import React from "react";
 
 import configChart from "../../configs/configChart";
 import { useLogic } from "../../logic";
-
- import ChartLogic from "./ChartLogic";
+import ChartLogic from "./ChartLogic";
 
 const Charts = () => {
   const { serie } = configChart;
   const fieldsChart = [];
+  // IN THIS COMPONENT PREPARE DATA IN THE CORRECT FORMAT:
+
+  /* Stackedcolumn:
+   * data format = [
+   *   {name: "<name of  row 1>", "<name of column1>": 18.9, "<name of column2>": 28.8, ... },
+   *   {name: "<name of  row 2>", "<name of column1>": 16.5, "<name of column2>": 14.7, ... }
+   * ]
+   */
+
+  /* Line Chart:
+   * data format = [
+   *   {name: "<name of column 1>", name_of_value: 18.9, ... },
+   *   {name: "<name of column 2>", name_of_value: 16.5, ... }
+   * ]
+   */
+
   // objects with values: Interest Payment, PrincipalPayment, ...
   const objInterestPayment = { name: serie[1] };
   const objPrincipalPayment = { name: serie[3] };
@@ -25,9 +38,6 @@ const Charts = () => {
   let amountForEachYearBalance = 0;
   let amountForEachYearTotalPayments = 0;
 
-  // arrays - data for different charts
-  const arrayInterestPrincipal = [objInterestPayment, objPrincipalPayment];
-  const arrayBalanceTotalPayments = [objBalance, objTotalPayments];
   let arrayTotalInterest = [];
 
   let numberOfYear = 1;
@@ -71,82 +81,16 @@ const Charts = () => {
     }
   });
 
-  const chart1 = new DataSet();
-  const chart1Data = chart1.createView().source(arrayBalanceTotalPayments);
-  chart1Data.transform({
-    type: "fold",
-    fields: fieldsChart,
-    key: "Key",
-    value: "Value"
-  });
-
-  const chart2 = new DataSet();
-  const chart2Data = chart2.createView().source(arrayInterestPrincipal);
-  chart2Data.transform({
-    type: "fold",
-    fields: fieldsChart,
-    key: "Key",
-    value: "Value"
-  });
-
   return (
     <div className="Charts">
-      <ChartLogic />
-      <Chart height={400} data={chart1Data} forceFit>
-        <Legend />
-        <Axis name="Key" />
-        <Axis name="Value" />
-        <Tooltip />
-        <Geom
-          type="intervalStack"
-          position="Key*Value"
-          color="name"
-          style={{
-            stroke: "#fff",
-            lineWidth: 1
-          }}
-        />
-      </Chart>
-
-      <Chart height={400} data={chart2Data} forceFit>
-        <Legend />
-        <Axis name="Key" />
-        <Axis name="Value" />
-        <Tooltip />
-        <Geom
-          type="intervalStack"
-          position="Key*Value"
-          color="name"
-          style={{
-            stroke: "#fff",
-            lineWidth: 1
-          }}
-        />
-      </Chart>
-
-      <Chart height={400} data={arrayTotalInterest} forceFit>
-        <Axis name="month" />
-        <Axis name="tem" />
-        <Tooltip
-          containerTpl='<div class="g2-tooltip"><p class="g2-tooltip-title"></p><table class="g2-tooltip-list"></table></div>'
-          itemTpl='<tr class="g2-tooltip-list-item"><td style="color:{color}">{name}</td><td>{value}</td></tr>'
-          offset={50}
-          g2-tooltip={{
-            position: "absolute",
-            visibility: "hidden",
-            border: "1px solid #efefef",
-            backgroundColor: "white",
-            color: "#000",
-            opacity: "0.8",
-            padding: "5px 15px",
-            transition: "top 200ms,left 200ms"
-          }}
-          g2-tooltip-list={{
-            margin: "10px"
-          }}
-        />
-        <Geom type="line" position="month*tem" />
-      </Chart>
+      <ChartLogic
+        fieldsChart={fieldsChart}
+        source1={objBalance}
+        source2={objInterestPayment}
+        source3={arrayTotalInterest}
+        source4={objPrincipalPayment}
+        source5={objTotalPayments}
+      />
     </div>
   );
 };

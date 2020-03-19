@@ -7,6 +7,11 @@ const configChart = {
     "Total Interest",
     "Principal Payment",
     "Total Payments"
+  ],
+  names: [
+    "Balance & Toatal Payment",
+    "Interset Payment & Principal Paiment",
+    "Total Interest"
   ]
 };
 
