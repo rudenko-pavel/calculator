@@ -2,16 +2,14 @@ import "./Payments.scss";
 
 import { Divider, Table } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
 
 import configPayments from "../../configs/configPayments";
-import getMortgageCalculator from "../../lib/mortgage";
+import { useLogic } from "../../logic";
 import CreatePdf from "../CreatePdf/CreatePdf";
 import PaymentSummary from "./PaymentSummary";
 
 const Payments = () => {
   const { columns } = configPayments;
-  const data = useSelector(state => state.state);
 
   // Create number formatter for $.
   const formatter = new Intl.NumberFormat("en-US", {
@@ -34,18 +32,7 @@ const Payments = () => {
     return newArr;
   }
 
-  const mortgageCalculator = getMortgageCalculator();
-  mortgageCalculator.totalPrice = data.propertyValue.val;
-  mortgageCalculator.downPayment = data.downPaymentValue.val;
-  mortgageCalculator.interestRate = 0.045;
-  mortgageCalculator.months = data.amortizationValue.val * 12;
-  mortgageCalculator.taxRate = 0.012;
-  mortgageCalculator.insuranceRate = 0.0013;
-  mortgageCalculator.mortgageInsuranceRate = 0.01;
-  mortgageCalculator.mortgageInsuranceEnabled = true;
-  mortgageCalculator.mortgageInsuranceThreshold = 0.2;
-  mortgageCalculator.additionalPrincipalPayment = 100;
-  const payment = mortgageCalculator.calculatePayment();
+  const payment = useLogic();
 
   return (
     <div className="Payments">

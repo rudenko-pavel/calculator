@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { resetValues } from "../../actions";
 import configTFE from "../../configs/configTextForElements";
-import getMortgageCalculator from "../../lib/mortgage";
+import { useLogic } from "../../logic";
 import { returnFormatter } from "../CardComponent/CardComponent";
 
 const RightPart = () => {
@@ -14,25 +14,8 @@ const RightPart = () => {
   const dispatch = useDispatch();
 
   const data = useSelector(s => s.state);
-  const mortgageCalculator = getMortgageCalculator();
-  mortgageCalculator.totalPrice = data.propertyValue.val;
-  mortgageCalculator.downPayment = data.downPaymentValue.val;
-  mortgageCalculator.interestRate = data.mortgageRateValue.val / 100;
-  mortgageCalculator.months = data.amortizationValue.val * 12;
-  mortgageCalculator.taxRate =
-    data.amountAnnualTaxesValue.val / data.propertyValue.val;
-  mortgageCalculator.insuranceRate = data.ownerInsuranceValue.val / 100;
-  const payment = mortgageCalculator.calculatePayment();
-
-  // tax + maint + insurance + heating
-  const mMonthlyExpenses =
-    (data.amountAnnualTaxesValue.val +
-      data.propertyValue.val * (data.maintenanceValue.val / 100) +
-      data.propertyValue.val * (data.ownerInsuranceValue.val / 100) +
-      data.annualHeatingCostsValue.val) /
-    12;
-
-  const rMonthlyExpenses = data.rentersInsuranceValue.val;
+  const payment = useLogic();
+  const { mMonthlyExpenses, rMonthlyExpenses } = payment;
 
   const mTotal = payment.principalAndInterest + mMonthlyExpenses;
   const rTotal = data.rentValue.val + rMonthlyExpenses;
