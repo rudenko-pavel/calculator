@@ -4,20 +4,17 @@ import "antd/dist/antd.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { applyMiddleware, compose, createStore } from "redux";
-import thunk from "redux-thunk";
+import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./components/App";
-import reducers from "./reducers";
+import configureStore from "./configureStore";
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const middleware = composeEnhancer(applyMiddleware(thunk)); // , loggerMiddleware
-
-const store = createStore(reducers, middleware);
-
+const { store, persistor } = configureStore();
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.querySelector("#root")
 );
