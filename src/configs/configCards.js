@@ -39,8 +39,9 @@ const config = {
     title: "Down Payment",
     text:
       "Indicate how much you could pay for your down payment. Usually loans with a down payment of less than 20% of property value will require additional loan-insurance.",
-    prefix: "$",
-    percentOf: "propertyValue"
+    suffix: "%",
+    percentOf: "propertyValue",
+    percentOf_prefix: "$"
   },
   amortizationValue: {
     title: "Amortization period",

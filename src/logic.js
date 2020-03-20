@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 
+import { returnMoneyValue } from "./components/CardComponent/helpers";
 import getMortgageCalculator from "./lib/mortgage";
 
 export default class Calculator {
@@ -21,7 +22,10 @@ export const useLogic = () => {
   const data = useSelector(s => s.state);
   const payment = new Calculator()
     .setValue("totalPrice", data.propertyValue.val)
-    .setValue("downPayment", data.downPaymentValue.val)
+    .setValue(
+      "downPayment",
+      returnMoneyValue(data.downPaymentValue.val, data.propertyValue.val)
+    )
     .setValue("interestRate", data.mortgageRateValue.val / 100)
     .setValue("months", data.amortizationValue.val * 12)
     .setValue(

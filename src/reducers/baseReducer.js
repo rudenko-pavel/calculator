@@ -6,7 +6,7 @@ import { RESET_VALUES, SET_VALUE } from "../actions/types";
 const initialState = {
   rentValue: { val: 1000, min: 500, max: 4000, step: 50 },
   propertyValue: { val: 50000, min: 50000, max: 4000000, step: 10000 },
-  downPaymentValue: { val: 2500, min: 2500, max: 800000, step: 10 },
+  downPaymentValue: { val: 20, min: 0, max: 50, step: 0.1 }, // in %
   amortizationValue: { val: 25, min: 5, max: 30, step: 1 },
   mortgageRateValue: { val: 2.79, min: 0.01, max: 12, step: 0.01 },
   amountAnnualTaxesValue: { val: 500, min: 0, max: 2000, step: 10 },

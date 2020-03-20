@@ -4,10 +4,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setValue } from "../../actions";
-import config from "../../configs/configCards";
 
 const FieldPercent = props => {
-  const { name } = props;
+  const { name, percentOf } = props;
   const dispatch = useDispatch();
 
   function returnMoneyValue(a, b) {
@@ -33,8 +32,6 @@ const FieldPercent = props => {
   }
 
   const data = useSelector(state => state.state[name].val);
-
-  const { percentOf } = config[name];
   const dataPercentOf = useSelector(state => state.state[percentOf].val);
   function percent(a, b) {
     const result = (a / b) * 100;
@@ -95,5 +92,10 @@ const FieldPercent = props => {
 export default FieldPercent;
 
 FieldPercent.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  percentOf: PropTypes.string
+};
+
+FieldPercent.defaultProps = {
+  percentOf: ""
 };

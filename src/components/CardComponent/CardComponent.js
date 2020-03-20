@@ -1,32 +1,19 @@
 import "./CardComponent.scss";
 
-import { Card, InputNumber, Slider, Typography } from "antd";
+import { Card, Typography } from "antd";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import FieldPercent from "./FieldPercent";
-
-/**
- * Returns formatted string: pref + valF + suff
- * valF, pref, suff - newValue, preffix, suffix
- */
-export function returnFormatter(valF, pref, suff) {
-  let formatter;
-  if (pref === "$") {
-    // https://stackoverflow.com/a/16233919
-    /* return valF.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD"
-    }); */
-    formatter = `${pref} ${Number(valF).toFixed(0)}`.replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      ","
-    );
-  } else {
-    formatter = `${valF} ${suff}`;
-  }
-  return formatter;
-}
+import config from "../../configs/configCards";
+import CardInput from "./CardInput";
+import {
+  formattedData,
+  returnFormatter,
+  returnMoneyValue,
+  returnParcer,
+  returnPercentValue
+} from "./helpers";
 
 const CardComponent = props => {
   const { Text } = Typography;
@@ -40,30 +27,9 @@ const CardComponent = props => {
     min,
     max,
     step,
-    percentOf,
     onChange
   } = props;
-  function returnParcer(valP, pref, suff) {
-    let parcer;
-    if (pref === "$") {
-      parcer = valP.replace(/\$\s?|(,*)/g, "");
-    } else {
-      parcer = valP.replace(`${suff}`, "");
-    }
-    parcer = parcer.replace(/\s+/g, "");
-    return parcer;
-  }
 
-  /**
-   * Returns formatted string: pref + val + suff
-   * val = number (Required),
-   * pref,suff = string. Get variables from props (e.g. preffix="$", value=4000, suffix="")
-   */
-  function formattedData(valF) {
-    const formatter = new Intl.NumberFormat("en-EN").format(valF);
-    const result = `${prefix}${formatter}${suffix}`;
-    return result;
-  }
   const [value, setValue] = useState(val);
 
   // update inner value if val is changed
@@ -71,10 +37,6 @@ const CardComponent = props => {
     setValue(val);
   }, [val]);
 
-  const marks = {
-    [min]: formattedData(min),
-    [max]: formattedData(max)
-  };
   /**
    * Change value if value isNumber
    */
@@ -85,11 +47,9 @@ const CardComponent = props => {
     setValue(e);
   }
 
-  function showFieldPercent(nameComp) {
-    if (nameComp === "downPaymentValue") {
-      return <FieldPercent name={name} />;
-    }
-  }
+  const { percentOf, percentOf_suffix, percentOf_prefix } = config[name];
+  const percentObj = useSelector(state => state.state[percentOf]);
+  const dataPercentOf = percentOf ? percentObj.val : false;
 
   return (
     <div>
@@ -104,38 +64,42 @@ const CardComponent = props => {
         >
           <Text type="secondary">{text}</Text>
         </Card.Grid>
-        <Card.Grid hoverable={false}>
-          <InputNumber
+        <CardInput
+          name={name}
+          prefix={prefix}
+          suffix={suffix}
+          step={step}
+          min={min}
+          max={max}
+          value={value}
+          onChange={v => setValue(v)}
+          onAfterChange={onChange}
+          returnFormatter={returnFormatter}
+          returnParcer={returnParcer}
+          formattedData={formattedData}
+          onHandleChangeNumeric={onHandleChangeNumeric}
+        />
+        {percentOf && (
+          <CardInput
             name={name}
-            value={value}
-            prefix={prefix}
-            suffix={suffix}
-            min={min}
-            max={max}
-            step={step}
-            formatter={valIn => returnFormatter(valIn, prefix, suffix)}
-            parser={valIn => returnParcer(valIn, prefix, suffix)}
-            onChange={onHandleChangeNumeric}
-            onBlur={() => onChange(value)}
+            step={0.5}
+            prefix={percentOf_prefix}
+            suffix={percentOf_suffix}
+            min={returnMoneyValue(min, dataPercentOf)}
+            max={returnMoneyValue(max, dataPercentOf)}
+            value={returnMoneyValue(value, dataPercentOf)}
+            onChange={v => setValue(returnPercentValue(v, dataPercentOf))}
+            onAfterChange={v => onChange(returnPercentValue(v, dataPercentOf))}
+            returnFormatter={returnFormatter}
+            returnParcer={returnParcer}
+            formattedData={formattedData}
+            onHandleChangeNumeric={e =>
+              onHandleChangeNumeric(returnPercentValue(e, dataPercentOf))
+            }
           />
-          <div>
-            <Text type="secondary">{percentOf}</Text>
-          </div>
-        </Card.Grid>
-        <Card.Grid hoverable={false}>
-          <Slider
-            marks={marks}
-            tipFormatter={formattedData}
-            onAfterChange={() => onChange(value)}
-            min={min}
-            max={max}
-            step={step}
-            onChange={v => setValue(v)}
-            value={value}
-          />
-        </Card.Grid>
+        )}
+        {/* {percentOf && <FieldPercent name={name} percentOf={percentOf} />} */}
       </Card>
-      {showFieldPercent(name)}
     </div>
   );
 };
@@ -151,16 +115,11 @@ CardComponent.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  // popover: PropTypes.object,
-  percentOf: PropTypes.string,
   val: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired
 };
-
 CardComponent.defaultProps = {
   text: "",
   prefix: "",
-  suffix: "",
-  percentOf: ""
+  suffix: ""
 };

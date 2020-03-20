@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetValues } from "../../actions";
 import configTFE from "../../configs/configTextForElements";
 import { useLogic } from "../../logic";
-import { returnFormatter } from "../CardComponent/CardComponent";
+import { returnFormatter } from "../CardComponent/helpers";
 
 const RightPart = () => {
   const { buttons, divElements } = configTFE;

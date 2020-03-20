@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 
 import config from "../../configs/configCards";
 import configTFE from "../../configs/configTextForElements";
-import { returnFormatter } from "../CardComponent/CardComponent";
 import CardComponentLogic from "../CardComponent/CardComponentLogic";
+import { returnFormatter, returnMoneyValue } from "../CardComponent/helpers";
 import TextPanel from "../TextPanel/TextPanel";
 
 const LeftPart = () => {
@@ -46,7 +46,10 @@ const LeftPart = () => {
               <>
                 Borrowing:{" "}
                 {returnFormatter(
-                  state.propertyValue.val - state.downPaymentValue.val,
+                  returnMoneyValue(
+                    100 - state.downPaymentValue.val,
+                    state.propertyValue.val
+                  ),
                   "$"
                 )}
               </>
