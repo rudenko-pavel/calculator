@@ -9,7 +9,7 @@ import StackedColumn from "./views/StackedColumn";
 const ChartView = props => {
   const { data1, data2, data3, fieldsChart } = props;
   const { names } = configChart;
-
+  console.log("fuck: names", names);
   return (
     <div>
       <StackedColumn data={data1} name={names[0]} fieldsChart={fieldsChart} />

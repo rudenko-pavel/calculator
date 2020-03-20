@@ -4,6 +4,8 @@ import { Axis, Chart, Geom, Legend, Tooltip } from "bizcharts";
 import PropTypes from "prop-types";
 import React from "react";
 
+import { formattedData } from "../../CardComponent/helpers";
+
 const StackedColumn = props => {
   const { data, name, fieldsChart } = props;
 
@@ -12,26 +14,45 @@ const StackedColumn = props => {
   chartData.transform({
     type: "fold",
     fields: fieldsChart,
-    key: "Key",
-    value: "Value"
+    key: "key",
+    value: "value"
   });
+
+  console.log("fuck: ", chartData);
 
   return (
     <div className="chart-area stacked-column-chart">
       <h3>{name}</h3>
       <Chart height={300} data={chartData} forceFit>
         <Legend />
-        <Axis name="Key" />
-        <Axis name="Value" />
-        <Tooltip />
+        <Axis name="key" />
+        <Axis
+          name="value"
+          label={{ formatter: val => `${formattedData(val, "$")}` }}
+        />
+        <Tooltip
+          containerTpl='<div class="g2-tooltip"><p class="g2-tooltip-title"></p><table class="g2-tooltip-list"></table></div>'
+          itemTpl='<tr class="g2-tooltip-list-item"><td style="color:{color}">{value}</td></tr>'
+        />
         <Geom
           type="intervalStack"
-          position="Key*Value"
+          position="key*value"
           color="name"
           style={{
             stroke: "#fff",
             lineWidth: 1
           }}
+          tooltip={[
+            "key*value",
+            (key, value) => {
+              return {
+                // Custom tooltip on the title display and so on.
+
+                title: `Month# ${key}`,
+                value: `${formattedData(value, "$")}`
+              };
+            }
+          ]}
         />
       </Chart>
     </div>
