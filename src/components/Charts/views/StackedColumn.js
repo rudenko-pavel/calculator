@@ -18,8 +18,6 @@ const StackedColumn = props => {
     value: "value"
   });
 
-  console.log("fuck: ", chartData);
-
   return (
     <div className="chart-area stacked-column-chart">
       <h3>{name}</h3>
@@ -32,7 +30,7 @@ const StackedColumn = props => {
         />
         <Tooltip
           containerTpl='<div class="g2-tooltip"><p class="g2-tooltip-title"></p><table class="g2-tooltip-list"></table></div>'
-          itemTpl='<tr class="g2-tooltip-list-item"><td style="color:{color}">{value}</td></tr>'
+          itemTpl='<tr class="g2-tooltip-list-item"><td style="color:{color}">{name}  {value}</td></tr>'
         />
         <Geom
           type="intervalStack"

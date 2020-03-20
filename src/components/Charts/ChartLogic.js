@@ -9,7 +9,6 @@ const ChartLogic = props => {
 
   // union objects into one array for show in the same chart
   const data1 = [source1, source5];
-  console.log("fuck: data1 ", data1);
   const data2 = [source2, source4];
   const data3 = source3;
 
